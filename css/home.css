@@ -1,0 +1,1680 @@
+/*
+==================================================
+LumiA
+ファイル名：home.css
+
+【ファイル概要】
+LumiA ホーム画面専用CSS
+
+【デザイン方針】
+・学校らしい明るさ
+・AIらしい先進感
+・親しみやすさ
+・情報の見やすさ
+・余白を大切にする
+・コーギくんを主役の一つとして扱う
+・PC / タブレット / スマートフォン対応
+
+【重要】
+・コーギくん本体と吹き出しは独立して配置
+・吹き出し位置を変更してもコーギくん本体は動かない
+・質問欄とコーギくんが干渉しないようにする
+==================================================
+*/
+
+/* ==================================================
+   基本設定
+   ================================================== */
+
+.home-main {
+  position: relative;
+
+  min-height: calc(100vh - 76px);
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+/* ==================================================
+   背景
+   ================================================== */
+
+.home-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: -3;
+
+  background-image: url("../assets/images/backgrounds/lumia-home-bg.png");
+
+  background-position: center center;
+
+  background-size: cover;
+
+  background-repeat: no-repeat;
+}
+
+/* ==================================================
+   背景オーバーレイ
+   ================================================== */
+
+.home-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: -2;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.1) 42%,
+    rgba(237, 250, 255, 0.22) 100%
+  );
+}
+
+/* ==================================================
+   ヘッダー
+   ================================================== */
+
+.site-header {
+  position: relative;
+
+  z-index: 50;
+
+  height: 76px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-bottom: 1px solid rgba(20, 135, 180, 0.08);
+
+  box-shadow: 0 3px 18px rgba(30, 120, 155, 0.05);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ==================================================
+   ヘッダー内部
+   ================================================== */
+
+.header-inner {
+  width: min(calc(100% - 48px), 1240px);
+
+  height: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+}
+
+/* ==================================================
+   ナビゲーション
+   ================================================== */
+
+.main-nav {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+}
+
+/* ==================================================
+   ナビゲーションリンク
+   ================================================== */
+
+.nav-link {
+  position: relative;
+
+  min-height: 48px;
+
+  padding: 0 18px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  box-sizing: border-box;
+
+  border-radius: 18px;
+
+  color: #153d5c;
+
+  background: transparent;
+
+  text-decoration: none;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.03em;
+
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* ==================================================
+   ナビゲーション ホバー
+   ================================================== */
+
+.nav-link:hover {
+  color: #078fca;
+
+  background: rgba(223, 247, 255, 0.95);
+
+  transform: translateY(-1px);
+}
+
+/* ==================================================
+   現在のページ
+   ================================================== */
+
+.nav-link.active {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #119bd1 0%, #20a8d8 100%);
+
+  box-shadow: 0 7px 18px rgba(17, 151, 201, 0.22);
+}
+
+/* ==================================================
+   現在ページのホバー
+   ================================================== */
+
+.nav-link.active:hover {
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #119bd1 0%, #20a8d8 100%);
+
+  transform: translateY(-1px);
+}
+
+/* ==================================================
+   ナビアイコン
+   ================================================== */
+
+.nav-icon {
+  width: 20px;
+
+  height: 20px;
+
+  flex: 0 0 20px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.nav-icon svg {
+  width: 20px;
+
+  height: 20px;
+
+  display: block;
+}
+
+/* ==================================================
+   メインコンテンツ
+   ================================================== */
+
+.home-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(calc(100% - 48px), 1240px);
+
+  margin: 0 auto;
+
+  padding: 42px 0 54px;
+}
+
+/* ==================================================
+   ヒーロー
+   ================================================== */
+
+.hero-section {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  margin: 0 auto 26px;
+}
+
+/* ==================================================
+   LumiA ロゴ
+   ================================================== */
+
+.hero-logo {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 10px;
+}
+
+.lumia-main-logo {
+  display: block;
+
+  width: clamp(230px, 24vw, 350px);
+
+  height: auto;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 8px 10px rgba(35, 108, 147, 0.1));
+}
+
+/* ==================================================
+   キャッチコピー
+   ================================================== */
+
+.hero-title {
+  margin: 0;
+
+  color: #063d69;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: clamp(27px, 2.7vw, 39px);
+
+  line-height: 1.55;
+
+  font-weight: 900;
+
+  letter-spacing: 0.035em;
+
+  text-shadow: 0 2px 5px rgba(255, 255, 255, 0.55);
+}
+
+/* ==================================================
+   ヒーロー説明
+   ================================================== */
+
+.hero-description {
+  margin: 12px 0 0;
+
+  color: #285d7d;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: 14px;
+
+  line-height: 1.9;
+
+  font-weight: 500;
+
+  letter-spacing: 0.035em;
+}
+
+/* ==================================================
+   質問エリア
+   ================================================== */
+
+.question-section {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 1180px;
+
+  min-height: 330px;
+
+  margin: 0 auto 34px;
+
+  box-sizing: border-box;
+}
+
+/* ==================================================
+   コーギくんエリア
+
+   ★重要
+   コーギくん本体と吹き出しを
+   同じ親の中で独立して配置する。
+   ================================================== */
+
+.mascot-area {
+  position: absolute;
+
+  top: -20px;
+
+  left: -35px;
+
+  width: 390px;
+
+  height: 320px;
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+  z-index: 20;
+
+  pointer-events: none;
+}
+
+/* ==================================================
+   コーギくん本体
+
+   ★ここは現在の位置を維持
+   ================================================== */
+
+.corgi-main {
+  position: absolute;
+
+  left: -150px;
+
+  top: -150px;
+
+  z-index: 15;
+
+  display: block;
+
+  width: 390px;
+
+  max-width: none;
+
+  height: auto;
+
+  margin: 0;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 10px 12px rgba(27, 113, 151, 0.12));
+}
+
+/* ==================================================
+   吹き出し
+
+   ★今回の重要ポイント
+
+   コーギくん本体とは完全に独立。
+   この値だけ変更すれば吹き出しだけ動く。
+
+   left  → 左右
+   top   → 上下
+
+   コーギくん本体には影響しない。
+   ================================================== */
+
+.mascot-speech {
+  position: absolute;
+
+  /*
+   * コーギくんの頭の上に配置
+   * 今後ここだけ調整可能
+   */
+  left: 50px;
+
+  top: -235px;
+
+  width: 235px;
+
+  min-height: 72px;
+
+  padding: 16px 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 3px solid rgba(100, 197, 226, 0.42);
+
+  border-radius: 24px;
+
+  box-shadow: 0 7px 18px rgba(27, 126, 164, 0.1);
+
+  color: #0787c1;
+
+  text-align: center;
+
+  z-index: 30;
+
+  pointer-events: none;
+}
+
+/* ==================================================
+   吹き出し内の不要な1行目を非表示
+
+   HTML側に
+   「知りたいこと、」
+   が残っていても表示しない。
+   ================================================== */
+
+.mascot-speech .speech-line {
+  display: none;
+}
+
+/* ==================================================
+   吹き出し文字
+   ================================================== */
+
+.mascot-speech strong {
+  display: block;
+
+  margin: 0;
+
+  padding: 0;
+
+  color: #0787c1;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: 21px;
+
+  line-height: 1.45;
+
+  font-weight: 900;
+
+  letter-spacing: 0.025em;
+
+  white-space: nowrap;
+
+  text-align: center;
+}
+
+/* ==================================================
+   吹き出しのしっぽ
+   ================================================== */
+
+.mascot-speech::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: -18px;
+
+  width: 0;
+
+  height: 0;
+
+  transform: translateX(-50%);
+
+  border-left: 14px solid transparent;
+
+  border-right: 14px solid transparent;
+
+  border-top: 18px solid rgba(100, 197, 226, 0.42);
+
+  z-index: -1;
+}
+
+.mascot-speech::before {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: -12px;
+
+  width: 0;
+
+  height: 0;
+
+  transform: translateX(-50%);
+
+  border-left: 11px solid transparent;
+
+  border-right: 11px solid transparent;
+
+  border-top: 15px solid rgba(255, 255, 255, 0.96);
+
+  z-index: 1;
+}
+
+/* ==================================================
+   質問入力エリア
+
+   コーギくんとは独立して配置
+   ================================================== */
+
+.question-area {
+  position: relative;
+
+  width: 850px;
+
+  max-width: calc(100% - 250px);
+
+  margin-left: 135px;
+
+  box-sizing: border-box;
+
+  z-index: 3;
+}
+
+/* ==================================================
+   質問フォーム
+   ================================================== */
+
+.question-form {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 255px;
+
+  box-sizing: border-box;
+
+  padding: 0;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.91);
+
+  border: 2px solid rgba(79, 188, 222, 0.46);
+
+  border-radius: 27px;
+
+  box-shadow: 0 13px 30px rgba(40, 131, 166, 0.1);
+
+  backdrop-filter: blur(5px);
+
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* ==================================================
+   textarea
+   ================================================== */
+
+.question-input {
+  display: block;
+
+  width: 100%;
+
+  height: 205px;
+
+  box-sizing: border-box;
+
+  margin: 0;
+
+  padding: 26px 30px 18px;
+
+  border: none;
+
+  outline: none;
+
+  resize: none;
+
+  overflow-y: auto;
+
+  background: rgba(255, 255, 255, 0.32);
+
+  color: #164b6c;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+
+  font-weight: 500;
+
+  letter-spacing: 0.025em;
+}
+
+.question-input::placeholder {
+  color: #91aec0;
+
+  opacity: 1;
+}
+
+.question-input:focus {
+  background: rgba(255, 255, 255, 0.58);
+}
+
+/* ==================================================
+   質問フォーム下部
+   ================================================== */
+
+.question-form-bottom {
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 0;
+
+  height: 68px;
+
+  padding: 0 22px 15px 25px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: flex-end;
+}
+
+/* ==================================================
+   1000文字表示は削除
+   ================================================== */
+
+.character-limit {
+  display: none;
+}
+
+/* ==================================================
+   質問ボタン
+   ================================================== */
+
+.question-submit {
+  flex: 0 0 auto;
+
+  min-width: 142px;
+
+  height: 54px;
+
+  padding: 0 20px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 11px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: linear-gradient(135deg, #1aa5d1 0%, #2ab1d7 100%);
+
+  color: #ffffff;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 18px rgba(20, 155, 198, 0.2);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.question-submit:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 11px 22px rgba(20, 155, 198, 0.27);
+
+  filter: brightness(1.03);
+}
+
+.question-submit:active {
+  transform: translateY(0);
+}
+
+.question-submit:focus-visible {
+  outline: 3px solid rgba(29, 168, 214, 0.3);
+
+  outline-offset: 3px;
+}
+
+.submit-arrow {
+  font-size: 19px;
+
+  line-height: 1;
+
+  font-weight: 700;
+}
+
+/* ==================================================
+   個人情報注意
+   ================================================== */
+
+.privacy-notice {
+  margin: 9px 0 0;
+
+  text-align: center;
+
+  color: #48728b;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: 11px;
+
+  line-height: 1.7;
+
+  font-weight: 500;
+
+  letter-spacing: 0.025em;
+}
+
+/* ==================================================
+   質問例
+   ================================================== */
+
+.example-section {
+  width: 100%;
+
+  margin: 0 auto;
+}
+
+/* ==================================================
+   「こういう質問ができます」
+   ================================================== */
+
+.example-heading-wrap {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin: 0 0 20px;
+}
+
+/* ==================================================
+   電球アイコン
+   ================================================== */
+
+.example-icon {
+  width: 26px;
+
+  height: 26px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 21px;
+
+  line-height: 1;
+}
+
+/* ==================================================
+   見出し
+   ================================================== */
+
+.example-title {
+  margin: 0;
+
+  color: #063d69;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: clamp(24px, 2.2vw, 31px);
+
+  line-height: 1.4;
+
+  font-weight: 900;
+
+  letter-spacing: 0.04em;
+
+  text-align: center;
+
+  text-shadow: 0 2px 5px rgba(255, 255, 255, 0.55);
+}
+
+/* ==================================================
+   装飾
+
+   以前のキラキラを使わない場合に備えて非表示
+   ================================================== */
+
+.example-decoration {
+  display: none;
+}
+
+/* ==================================================
+   4つの質問例
+   ================================================== */
+
+.example-list {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  width: 100%;
+}
+
+/* ==================================================
+   カード
+
+   ・クリック不可
+   ・ホバーなし
+   ・質問例を見せるだけ
+   ================================================== */
+
+.example-card {
+  position: relative;
+
+  min-width: 0;
+
+  min-height: 148px;
+
+  box-sizing: border-box;
+
+  padding: 22px 22px 20px 96px;
+
+  display: flex;
+
+  align-items: center;
+
+  text-align: left;
+
+  border: 1px solid rgba(90, 189, 220, 0.35);
+
+  border-left: 5px solid;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  box-shadow: 0 8px 22px rgba(45, 127, 158, 0.08);
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  cursor: default;
+
+  user-select: none;
+}
+
+/* ==================================================
+   カードカラー
+   ================================================== */
+
+.example-card-training {
+  border-left-color: #8d63eb;
+}
+
+.example-card-qualification {
+  border-left-color: #18bfa7;
+}
+
+.example-card-event {
+  border-left-color: #f46b82;
+}
+
+.example-card-career {
+  border-left-color: #229dd5;
+}
+
+/* ==================================================
+   ホバーなし
+   ================================================== */
+
+.example-card:hover {
+  transform: none;
+
+  box-shadow: 0 8px 22px rgba(45, 127, 158, 0.08);
+}
+
+/* ==================================================
+   カードアイコン
+   ================================================== */
+
+.example-card-icon {
+  position: absolute;
+
+  left: 18px;
+
+  top: 50%;
+
+  width: 52px;
+
+  height: 52px;
+
+  transform: translateY(-50%);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(76, 191, 225, 0.32);
+
+  border-radius: 50%;
+
+  background: rgba(225, 247, 255, 0.9);
+
+  color: #1b9ecb;
+
+  flex-shrink: 0;
+}
+
+.example-card-icon svg {
+  width: 25px;
+
+  height: 25px;
+
+  display: block;
+}
+
+/* ==================================================
+   カード文章
+   ================================================== */
+
+.example-card-content {
+  min-width: 0;
+
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0;
+
+  margin: 0;
+}
+
+/* ==================================================
+   カードタイトル
+
+   ★タイトルが変な位置で改行しない
+   ================================================== */
+
+.example-card-content strong {
+  display: block;
+
+  margin: 0;
+
+  color: #063d69;
+
+  font-size: 16px;
+
+  line-height: 1.45;
+
+  font-weight: 900;
+
+  letter-spacing: 0.01em;
+
+  white-space: nowrap;
+}
+
+/* ==================================================
+   カード説明
+
+   ★自然な日本語の幅で改行
+   ================================================== */
+
+.example-card-content > span {
+  display: block;
+
+  margin: 0;
+
+  color: #50748b;
+
+  font-size: 13px;
+
+  line-height: 1.75;
+
+  font-weight: 500;
+
+  letter-spacing: 0.01em;
+
+  word-break: normal;
+
+  overflow-wrap: break-word;
+}
+
+/* ==================================================
+   フッター
+   ================================================== */
+
+.site-footer {
+  position: relative;
+
+  z-index: 10;
+
+  min-height: 62px;
+
+  padding: 18px 20px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border-top: 1px solid rgba(45, 150, 188, 0.08);
+}
+
+.site-footer p {
+  margin: 0;
+
+  color: #52758b;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.025em;
+
+  text-align: center;
+}
+
+/* ==================================================
+   アクセシビリティ
+   ================================================== */
+
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+
+  height: 1px;
+
+  padding: 0;
+
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+
+  white-space: nowrap;
+
+  border: 0;
+}
+
+/* ==================================================
+   タブレット
+   ================================================== */
+
+@media (max-width: 1050px) {
+  .home-content {
+    width: calc(100% - 40px);
+
+    padding-top: 35px;
+  }
+
+  .question-section {
+    min-height: 310px;
+  }
+
+  /* ----------------------------------------------
+     コーギくん
+
+     本体は少しだけ縮小。
+     位置関係は独立。
+     ---------------------------------------------- */
+
+  .mascot-area {
+    width: 300px;
+
+    height: 270px;
+
+    left: -20px;
+
+    top: -10px;
+  }
+
+  .corgi-main {
+    width: 315px;
+
+    left: -10px;
+
+    top: 60px;
+  }
+
+  /* ----------------------------------------------
+     吹き出し
+
+     ★コーギくん本体とは別に調整
+     ---------------------------------------------- */
+
+  .mascot-speech {
+    width: 220px;
+
+    min-height: 72px;
+
+    left: 25px;
+
+    top: -25px;
+
+    padding: 14px 16px;
+
+    border-radius: 22px;
+  }
+
+  .mascot-speech strong {
+    font-size: 19px;
+  }
+
+  /* ----------------------------------------------
+     質問欄
+     ---------------------------------------------- */
+
+  .question-area {
+    width: 760px;
+
+    max-width: calc(100% - 190px);
+
+    margin-left: 120px;
+  }
+
+  .question-form {
+    min-height: 235px;
+  }
+
+  .question-input {
+    height: 185px;
+  }
+
+  /* ----------------------------------------------
+     カード
+     ---------------------------------------------- */
+
+  .example-list {
+    gap: 13px;
+  }
+
+  .example-card {
+    min-height: 145px;
+
+    padding: 20px 16px 20px 78px;
+  }
+
+  .example-card-icon {
+    left: 13px;
+
+    width: 46px;
+
+    height: 46px;
+  }
+
+  .example-card-icon svg {
+    width: 22px;
+
+    height: 22px;
+  }
+
+  .example-card-content strong {
+    font-size: 14px;
+  }
+
+  .example-card-content > span {
+    font-size: 12px;
+
+    line-height: 1.65;
+  }
+
+  /* ----------------------------------------------
+     ナビ
+     ---------------------------------------------- */
+
+  .nav-link {
+    padding: 0 13px;
+
+    font-size: 13px;
+  }
+}
+
+/* ==================================================
+   スマートフォン
+   ================================================== */
+
+@media (max-width: 760px) {
+  /* ----------------------------------------------
+     ヘッダー
+     ---------------------------------------------- */
+
+  .site-header {
+    height: auto;
+
+    min-height: 68px;
+  }
+
+  .header-inner {
+    width: calc(100% - 20px);
+
+    justify-content: center;
+
+    padding: 8px 0;
+  }
+
+  .main-nav {
+    width: 100%;
+
+    justify-content: center;
+
+    gap: 3px;
+  }
+
+  .nav-link {
+    min-height: 46px;
+
+    padding: 0 9px;
+
+    border-radius: 14px;
+
+    gap: 5px;
+
+    font-size: 11px;
+
+    letter-spacing: 0;
+  }
+
+  .nav-icon {
+    width: 17px;
+
+    height: 17px;
+
+    flex-basis: 17px;
+  }
+
+  .nav-icon svg {
+    width: 17px;
+
+    height: 17px;
+  }
+
+  /* ----------------------------------------------
+     メイン
+     ---------------------------------------------- */
+
+  .home-main {
+    min-height: auto;
+  }
+
+  .home-content {
+    width: calc(100% - 24px);
+
+    padding: 28px 0 38px;
+  }
+
+  /* ----------------------------------------------
+     ヒーロー
+     ---------------------------------------------- */
+
+  .hero-section {
+    margin-bottom: 24px;
+  }
+
+  .lumia-main-logo {
+    width: 210px;
+  }
+
+  .hero-title {
+    font-size: 24px;
+
+    line-height: 1.55;
+  }
+
+  .hero-description {
+    font-size: 12px;
+
+    line-height: 1.8;
+  }
+
+  /* ----------------------------------------------
+     質問エリア
+     ---------------------------------------------- */
+
+  .question-section {
+    min-height: auto;
+
+    margin-bottom: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  /* ----------------------------------------------
+     コーギくん
+
+     スマホでは上部に独立配置
+     ---------------------------------------------- */
+
+  .mascot-area {
+    position: relative;
+
+    order: 1;
+
+    width: 100%;
+
+    height: 255px;
+
+    left: auto;
+
+    top: auto;
+
+    margin: 0;
+
+    display: block;
+  }
+
+  /* ----------------------------------------------
+     吹き出し
+
+     スマホでもコーギくんとは独立
+     ---------------------------------------------- */
+
+  .mascot-speech {
+    left: 50%;
+
+    top: 0;
+
+    width: 220px;
+
+    min-height: 72px;
+
+    transform: translateX(-50%);
+
+    padding: 12px 14px;
+
+    border-radius: 22px;
+  }
+
+  .mascot-speech strong {
+    font-size: 18px;
+
+    line-height: 1.4;
+  }
+
+  /* ----------------------------------------------
+     コーギくん本体
+     ---------------------------------------------- */
+
+  .corgi-main {
+    left: 50%;
+
+    top: 72px;
+
+    width: 255px;
+
+    transform: translateX(-50%);
+  }
+
+  /* ----------------------------------------------
+     質問欄
+     ---------------------------------------------- */
+
+  .question-area {
+    order: 2;
+
+    width: 100%;
+
+    max-width: 100%;
+
+    margin-left: 0;
+  }
+
+  .question-form {
+    min-height: 220px;
+
+    border-radius: 22px;
+  }
+
+  .question-input {
+    height: 170px;
+
+    padding: 20px;
+
+    font-size: 14px;
+  }
+
+  .question-form-bottom {
+    height: 61px;
+
+    padding: 0 14px 11px;
+
+    justify-content: flex-end;
+  }
+
+  .question-submit {
+    min-width: 126px;
+
+    height: 46px;
+
+    padding: 0 15px;
+
+    border-radius: 14px;
+
+    font-size: 13px;
+  }
+
+  .privacy-notice {
+    font-size: 9px;
+
+    line-height: 1.6;
+  }
+
+  /* ----------------------------------------------
+     質問例
+     ---------------------------------------------- */
+
+  .example-heading-wrap {
+    margin-bottom: 15px;
+
+    gap: 8px;
+  }
+
+  .example-icon {
+    width: 21px;
+
+    height: 21px;
+
+    font-size: 18px;
+  }
+
+  .example-title {
+    font-size: 22px;
+  }
+
+  .example-list {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .example-card {
+    min-height: 108px;
+
+    padding: 17px 20px 17px 78px;
+
+    border-radius: 16px;
+  }
+
+  .example-card-icon {
+    left: 16px;
+
+    width: 45px;
+
+    height: 45px;
+  }
+
+  .example-card-icon svg {
+    width: 22px;
+
+    height: 22px;
+  }
+
+  .example-card-content strong {
+    font-size: 14px;
+
+    white-space: nowrap;
+  }
+
+  .example-card-content > span {
+    font-size: 12px;
+
+    line-height: 1.6;
+  }
+
+  .site-footer {
+    min-height: 55px;
+
+    padding: 15px;
+  }
+}
+
+/* ==================================================
+   小さいスマートフォン
+   ================================================== */
+
+@media (max-width: 420px) {
+  .nav-link {
+    padding: 0 6px;
+
+    font-size: 10px;
+  }
+
+  .nav-icon {
+    width: 15px;
+
+    height: 15px;
+
+    flex-basis: 15px;
+  }
+
+  .nav-icon svg {
+    width: 15px;
+
+    height: 15px;
+  }
+
+  .hero-title {
+    font-size: 22px;
+  }
+
+  .hero-description {
+    font-size: 11px;
+  }
+
+  /* ----------------------------------------------
+     コーギくん
+     ---------------------------------------------- */
+
+  .mascot-area {
+    height: 235px;
+  }
+
+  .corgi-main {
+    width: 230px;
+
+    top: 68px;
+  }
+
+  /* ----------------------------------------------
+     吹き出し
+     ---------------------------------------------- */
+
+  .mascot-speech {
+    width: 205px;
+
+    min-height: 68px;
+
+    top: 0;
+  }
+
+  .mascot-speech strong {
+    font-size: 17px;
+  }
+
+  .question-form {
+    min-height: 205px;
+  }
+
+  .question-input {
+    height: 155px;
+  }
+
+  .question-submit {
+    min-width: 118px;
+
+    font-size: 12px;
+  }
+
+  .example-title {
+    font-size: 20px;
+  }
+}
+
+/* ==================================================
+   動きを減らしたい環境への配慮
+   ================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link,
+  .question-submit {
+    transition: none;
+  }
+}

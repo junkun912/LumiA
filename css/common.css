@@ -1,0 +1,428 @@
+/*
+==================================================
+LumiA
+ファイル名：common.css
+
+【ファイル概要】
+LumiA全画面で共通して使用するCSSファイル。
+
+【主な役割】
+・ページ全体の基本スタイル
+・ヘッダーのレイアウト
+・共通ナビゲーションのデザイン
+・フッターのデザイン
+・共通リンクのスタイル
+・共通ボタンや状態表示の基本設定
+・レスポンシブ対応
+・アクセシビリティに関する共通設定
+
+【関連ファイル】
+・pages/home.html
+・pages/about.html
+・pages/answer.html
+・pages/faq.html
+・pages/howto.html
+・pages/error.html
+・pages/login.html
+・css/home.css
+・css/login.css
+・css/answer.css
+
+【デザイン方針】
+・白を基調とする
+・淡いブルー・ミント系をアクセントとして使用する
+・清潔感のある学校向けデザインとする
+・親しみやすさとAIらしい先進性を両立する
+・情報を詰め込みすぎない
+・PC・タブレット・スマートフォンに対応する
+・色だけに頼らず、文字や形でも状態を伝える
+
+【共通ナビゲーション】
+・ホーム
+・LumiAについて
+・よくある質問
+・使い方
+
+【重要な用語】
+三重県立津高等技術学校では「授業」ではなく「訓練」と表記する。
+
+==================================================
+*/
+
+/* ==================================================
+   基本設定
+   ================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #f5faff;
+  color: #243746;
+
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", "Yu Gothic", "YuGothic", Meiryo, sans-serif;
+
+  line-height: 1.6;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ==================================================
+   共通リンク
+   ================================================== */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+/* ==================================================
+   ヘッダー
+   --------------------------------------------------
+   LumiA全画面で共通して使用する
+   ================================================== */
+
+.site-header {
+  width: 100%;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border-bottom: 1px solid #e3edf3;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ==================================================
+   ヘッダー内部
+   ================================================== */
+
+.header-inner {
+  width: 100%;
+  max-width: 1180px;
+
+  min-height: 76px;
+
+  margin: 0 auto;
+  padding: 0 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 32px;
+}
+
+/* ==================================================
+   ヘッダー LumiAロゴ
+   --------------------------------------------------
+   ※正式ロゴ画像ではなく、
+   共通ヘッダー用のテキストロゴ
+   ================================================== */
+
+.lumia-logo {
+  display: inline-flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  color: #243746;
+
+  font-size: 26px;
+  font-weight: 800;
+
+  letter-spacing: 0.02em;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.lumia-logo:hover {
+  opacity: 0.75;
+}
+
+.lumia-logo:focus-visible {
+  outline: 3px solid rgba(55, 166, 207, 0.35);
+  outline-offset: 5px;
+  border-radius: 6px;
+}
+
+/* ==================================================
+   共通ナビゲーション
+   ================================================== */
+
+.main-nav {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+/* ==================================================
+   ナビゲーションリンク
+   ================================================== */
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+
+  padding: 9px 15px;
+
+  border-radius: 12px;
+
+  color: #334a5b;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* ==================================================
+   ナビゲーション hover
+   ================================================== */
+
+.nav-link:hover {
+  background: #eef8fc;
+  color: #187da5;
+
+  transform: translateY(-1px);
+}
+
+/* ==================================================
+   現在表示中のページ
+   ================================================== */
+
+.nav-link.active {
+  background: #e8f5fa;
+  color: #176f91;
+}
+
+/* ==================================================
+   キーボード操作時
+   ================================================== */
+
+.nav-link:focus-visible {
+  outline: 3px solid rgba(55, 166, 207, 0.35);
+  outline-offset: 2px;
+}
+
+/* ==================================================
+   メインコンテンツ共通
+   ================================================== */
+
+main {
+  min-height: calc(100vh - 136px);
+}
+
+/* ==================================================
+   フッター
+   ================================================== */
+
+.site-footer {
+  width: 100%;
+
+  padding: 24px 20px;
+
+  border-top: 1px solid #e3edf3;
+
+  background: #ffffff;
+
+  text-align: center;
+}
+
+/* ==================================================
+   フッター文字
+   ================================================== */
+
+.site-footer p {
+  margin: 0;
+
+  color: #607684;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ==================================================
+   画面上では表示しないが、
+   スクリーンリーダーでは読み上げる要素
+   ================================================== */
+
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  border: 0;
+}
+
+/* ==================================================
+   共通の選択状態
+   ================================================== */
+
+::selection {
+  background: #d8f1f8;
+  color: #17384a;
+}
+
+/* ==================================================
+   タブレット対応
+   ================================================== */
+
+@media (max-width: 768px) {
+  .header-inner {
+    min-height: 70px;
+
+    padding: 0 20px;
+
+    gap: 20px;
+  }
+
+  .lumia-logo {
+    font-size: 24px;
+  }
+
+  .main-nav {
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 8px 11px;
+
+    font-size: 13px;
+  }
+}
+
+/* ==================================================
+   スマートフォン対応
+   ================================================== */
+
+@media (max-width: 600px) {
+  .site-header {
+    position: static;
+  }
+
+  .header-inner {
+    min-height: auto;
+
+    padding: 14px 14px 12px;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .lumia-logo {
+    font-size: 23px;
+  }
+
+  .main-nav {
+    width: 100%;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 4px;
+  }
+
+  .nav-link {
+    min-height: 40px;
+
+    padding: 7px 10px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+  }
+
+  main {
+    min-height: calc(100vh - 150px);
+  }
+}
+
+/* ==================================================
+   小型スマートフォン対応
+   ================================================== */
+
+@media (max-width: 420px) {
+  .header-inner {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .main-nav {
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 7px 8px;
+
+    font-size: 11px;
+  }
+
+  .site-footer {
+    padding: 20px 14px;
+  }
+}
+
+/* ==================================================
+   動きを減らす設定への対応
+   ================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
