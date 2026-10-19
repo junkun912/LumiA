@@ -3,110 +3,71 @@
 LumiA
 ファイル名：home.css
 
-【ファイル概要】
-LumiA ホーム画面専用CSS
+【ホーム画面専用CSS】
 
-【デザイン方針】
-・学校らしい明るさ
-・AIらしい先進感
-・親しみやすさ
-・情報の見やすさ
+コンセプト
+「かわいい。でも、ちゃんとしてる。」
+
+・親しみやすい
+・明るく、やさしい
+・AIサービス感を出しすぎない
+・コーギくんをLumiAの案内役として使う
+・質問入力を画面の主役にする
 ・余白を大切にする
-・コーギくんを主役の一つとして扱う
+・学校らしい安心感
 ・PC / タブレット / スマートフォン対応
 
-【重要】
-・コーギくん本体と吹き出しは独立して配置
-・吹き出し位置を変更してもコーギくん本体は動かない
-・質問欄とコーギくんが干渉しないようにする
 ==================================================
 */
 
-/* ==================================================
+/* =================================================
    基本設定
-   ================================================== */
+================================================= */
 
-.home-main {
-  position: relative;
-
-  min-height: calc(100vh - 76px);
-
-  overflow: hidden;
-
-  isolation: isolate;
+* {
+  box-sizing: border-box;
 }
 
-/* ==================================================
-   背景
-   ================================================== */
-
-.home-background {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: -3;
-
-  background-image: url("../assets/images/backgrounds/lumia-home-bg.png");
-
-  background-position: center center;
-
-  background-size: cover;
-
-  background-repeat: no-repeat;
+html {
+  scroll-behavior: smooth;
 }
 
-/* ==================================================
-   背景オーバーレイ
-   ================================================== */
+body {
+  margin: 0;
+  min-width: 320px;
 
-.home-overlay {
-  position: absolute;
+  color: #214e68;
+  background: #f7f3e9;
 
-  inset: 0;
-
-  z-index: -2;
-
-  pointer-events: none;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.1) 42%,
-    rgba(237, 250, 255, 0.22) 100%
-  );
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 }
 
-/* ==================================================
+/* =================================================
    ヘッダー
-   ================================================== */
+================================================= */
 
 .site-header {
   position: relative;
-
   z-index: 50;
 
-  height: 76px;
+  width: 100%;
+  min-height: 76px;
 
-  background: rgba(255, 255, 255, 0.97);
+  background: rgba(255, 255, 255, 0.96);
 
-  border-bottom: 1px solid rgba(20, 135, 180, 0.08);
+  border-bottom: 1px solid rgba(45, 150, 188, 0.12);
 
-  box-shadow: 0 3px 18px rgba(30, 120, 155, 0.05);
+  box-shadow: 0 4px 20px rgba(33, 112, 143, 0.06);
 
-  backdrop-filter: blur(10px);
-
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-/* ==================================================
-   ヘッダー内部
-   ================================================== */
-
 .header-inner {
-  width: min(calc(100% - 48px), 1240px);
+  width: min(1240px, calc(100% - 48px));
 
-  height: 100%;
+  min-height: 76px;
 
   margin: 0 auto;
 
@@ -114,12 +75,62 @@ LumiA ホーム画面専用CSS
 
   align-items: center;
 
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+/* =================================================
+   LumiAロゴ
+================================================= */
+
+.site-logo {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  text-decoration: none;
+}
+
+.site-logo img {
+  display: block;
+
+  width: 138px;
+
+  height: auto;
+
+  object-fit: contain;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 /* ==================================================
-   ナビゲーション
+   LumiAロゴ
+   クリック・ホバー演出なし
    ================================================== */
+
+.site-logo {
+  cursor: default;
+}
+
+.site-logo img {
+  display: block;
+  transition: none !important;
+  transform: none !important;
+}
+
+.site-logo:hover img {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+/* =================================================
+   ナビゲーション
+================================================= */
 
 .main-nav {
   display: flex;
@@ -128,19 +139,15 @@ LumiA ホーム画面専用CSS
 
   justify-content: flex-end;
 
-  gap: 8px;
+  gap: 7px;
 }
-
-/* ==================================================
-   ナビゲーションリンク
-   ================================================== */
 
 .nav-link {
   position: relative;
 
-  min-height: 48px;
+  min-height: 46px;
 
-  padding: 0 18px;
+  padding: 0 16px;
 
   display: inline-flex;
 
@@ -150,79 +157,61 @@ LumiA ホーム画面専用CSS
 
   gap: 8px;
 
-  box-sizing: border-box;
-
-  border-radius: 18px;
-
-  color: #153d5c;
+  color: #214e69;
 
   background: transparent;
 
+  border-radius: 15px;
+
   text-decoration: none;
 
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 14px;
+  font-size: 13px;
 
   font-weight: 700;
 
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
 
   white-space: nowrap;
 
   transition:
-    background-color 0.2s ease,
     color 0.2s ease,
+    background-color 0.2s ease,
     transform 0.2s ease;
 }
 
-/* ==================================================
-   ナビゲーション ホバー
-   ================================================== */
-
 .nav-link:hover {
-  color: #078fca;
+  color: #087eaf;
 
-  background: rgba(223, 247, 255, 0.95);
+  background: rgba(225, 247, 255, 0.9);
 
   transform: translateY(-1px);
 }
-
-/* ==================================================
-   現在のページ
-   ================================================== */
 
 .nav-link.active {
   color: #ffffff;
 
-  background: linear-gradient(135deg, #119bd1 0%, #20a8d8 100%);
+  background: #159fd0;
 
-  box-shadow: 0 7px 18px rgba(17, 151, 201, 0.22);
+  box-shadow: 0 7px 18px rgba(21, 159, 208, 0.18);
 }
-
-/* ==================================================
-   現在ページのホバー
-   ================================================== */
 
 .nav-link.active:hover {
   color: #ffffff;
 
-  background: linear-gradient(135deg, #119bd1 0%, #20a8d8 100%);
+  background: #159fd0;
 
   transform: translateY(-1px);
 }
 
-/* ==================================================
+/* =================================================
    ナビアイコン
-   ================================================== */
+================================================= */
 
 .nav-icon {
-  width: 20px;
+  width: 19px;
+  height: 19px;
 
-  height: 20px;
-
-  flex: 0 0 20px;
+  flex: 0 0 19px;
 
   display: inline-flex;
 
@@ -232,32 +221,119 @@ LumiA ホーム画面専用CSS
 }
 
 .nav-icon svg {
-  width: 20px;
-
-  height: 20px;
+  width: 19px;
+  height: 19px;
 
   display: block;
 }
 
-/* ==================================================
+/* =================================================
+   ホーム本体
+================================================= */
+
+.home-main {
+  position: relative;
+
+  min-height: calc(100vh - 76px);
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  background: #f7f3e9;
+}
+
+/* =================================================
+   背景
+================================================= */
+
+.home-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  background-color: #f7f3e9;
+
+  background-image: url("../assets/images/backgrounds/bg_hero.png");
+
+  background-position: center center;
+
+  background-size: cover;
+
+  background-repeat: no-repeat;
+}
+
+/* =================================================
+   背景オーバーレイ
+================================================= */
+
+.home-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(247, 251, 250, 0.34) 100%
+  );
+}
+
+/* =================================================
+   下部ウェーブ
+================================================= */
+
+.home-wave {
+  position: absolute;
+
+  left: -5%;
+  right: -5%;
+
+  bottom: -5px;
+
+  z-index: 1;
+
+  height: 190px;
+
+  background-image: url("../assets/images/backgrounds/bg_wave.png");
+
+  background-position: center bottom;
+
+  background-size: 100% auto;
+
+  background-repeat: no-repeat;
+
+  pointer-events: none;
+
+  opacity: 0.58;
+}
+
+/* =================================================
    メインコンテンツ
-   ================================================== */
+================================================= */
 
 .home-content {
   position: relative;
 
   z-index: 2;
 
-  width: min(calc(100% - 48px), 1240px);
+  width: min(1240px, calc(100% - 48px));
 
   margin: 0 auto;
 
-  padding: 42px 0 54px;
+  padding: 38px 0 70px;
 }
 
-/* ==================================================
+/* =================================================
    ヒーロー
-   ================================================== */
+================================================= */
 
 .hero-section {
   display: flex;
@@ -268,12 +344,12 @@ LumiA ホーム画面専用CSS
 
   text-align: center;
 
-  margin: 0 auto 26px;
+  margin: 0 auto 30px;
 }
 
-/* ==================================================
-   LumiA ロゴ
-   ================================================== */
+/* =================================================
+   ヒーローロゴ
+================================================= */
 
 .hero-logo {
   display: flex;
@@ -282,173 +358,128 @@ LumiA ホーム画面専用CSS
 
   justify-content: center;
 
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .lumia-main-logo {
   display: block;
 
-  width: clamp(230px, 24vw, 350px);
+  width: clamp(215px, 22vw, 315px);
 
   height: auto;
 
   object-fit: contain;
 
-  filter: drop-shadow(0 8px 10px rgba(35, 108, 147, 0.1));
+  filter: drop-shadow(0 7px 12px rgba(41, 105, 133, 0.1));
 }
 
-/* ==================================================
-   キャッチコピー
-   ================================================== */
+/* =================================================
+   ヒーロー補足
+================================================= */
+
+.hero-kicker {
+  margin: 2px 0 8px;
+
+  color: #548095;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+/* =================================================
+   メインタイトル
+================================================= */
 
 .hero-title {
   margin: 0;
 
-  color: #063d69;
+  color: #173f59;
 
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  font-size: clamp(27px, 3vw, 40px);
 
-  font-size: clamp(27px, 2.7vw, 39px);
-
-  line-height: 1.55;
+  line-height: 1.5;
 
   font-weight: 900;
 
   letter-spacing: 0.035em;
 
-  text-shadow: 0 2px 5px rgba(255, 255, 255, 0.55);
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.72);
 }
 
-/* ==================================================
+/* =================================================
    ヒーロー説明
-   ================================================== */
+================================================= */
 
 .hero-description {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
 
-  color: #285d7d;
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  color: #476d81;
 
   font-size: 14px;
 
-  line-height: 1.9;
+  line-height: 1.85;
 
   font-weight: 500;
 
   letter-spacing: 0.035em;
 }
 
-/* ==================================================
+/* =================================================
    質問エリア
-   ================================================== */
+================================================= */
 
 .question-section {
   position: relative;
 
-  width: 100%;
+  width: min(1160px, 100%);
 
-  max-width: 1180px;
+  min-height: 320px;
 
-  min-height: 330px;
-
-  margin: 0 auto 34px;
-
-  box-sizing: border-box;
+  margin: 0 auto 38px;
 }
 
-/* ==================================================
+/* =================================================
    コーギくんエリア
-
-   ★重要
-   コーギくん本体と吹き出しを
-   同じ親の中で独立して配置する。
-   ================================================== */
+   -----------------------------------------------
+   コーギくんはカードに座っている構図。
+   位置・存在感をデザインとして固定する。
+================================================= */
 
 .mascot-area {
   position: absolute;
 
-  top: -20px;
+  left: -105px;
 
-  left: -35px;
+  top: 123px;
 
-  width: 390px;
+  width: 330px;
 
-  height: 320px;
+  height: 300px;
 
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-
-  z-index: 20;
+  z-index: 10;
 
   pointer-events: none;
 }
 
-/* ==================================================
-   コーギくん本体
-
-   ★ここは現在の位置を維持
-   ================================================== */
-
-.corgi-main {
-  position: absolute;
-
-  left: -150px;
-
-  top: -150px;
-
-  z-index: 15;
-
-  display: block;
-
-  width: 390px;
-
-  max-width: none;
-
-  height: auto;
-
-  margin: 0;
-
-  object-fit: contain;
-
-  filter: drop-shadow(0 10px 12px rgba(27, 113, 151, 0.12));
-}
-
-/* ==================================================
+/* =================================================
    吹き出し
-
-   ★今回の重要ポイント
-
-   コーギくん本体とは完全に独立。
-   この値だけ変更すれば吹き出しだけ動く。
-
-   left  → 左右
-   top   → 上下
-
-   コーギくん本体には影響しない。
-   ================================================== */
+================================================= */
 
 .mascot-speech {
   position: absolute;
 
-  /*
-   * コーギくんの頭の上に配置
-   * 今後ここだけ調整可能
-   */
-  left: 50px;
+  left: 45px;
 
-  top: -235px;
+  top: 0;
 
-  width: 235px;
+  width: 215px;
 
-  min-height: 72px;
+  min-height: 62px;
 
-  padding: 16px 18px;
+  padding: 12px 16px;
 
   display: flex;
 
@@ -456,69 +487,45 @@ LumiA ホーム画面専用CSS
 
   justify-content: center;
 
-  box-sizing: border-box;
-
   background: rgba(255, 255, 255, 0.96);
 
-  border: 3px solid rgba(100, 197, 226, 0.42);
+  border: 2px solid rgba(76, 185, 217, 0.35);
 
-  border-radius: 24px;
+  border-radius: 21px;
 
-  box-shadow: 0 7px 18px rgba(27, 126, 164, 0.1);
+  box-shadow: 0 7px 18px rgba(41, 113, 143, 0.09);
 
-  color: #0787c1;
+  color: #087fac;
 
   text-align: center;
 
-  z-index: 30;
+  z-index: 12;
 
-  pointer-events: none;
+  /*
+   * 吹き出しは動かさない。
+   */
+  animation: none !important;
 }
-
-/* ==================================================
-   吹き出し内の不要な1行目を非表示
-
-   HTML側に
-   「知りたいこと、」
-   が残っていても表示しない。
-   ================================================== */
-
-.mascot-speech .speech-line {
-  display: none;
-}
-
-/* ==================================================
-   吹き出し文字
-   ================================================== */
 
 .mascot-speech strong {
-  display: block;
-
   margin: 0;
 
-  padding: 0;
+  color: #087fac;
 
-  color: #0787c1;
+  font-size: 17px;
 
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 21px;
-
-  line-height: 1.45;
+  line-height: 1.4;
 
   font-weight: 900;
 
-  letter-spacing: 0.025em;
+  letter-spacing: 0.02em;
 
   white-space: nowrap;
-
-  text-align: center;
 }
 
-/* ==================================================
+/* =================================================
    吹き出しのしっぽ
-   ================================================== */
+================================================= */
 
 .mascot-speech::after {
   content: "";
@@ -527,21 +534,15 @@ LumiA ホーム画面専用CSS
 
   left: 50%;
 
-  bottom: -18px;
-
-  width: 0;
-
-  height: 0;
+  bottom: -13px;
 
   transform: translateX(-50%);
 
-  border-left: 14px solid transparent;
+  border-left: 10px solid transparent;
 
-  border-right: 14px solid transparent;
+  border-right: 10px solid transparent;
 
-  border-top: 18px solid rgba(100, 197, 226, 0.42);
-
-  z-index: -1;
+  border-top: 14px solid rgba(76, 185, 217, 0.35);
 }
 
 .mascot-speech::before {
@@ -551,89 +552,175 @@ LumiA ホーム画面専用CSS
 
   left: 50%;
 
-  bottom: -12px;
-
-  width: 0;
-
-  height: 0;
+  bottom: -9px;
 
   transform: translateX(-50%);
 
-  border-left: 11px solid transparent;
+  border-left: 8px solid transparent;
 
-  border-right: 11px solid transparent;
+  border-right: 8px solid transparent;
 
-  border-top: 15px solid rgba(255, 255, 255, 0.96);
+  border-top: 11px solid #ffffff;
 
   z-index: 1;
 }
 
-/* ==================================================
-   質問入力エリア
+/* =================================================
+   コーギくん本体
+   -----------------------------------------------
+   完全固定。
+   透過処理はCSSで行わない。
+================================================= */
 
-   コーギくんとは独立して配置
-   ================================================== */
+.corgi-main {
+  position: absolute;
+
+  left: 30px;
+
+  top: 88px;
+
+  width: 250px;
+
+  height: auto;
+
+  display: block;
+
+  object-fit: contain;
+
+  opacity: 1;
+
+  visibility: visible;
+
+  filter: drop-shadow(0 9px 12px rgba(50, 104, 123, 0.12));
+
+  z-index: 11;
+
+  /*
+   * コーギくんは完全に固定。
+   */
+  animation: none !important;
+
+  transform: none;
+}
+
+/* =================================================
+   質問入力エリア
+================================================= */
 
 .question-area {
   position: relative;
 
-  width: 850px;
+  width: calc(100% - 245px);
 
-  max-width: calc(100% - 250px);
+  max-width: 850px;
 
-  margin-left: 135px;
+  margin-left: 230px;
 
-  box-sizing: border-box;
+  z-index: 4;
 
-  z-index: 3;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ==================================================
+/*
+ * 入力中だけほんの少し浮く。
+ */
+
+.question-area.is-focus {
+  transform: translateY(-2px);
+}
+
+/* =================================================
    質問フォーム
-   ================================================== */
+================================================= */
 
 .question-form {
   position: relative;
 
   width: 100%;
 
-  min-height: 255px;
-
-  box-sizing: border-box;
+  min-height: 270px;
 
   padding: 0;
 
   overflow: hidden;
 
-  background: rgba(255, 255, 255, 0.91);
+  background: rgba(255, 255, 255, 0.93);
 
-  border: 2px solid rgba(79, 188, 222, 0.46);
+  border: 1.5px solid rgba(64, 178, 211, 0.36);
 
-  border-radius: 27px;
+  border-radius: 24px;
 
-  box-shadow: 0 13px 30px rgba(40, 131, 166, 0.1);
+  box-shadow: 0 16px 35px rgba(48, 119, 144, 0.12);
 
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(7px);
 
-  -webkit-backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(7px);
+
+  transition:
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
 }
 
-/* ==================================================
-   textarea
-   ================================================== */
+/*
+ * 入力中
+ */
+
+.question-area.is-focus .question-form {
+  border-color: rgba(64, 178, 211, 0.55);
+
+  box-shadow: 0 18px 38px rgba(48, 119, 144, 0.14);
+}
+
+/* =================================================
+   質問フォーム見出し
+================================================= */
+
+.question-heading {
+  min-height: 56px;
+
+  padding: 17px 26px 8px;
+
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 12px;
+}
+
+.question-heading-label {
+  color: #174965;
+
+  font-size: 16px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.03em;
+}
+
+.question-heading-sub {
+  color: #7b9aaa;
+
+  font-size: 11px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.02em;
+}
+
+/* =================================================
+   質問入力欄
+================================================= */
 
 .question-input {
   display: block;
 
   width: 100%;
 
-  height: 205px;
-
-  box-sizing: border-box;
+  height: 155px;
 
   margin: 0;
 
-  padding: 26px 30px 18px;
+  padding: 12px 27px 16px;
 
   border: none;
 
@@ -643,35 +730,38 @@ LumiA ホーム画面専用CSS
 
   overflow-y: auto;
 
-  background: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.28);
 
-  color: #164b6c;
+  color: #214e68;
 
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 16px;
+  font-size: 15px;
 
   line-height: 1.8;
 
   font-weight: 500;
 
   letter-spacing: 0.025em;
+
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .question-input::placeholder {
-  color: #91aec0;
+  color: #94acba;
 
   opacity: 1;
 }
 
 .question-input:focus {
-  background: rgba(255, 255, 255, 0.58);
+  background: rgba(250, 254, 255, 0.6);
+
+  box-shadow: inset 0 0 0 1px rgba(64, 178, 211, 0.1);
 }
 
-/* ==================================================
-   質問フォーム下部
-   ================================================== */
+/* =================================================
+   フォーム下部
+================================================= */
 
 .question-form-bottom {
   position: absolute;
@@ -682,39 +772,49 @@ LumiA ホーム画面専用CSS
 
   bottom: 0;
 
-  height: 68px;
+  min-height: 65px;
 
-  padding: 0 22px 15px 25px;
-
-  box-sizing: border-box;
+  padding: 0 20px 12px 25px;
 
   display: flex;
 
   align-items: flex-end;
 
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  gap: 15px;
 }
 
-/* ==================================================
-   1000文字表示は削除
-   ================================================== */
+/* =================================================
+   フォーム補足
+================================================= */
 
-.character-limit {
-  display: none;
+.question-form-note {
+  padding-bottom: 6px;
+
+  color: #8aa4b2;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+
+  font-weight: 500;
 }
 
-/* ==================================================
+/* =================================================
    質問ボタン
-   ================================================== */
+================================================= */
 
 .question-submit {
+  position: relative;
+
   flex: 0 0 auto;
 
-  min-width: 142px;
+  min-width: 140px;
 
-  height: 54px;
+  height: 48px;
 
-  padding: 0 20px;
+  padding: 0 19px;
 
   display: inline-flex;
 
@@ -722,20 +822,19 @@ LumiA ホーム画面専用CSS
 
   justify-content: center;
 
-  gap: 11px;
+  gap: 10px;
+
+  overflow: hidden;
 
   border: none;
 
-  border-radius: 16px;
+  border-radius: 14px;
 
-  background: linear-gradient(135deg, #1aa5d1 0%, #2ab1d7 100%);
+  background: #159fd0;
 
   color: #ffffff;
 
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 15px;
+  font-size: 14px;
 
   font-weight: 800;
 
@@ -743,66 +842,140 @@ LumiA ホーム画面専用CSS
 
   cursor: pointer;
 
-  box-shadow: 0 8px 18px rgba(20, 155, 198, 0.2);
+  box-shadow: 0 8px 18px rgba(21, 159, 208, 0.2);
 
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    filter 0.18s ease;
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease,
+    background-color 0.22s ease;
 }
 
-.question-submit:hover {
+/* =================================================
+   ボタン無効
+================================================= */
+
+.question-submit:disabled {
+  cursor: default;
+
+  opacity: 0.72;
+
+  background: #67bddb;
+
+  box-shadow: 0 6px 14px rgba(21, 159, 208, 0.12);
+}
+
+/* =================================================
+   ボタン hover
+================================================= */
+
+.question-submit:hover:not(:disabled) {
+  background: #0d92c3;
+
   transform: translateY(-2px);
 
-  box-shadow: 0 11px 22px rgba(20, 155, 198, 0.27);
-
-  filter: brightness(1.03);
+  box-shadow: 0 10px 22px rgba(21, 159, 208, 0.22);
 }
 
-.question-submit:active {
+/* =================================================
+   ボタン click
+================================================= */
+
+.question-submit:active:not(:disabled) {
   transform: translateY(0);
+
+  box-shadow: 0 6px 12px rgba(21, 159, 208, 0.18);
 }
+
+/* =================================================
+   キーボード操作
+================================================= */
 
 .question-submit:focus-visible {
-  outline: 3px solid rgba(29, 168, 214, 0.3);
+  outline: 3px solid rgba(21, 159, 208, 0.25);
 
   outline-offset: 3px;
 }
 
+/* =================================================
+   ボタンの光
+   -----------------------------------------------
+   hover時に一度だけ非常に薄く流れる。
+================================================= */
+
+.question-submit::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: -120%;
+
+  width: 65%;
+
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+
+  transform: skewX(-18deg);
+
+  pointer-events: none;
+}
+
+.question-submit:hover:not(:disabled)::after {
+  left: 140%;
+
+  transition: left 0.55s ease;
+}
+
+/* =================================================
+   送信矢印
+================================================= */
+
 .submit-arrow {
-  font-size: 19px;
+  display: inline-block;
+
+  font-size: 18px;
 
   line-height: 1;
 
   font-weight: 700;
+
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ==================================================
+.question-submit:hover:not(:disabled) .submit-arrow {
+  transform: translateX(4px);
+}
+
+/* =================================================
    個人情報注意
-   ================================================== */
+================================================= */
 
 .privacy-notice {
   margin: 9px 0 0;
 
+  color: #58788a;
+
   text-align: center;
 
-  color: #48728b;
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 11px;
+  font-size: 10px;
 
   line-height: 1.7;
 
   font-weight: 500;
 
-  letter-spacing: 0.025em;
+  letter-spacing: 0.015em;
 }
 
-/* ==================================================
+/* =================================================
    質問例
-   ================================================== */
+================================================= */
 
 .example-section {
   width: 100%;
@@ -810,9 +983,9 @@ LumiA ホーム画面専用CSS
   margin: 0 auto;
 }
 
-/* ==================================================
-   「こういう質問ができます」
-   ================================================== */
+/* =================================================
+   質問例見出し
+================================================= */
 
 .example-heading-wrap {
   display: flex;
@@ -821,167 +994,116 @@ LumiA ホーム画面専用CSS
 
   justify-content: center;
 
-  gap: 10px;
+  gap: 16px;
 
   margin: 0 0 20px;
 }
 
-/* ==================================================
-   電球アイコン
-   ================================================== */
+.example-heading-line {
+  width: 52px;
 
-.example-icon {
-  width: 26px;
+  height: 1px;
 
-  height: 26px;
-
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 21px;
-
-  line-height: 1;
+  background: rgba(35, 146, 185, 0.28);
 }
-
-/* ==================================================
-   見出し
-   ================================================== */
 
 .example-title {
   margin: 0;
 
-  color: #063d69;
+  color: #234f67;
 
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: clamp(24px, 2.2vw, 31px);
+  font-size: clamp(21px, 2vw, 27px);
 
   line-height: 1.4;
 
   font-weight: 900;
 
-  letter-spacing: 0.04em;
+  letter-spacing: 0.045em;
 
   text-align: center;
-
-  text-shadow: 0 2px 5px rgba(255, 255, 255, 0.55);
 }
 
-/* ==================================================
-   装飾
-
-   以前のキラキラを使わない場合に備えて非表示
-   ================================================== */
-
-.example-decoration {
-  display: none;
-}
-
-/* ==================================================
-   4つの質問例
-   ================================================== */
+/* =================================================
+   質問例カード一覧
+================================================= */
 
 .example-list {
   display: grid;
 
   grid-template-columns: repeat(4, minmax(0, 1fr));
 
-  gap: 18px;
+  gap: 16px;
 
   width: 100%;
 }
 
-/* ==================================================
-   カード
-
-   ・クリック不可
-   ・ホバーなし
-   ・質問例を見せるだけ
-   ================================================== */
+/* =================================================
+   質問例カード
+   -----------------------------------------------
+   ホバーなし。
+   常に静かに表示する。
+================================================= */
 
 .example-card {
   position: relative;
 
   min-width: 0;
 
-  min-height: 148px;
+  min-height: 138px;
 
-  box-sizing: border-box;
-
-  padding: 22px 22px 20px 96px;
+  padding: 20px 17px 18px 72px;
 
   display: flex;
 
   align-items: center;
 
-  text-align: left;
+  background: rgba(255, 255, 255, 0.91);
 
-  border: 1px solid rgba(90, 189, 220, 0.35);
+  border: 1px solid rgba(74, 170, 201, 0.25);
 
-  border-left: 5px solid;
+  border-left: 4px solid;
 
-  border-radius: 18px;
+  border-radius: 17px;
 
-  background: rgba(255, 255, 255, 0.92);
-
-  box-shadow: 0 8px 22px rgba(45, 127, 158, 0.08);
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  cursor: default;
+  box-shadow: 0 7px 20px rgba(48, 120, 143, 0.07);
 
   user-select: none;
 }
 
-/* ==================================================
+/* =================================================
    カードカラー
-   ================================================== */
+================================================= */
 
 .example-card-training {
-  border-left-color: #8d63eb;
+  border-left-color: #7f68d9;
 }
 
 .example-card-qualification {
-  border-left-color: #18bfa7;
+  border-left-color: #21ad98;
 }
 
 .example-card-event {
-  border-left-color: #f46b82;
+  border-left-color: #e87588;
 }
 
 .example-card-career {
-  border-left-color: #229dd5;
+  border-left-color: #2399cc;
 }
 
-/* ==================================================
-   ホバーなし
-   ================================================== */
-
-.example-card:hover {
-  transform: none;
-
-  box-shadow: 0 8px 22px rgba(45, 127, 158, 0.08);
-}
-
-/* ==================================================
+/* =================================================
    カードアイコン
-   ================================================== */
+================================================= */
 
 .example-card-icon {
   position: absolute;
 
-  left: 18px;
+  left: 14px;
 
   top: 50%;
 
-  width: 52px;
+  width: 43px;
 
-  height: 52px;
+  height: 43px;
 
   transform: translateY(-50%);
 
@@ -991,113 +1113,85 @@ LumiA ホーム画面専用CSS
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  border: 1px solid rgba(76, 191, 225, 0.32);
+  border: 1px solid rgba(60, 176, 209, 0.25);
 
   border-radius: 50%;
 
-  background: rgba(225, 247, 255, 0.9);
+  background: rgba(231, 248, 253, 0.88);
 
-  color: #1b9ecb;
-
-  flex-shrink: 0;
+  color: #229cc8;
 }
 
 .example-card-icon svg {
-  width: 25px;
+  width: 22px;
 
-  height: 25px;
+  height: 22px;
 
   display: block;
 }
 
-/* ==================================================
+/* =================================================
    カード文章
-   ================================================== */
+================================================= */
 
 .example-card-content {
   min-width: 0;
-
-  width: 100%;
 
   display: flex;
 
   flex-direction: column;
 
-  justify-content: center;
-
   gap: 7px;
-
-  padding: 0;
-
-  margin: 0;
 }
-
-/* ==================================================
-   カードタイトル
-
-   ★タイトルが変な位置で改行しない
-   ================================================== */
 
 .example-card-content strong {
   display: block;
 
   margin: 0;
 
-  color: #063d69;
+  color: #234d65;
 
-  font-size: 16px;
+  font-size: 14px;
 
   line-height: 1.45;
 
   font-weight: 900;
 
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em;
 
   white-space: nowrap;
 }
-
-/* ==================================================
-   カード説明
-
-   ★自然な日本語の幅で改行
-   ================================================== */
 
 .example-card-content > span {
   display: block;
 
   margin: 0;
 
-  color: #50748b;
+  color: #607e8e;
 
-  font-size: 13px;
+  font-size: 11.5px;
 
-  line-height: 1.75;
+  line-height: 1.65;
 
   font-weight: 500;
 
   letter-spacing: 0.01em;
 
-  word-break: normal;
-
-  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
-/* ==================================================
+/* =================================================
    フッター
-   ================================================== */
+================================================= */
 
 .site-footer {
   position: relative;
 
   z-index: 10;
 
-  min-height: 62px;
+  min-height: 60px;
 
-  padding: 18px 20px;
-
-  box-sizing: border-box;
+  padding: 17px 20px;
 
   display: flex;
 
@@ -1105,7 +1199,7 @@ LumiA ホーム画面専用CSS
 
   justify-content: center;
 
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.95);
 
   border-top: 1px solid rgba(45, 150, 188, 0.08);
 }
@@ -1113,12 +1207,9 @@ LumiA ホーム画面専用CSS
 .site-footer p {
   margin: 0;
 
-  color: #52758b;
+  color: #668291;
 
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 11px;
+  font-size: 10px;
 
   font-weight: 500;
 
@@ -1127,9 +1218,9 @@ LumiA ホーム画面専用CSS
   text-align: center;
 }
 
-/* ==================================================
+/* =================================================
    アクセシビリティ
-   ================================================== */
+================================================= */
 
 .visually-hidden {
   position: absolute;
@@ -1151,239 +1242,440 @@ LumiA ホーム画面専用CSS
   border: 0;
 }
 
-/* ==================================================
-   タブレット
-   ================================================== */
+/* =================================================
+   ================================================
+   ページ表示アニメーション
+   ================================================
+================================================= */
 
-@media (max-width: 1050px) {
-  .home-content {
-    width: calc(100% - 40px);
+/*
+ * 最初は非表示。
+ */
 
-    padding-top: 35px;
+.home-main {
+  opacity: 0;
+}
+
+/*
+ * 表示開始。
+ */
+
+body.is-ready .home-main {
+  opacity: 1;
+
+  transition: opacity 0.45s ease;
+}
+
+/* =================================================
+   ヒーロー表示
+================================================= */
+
+.hero-section {
+  opacity: 0;
+
+  transform: translateY(10px);
+}
+
+body.is-ready .hero-section {
+  animation: lumiAHeroIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes lumiAHeroIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(10px);
   }
 
-  .question-section {
-    min-height: 310px;
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* =================================================
+   質問エリア表示
+================================================= */
+
+.question-section {
+  opacity: 0;
+
+  transform: translateY(12px);
+}
+
+body.is-ready .question-section {
+  animation: lumiAQuestionIn 0.65s 0.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes lumiAQuestionIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(12px);
   }
 
-  /* ----------------------------------------------
-     コーギくん
+  to {
+    opacity: 1;
 
-     本体は少しだけ縮小。
-     位置関係は独立。
-     ---------------------------------------------- */
+    transform: translateY(0);
+  }
+}
 
-  .mascot-area {
-    width: 300px;
+/* =================================================
+   質問例表示
+================================================= */
 
-    height: 270px;
+.example-section {
+  opacity: 0;
 
-    left: -20px;
+  transform: translateY(10px);
+}
 
-    top: -10px;
+body.is-ready .example-section {
+  animation: lumiAExamplesIn 0.65s 0.18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes lumiAExamplesIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(10px);
   }
 
-  .corgi-main {
-    width: 315px;
+  to {
+    opacity: 1;
 
-    left: -10px;
+    transform: translateY(0);
+  }
+}
 
-    top: 60px;
+/* =================================================
+   エラー入力
+================================================= */
+
+.question-input.is-error {
+  animation: lumiAInputError 0.32s ease;
+}
+
+@keyframes lumiAInputError {
+  0%,
+  100% {
+    transform: translateX(0);
   }
 
-  /* ----------------------------------------------
-     吹き出し
-
-     ★コーギくん本体とは別に調整
-     ---------------------------------------------- */
-
-  .mascot-speech {
-    width: 220px;
-
-    min-height: 72px;
-
-    left: 25px;
-
-    top: -25px;
-
-    padding: 14px 16px;
-
-    border-radius: 22px;
+  25% {
+    transform: translateX(-3px);
   }
 
-  .mascot-speech strong {
-    font-size: 19px;
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+/* =================================================
+   エラーメッセージ
+================================================= */
+
+.question-status {
+  margin: 10px 25px 0;
+
+  color: #c45a5a;
+
+  font-size: 0.85rem;
+
+  line-height: 1.6;
+
+  animation: lumiAStatusIn 0.25s ease both;
+}
+
+@keyframes lumiAStatusIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(-4px);
   }
 
-  /* ----------------------------------------------
-     質問欄
-     ---------------------------------------------- */
+  to {
+    opacity: 1;
 
-  .question-area {
-    width: 760px;
-
-    max-width: calc(100% - 190px);
-
-    margin-left: 120px;
-  }
-
-  .question-form {
-    min-height: 235px;
-  }
-
-  .question-input {
-    height: 185px;
-  }
-
-  /* ----------------------------------------------
-     カード
-     ---------------------------------------------- */
-
-  .example-list {
-    gap: 13px;
-  }
-
-  .example-card {
-    min-height: 145px;
-
-    padding: 20px 16px 20px 78px;
-  }
-
-  .example-card-icon {
-    left: 13px;
-
-    width: 46px;
-
-    height: 46px;
-  }
-
-  .example-card-icon svg {
-    width: 22px;
-
-    height: 22px;
-  }
-
-  .example-card-content strong {
-    font-size: 14px;
-  }
-
-  .example-card-content > span {
-    font-size: 12px;
-
-    line-height: 1.65;
-  }
-
-  /* ----------------------------------------------
-     ナビ
-     ---------------------------------------------- */
-
-  .nav-link {
-    padding: 0 13px;
-
-    font-size: 13px;
+    transform: translateY(0);
   }
 }
 
 /* ==================================================
-   スマートフォン
+   エラーメッセージ
+   -----------------------------------------------
+   エラー表示時もフォーム下部と重ならないようにする。
    ================================================== */
 
+.question-status {
+  position: relative;
+
+  margin: 7px 25px 0;
+
+  color: #c45a5a;
+
+  font-size: 0.85rem;
+
+  line-height: 1.5;
+
+  font-weight: 600;
+
+  animation: lumiAStatusIn 0.25s ease both;
+}
+
+/*
+ * エラーが表示されたときは、
+ * フォーム全体に少しだけ高さを持たせる。
+ *
+ * これによって
+ *
+ * 入力欄
+ * ↓
+ * エラーメッセージ
+ * ↓
+ * Enterでは送信されません
+ * ↓
+ * 質問する
+ *
+ * の順番で自然に配置できる。
+ */
+
+.question-form:has(.question-status) {
+  min-height: 305px;
+}
+
+/*
+ * エラー表示中は下部エリアを
+ * 通常より少し下へ確保する。
+ */
+
+.question-form:has(.question-status) .question-form-bottom {
+  min-height: 65px;
+}
+
+/*
+ * エラー表示中の個人情報注意文との
+ * 距離も確保する。
+ */
+
+.question-area:has(.question-status) .privacy-notice {
+  margin-top: 9px;
+}
+
+/* =================================================
+   送信中
+================================================= */
+
+.question-submit.is-loading {
+  cursor: wait;
+
+  pointer-events: none;
+
+  opacity: 0.82;
+}
+
+/* =================================================
+   タブレット
+================================================= */
+
+@media (max-width: 1050px) {
+  .header-inner {
+    width: calc(100% - 36px);
+  }
+
+  .site-logo img {
+    width: 125px;
+  }
+
+  .nav-link {
+    padding: 0 11px;
+
+    font-size: 12px;
+  }
+
+  .home-content {
+    width: calc(100% - 36px);
+
+    padding-top: 32px;
+  }
+
+  .question-section {
+    min-height: 305px;
+  }
+
+  .mascot-area {
+    left: -10px;
+
+    width: 300px;
+  }
+
+  .corgi-main {
+    width: 245px;
+
+    left: 15px;
+
+    top: 84px;
+
+    transform: none;
+  }
+
+  .mascot-speech {
+    left: 18px;
+
+    width: 210px;
+  }
+
+  .question-area {
+    width: calc(100% - 190px);
+
+    margin-left: 165px;
+  }
+
+  .example-list {
+    gap: 12px;
+  }
+
+  .example-card {
+    padding-left: 62px;
+  }
+
+  .example-card-icon {
+    left: 10px;
+
+    width: 40px;
+
+    height: 40px;
+  }
+
+  .example-card-content strong {
+    font-size: 12.5px;
+  }
+
+  .example-card-content > span {
+    font-size: 10.5px;
+  }
+}
+
+/* =================================================
+   スマートフォン
+================================================= */
+
 @media (max-width: 760px) {
-  /* ----------------------------------------------
-     ヘッダー
-     ---------------------------------------------- */
-
   .site-header {
-    height: auto;
-
     min-height: 68px;
   }
 
   .header-inner {
     width: calc(100% - 20px);
 
-    justify-content: center;
+    min-height: 68px;
 
-    padding: 8px 0;
+    gap: 10px;
+  }
+
+  .site-logo img {
+    width: 100px;
   }
 
   .main-nav {
-    width: 100%;
-
-    justify-content: center;
-
-    gap: 3px;
+    gap: 2px;
   }
 
   .nav-link {
-    min-height: 46px;
+    min-height: 43px;
 
-    padding: 0 9px;
+    padding: 0 7px;
 
-    border-radius: 14px;
+    gap: 4px;
 
-    gap: 5px;
+    border-radius: 12px;
 
-    font-size: 11px;
-
-    letter-spacing: 0;
+    font-size: 10px;
   }
 
   .nav-icon {
-    width: 17px;
+    width: 16px;
 
-    height: 17px;
+    height: 16px;
 
-    flex-basis: 17px;
+    flex-basis: 16px;
   }
 
   .nav-icon svg {
-    width: 17px;
+    width: 16px;
 
-    height: 17px;
+    height: 16px;
   }
 
-  /* ----------------------------------------------
+  /* -----------------------------------------------
      メイン
-     ---------------------------------------------- */
+  ----------------------------------------------- */
 
   .home-main {
     min-height: auto;
   }
 
+  .home-background {
+    background-image: url("../assets/images/backgrounds/bg_hero_mobile.png");
+
+    background-position: center top;
+  }
+
+  .home-wave {
+    height: 110px;
+
+    background-size: auto 100%;
+
+    background-position: center bottom;
+
+    opacity: 0.48;
+  }
+
   .home-content {
     width: calc(100% - 24px);
 
-    padding: 28px 0 38px;
+    padding: 25px 0 45px;
   }
 
-  /* ----------------------------------------------
+  /* -----------------------------------------------
      ヒーロー
-     ---------------------------------------------- */
+  ----------------------------------------------- */
 
   .hero-section {
     margin-bottom: 24px;
   }
 
   .lumia-main-logo {
-    width: 210px;
+    width: 190px;
+  }
+
+  .hero-kicker {
+    margin-top: 3px;
+
+    font-size: 9px;
+
+    letter-spacing: 0.05em;
   }
 
   .hero-title {
-    font-size: 24px;
+    font-size: 23px;
 
     line-height: 1.55;
   }
 
   .hero-description {
-    font-size: 12px;
+    margin-top: 8px;
+
+    font-size: 11px;
 
     line-height: 1.8;
   }
 
-  /* ----------------------------------------------
+  /* -----------------------------------------------
      質問エリア
-     ---------------------------------------------- */
+  ----------------------------------------------- */
 
   .question-section {
     min-height: auto;
@@ -1393,79 +1685,71 @@ LumiA ホーム画面専用CSS
     display: flex;
 
     flex-direction: column;
-
-    align-items: center;
   }
 
-  /* ----------------------------------------------
+  /* -----------------------------------------------
      コーギくん
-
-     スマホでは上部に独立配置
-     ---------------------------------------------- */
+  ----------------------------------------------- */
 
   .mascot-area {
     position: relative;
 
     order: 1;
 
-    width: 100%;
-
-    height: 255px;
-
     left: auto;
 
     top: auto;
 
+    width: 100%;
+
+    height: 235px;
+
     margin: 0;
 
-    display: block;
+    z-index: 10;
   }
-
-  /* ----------------------------------------------
-     吹き出し
-
-     スマホでもコーギくんとは独立
-     ---------------------------------------------- */
 
   .mascot-speech {
     left: 50%;
 
     top: 0;
 
-    width: 220px;
+    width: 210px;
 
-    min-height: 72px;
+    min-height: 65px;
 
     transform: translateX(-50%);
 
-    padding: 12px 14px;
+    border-radius: 20px;
 
-    border-radius: 22px;
+    z-index: 12;
   }
 
   .mascot-speech strong {
-    font-size: 18px;
-
-    line-height: 1.4;
+    font-size: 17px;
   }
-
-  /* ----------------------------------------------
-     コーギくん本体
-     ---------------------------------------------- */
 
   .corgi-main {
     left: 50%;
 
-    top: 72px;
+    top: 82px;
 
-    width: 255px;
+    width: 235px;
 
     transform: translateX(-50%);
+
+    opacity: 1;
+
+    visibility: visible;
+
+    animation: none !important;
+
+    z-index: 11;
   }
 
-  /* ----------------------------------------------
-     質問欄
-     ---------------------------------------------- */
+  /* -----------------------------------------------
+     質問入力
+  ----------------------------------------------- */
 
   .question-area {
     order: 2;
@@ -1478,203 +1762,283 @@ LumiA ホーム画面専用CSS
   }
 
   .question-form {
-    min-height: 220px;
+    min-height: 245px;
 
-    border-radius: 22px;
+    border-radius: 21px;
   }
 
-  .question-input {
-    height: 170px;
+  .question-heading {
+    min-height: 52px;
 
-    padding: 20px;
-
-    font-size: 14px;
-  }
-
-  .question-form-bottom {
-    height: 61px;
-
-    padding: 0 14px 11px;
-
-    justify-content: flex-end;
-  }
-
-  .question-submit {
-    min-width: 126px;
-
-    height: 46px;
-
-    padding: 0 15px;
-
-    border-radius: 14px;
-
-    font-size: 13px;
-  }
-
-  .privacy-notice {
-    font-size: 9px;
-
-    line-height: 1.6;
-  }
-
-  /* ----------------------------------------------
-     質問例
-     ---------------------------------------------- */
-
-  .example-heading-wrap {
-    margin-bottom: 15px;
+    padding: 15px 18px 7px;
 
     gap: 8px;
   }
 
-  .example-icon {
-    width: 21px;
-
-    height: 21px;
-
-    font-size: 18px;
-  }
-
-  .example-title {
-    font-size: 22px;
-  }
-
-  .example-list {
-    grid-template-columns: 1fr;
-
-    gap: 10px;
-  }
-
-  .example-card {
-    min-height: 108px;
-
-    padding: 17px 20px 17px 78px;
-
-    border-radius: 16px;
-  }
-
-  .example-card-icon {
-    left: 16px;
-
-    width: 45px;
-
-    height: 45px;
-  }
-
-  .example-card-icon svg {
-    width: 22px;
-
-    height: 22px;
-  }
-
-  .example-card-content strong {
+  .question-heading-label {
     font-size: 14px;
-
-    white-space: nowrap;
   }
 
-  .example-card-content > span {
+  .question-heading-sub {
+    font-size: 9px;
+  }
+
+  .question-input {
+    height: 140px;
+
+    padding: 10px 18px 14px;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+  }
+
+  .question-form-bottom {
+    min-height: 61px;
+
+    padding: 0 13px 10px 17px;
+  }
+
+  .question-form-note {
+    padding-bottom: 5px;
+
+    font-size: 9px;
+  }
+
+  .question-submit {
+    min-width: 120px;
+
+    height: 43px;
+
+    padding: 0 14px;
+
+    border-radius: 12px;
+
     font-size: 12px;
+  }
+
+  .submit-arrow {
+    font-size: 16px;
+  }
+
+  .privacy-notice {
+    font-size: 8.5px;
 
     line-height: 1.6;
   }
 
-  .site-footer {
-    min-height: 55px;
-
-    padding: 15px;
-  }
-}
-
-/* ==================================================
-   小さいスマートフォン
-   ================================================== */
-
-@media (max-width: 420px) {
-  .nav-link {
-    padding: 0 6px;
-
-    font-size: 10px;
+  /* エラー表示時 */
+  .question-form:has(.question-status) {
+    min-height: 285px;
   }
 
-  .nav-icon {
-    width: 15px;
+  /* -----------------------------------------------
+     質問例
+  ----------------------------------------------- */
 
-    height: 15px;
+  .example-heading-wrap {
+    gap: 9px;
 
-    flex-basis: 15px;
+    margin-bottom: 15px;
   }
 
-  .nav-icon svg {
-    width: 15px;
-
-    height: 15px;
-  }
-
-  .hero-title {
-    font-size: 22px;
-  }
-
-  .hero-description {
-    font-size: 11px;
-  }
-
-  /* ----------------------------------------------
-     コーギくん
-     ---------------------------------------------- */
-
-  .mascot-area {
-    height: 235px;
-  }
-
-  .corgi-main {
-    width: 230px;
-
-    top: 68px;
-  }
-
-  /* ----------------------------------------------
-     吹き出し
-     ---------------------------------------------- */
-
-  .mascot-speech {
-    width: 205px;
-
-    min-height: 68px;
-
-    top: 0;
-  }
-
-  .mascot-speech strong {
-    font-size: 17px;
-  }
-
-  .question-form {
-    min-height: 205px;
-  }
-
-  .question-input {
-    height: 155px;
-  }
-
-  .question-submit {
-    min-width: 118px;
-
-    font-size: 12px;
+  .example-heading-line {
+    width: 28px;
   }
 
   .example-title {
     font-size: 20px;
   }
+
+  .example-list {
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+  }
+
+  .example-card {
+    min-height: 103px;
+
+    padding: 16px 17px 16px 66px;
+
+    border-radius: 15px;
+  }
+
+  .example-card-icon {
+    left: 13px;
+
+    width: 40px;
+
+    height: 40px;
+  }
+
+  .example-card-icon svg {
+    width: 21px;
+
+    height: 21px;
+  }
+
+  .example-card-content {
+    gap: 5px;
+  }
+
+  .example-card-content strong {
+    font-size: 13px;
+  }
+
+  .example-card-content > span {
+    font-size: 11px;
+
+    line-height: 1.55;
+  }
+
+  /* -----------------------------------------------
+     フッター
+  ----------------------------------------------- */
+
+  .site-footer {
+    min-height: 52px;
+
+    padding: 14px;
+  }
+
+  .site-footer p {
+    font-size: 9px;
+  }
 }
 
-/* ==================================================
-   動きを減らしたい環境への配慮
-   ================================================== */
+/* =================================================
+   小さいスマートフォン
+================================================= */
+
+@media (max-width: 420px) {
+  .site-logo img {
+    width: 92px;
+  }
+
+  .nav-link {
+    padding: 0 5px;
+
+    font-size: 9px;
+  }
+
+  .nav-icon {
+    width: 14px;
+
+    height: 14px;
+
+    flex-basis: 14px;
+  }
+
+  .nav-icon svg {
+    width: 14px;
+
+    height: 14px;
+  }
+
+  .lumia-main-logo {
+    width: 175px;
+  }
+
+  .hero-title {
+    font-size: 21px;
+  }
+
+  .hero-description {
+    font-size: 10px;
+  }
+
+  .mascot-area {
+    height: 220px;
+  }
+
+  .corgi-main {
+    width: 220px;
+
+    top: 78px;
+
+    transform: translateX(-50%);
+
+    animation: none !important;
+  }
+
+  .mascot-speech {
+    width: 195px;
+  }
+
+  .mascot-speech strong {
+    font-size: 16px;
+  }
+
+  .question-form {
+    min-height: 230px;
+  }
+
+  .question-input {
+    height: 130px;
+  }
+
+  .question-heading-label {
+    font-size: 13px;
+  }
+
+  .question-heading-sub {
+    display: none;
+  }
+
+  .question-submit {
+    min-width: 112px;
+
+    font-size: 11px;
+  }
+
+  .example-title {
+    font-size: 18px;
+  }
+}
+
+/* =================================================
+   動きを減らす設定
+================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .nav-link,
-  .question-submit {
-    transition: none;
+  html {
+    scroll-behavior: auto;
   }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+    scroll-behavior: auto !important;
+  }
+
+  .home-main,
+  .hero-section,
+  .question-section,
+  .example-section {
+    opacity: 1;
+
+    transform: none;
+  }
+}
+
+/* =================================================
+   JavaScript側の動き無効化
+================================================= */
+
+body.motion-reduced .home-main,
+body.motion-reduced .hero-section,
+body.motion-reduced .question-section,
+body.motion-reduced .example-section {
+  opacity: 1;
+
+  transform: none;
+
+  animation: none !important;
 }

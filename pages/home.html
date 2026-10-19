@@ -14,9 +14,13 @@ LumiAのホーム画面。
 ・指導員
 ・ゲスト
 
-【重要】
-三重県立津高等技術学校では「授業」ではなく
-「訓練」と表記する。
+【主な役割】
+・LumiAへの入口をつくる
+・ユーザーが迷わず質問できるようにする
+・LumiAの世界観を最初に伝える
+・コーギくんを案内役として表示する
+・質問例から利用方法をイメージできるようにする
+
 ==================================================
 -->
 
@@ -38,14 +42,24 @@ LumiAのホーム画面。
 
   <body>
     <!-- =================================================
-       ヘッダー
-  ================================================== -->
+         ヘッダー
+    ================================================== -->
 
     <header class="site-header">
       <div class="header-inner">
+        <!--
+          LumiAロゴ
+
+          ホーム画面ではクリックできない
+          ブランド表示として使用する。
+        -->
+        <div class="site-logo" aria-label="LumiA">
+          <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
+        </div>
+
+        <!-- ナビゲーション -->
         <nav class="main-nav" aria-label="メインメニュー">
           <!-- ホーム -->
-
           <a href="home.html" class="nav-link active" aria-current="page">
             <span class="nav-icon" aria-hidden="true">
               <svg
@@ -81,7 +95,6 @@ LumiAのホーム画面。
           </a>
 
           <!-- LumiAについて -->
-
           <a href="about.html" class="nav-link">
             <span class="nav-icon" aria-hidden="true">
               <svg
@@ -126,7 +139,6 @@ LumiAのホーム画面。
           </a>
 
           <!-- よくある質問 -->
-
           <a href="faq.html" class="nav-link">
             <span class="nav-icon" aria-hidden="true">
               <svg
@@ -157,7 +169,6 @@ LumiAのホーム画面。
           </a>
 
           <!-- 使い方 -->
-
           <a href="howto.html" class="nav-link">
             <span class="nav-icon" aria-hidden="true">
               <svg
@@ -202,75 +213,65 @@ LumiAのホーム画面。
     </header>
 
     <!-- =================================================
-       メイン
-  ================================================== -->
+         メイン
+    ================================================== -->
 
     <main class="home-main">
-      <!-- 背景 -->
-
-      <div class="home-background"></div>
+      <!-- メイン背景 -->
+      <div class="home-background" aria-hidden="true"></div>
 
       <!-- 背景オーバーレイ -->
-
       <div class="home-overlay" aria-hidden="true"></div>
 
+      <!-- 下部ウェーブ -->
+      <div class="home-wave" aria-hidden="true"></div>
+
       <!-- =================================================
-         メインコンテンツ
-    ================================================== -->
+           メインコンテンツ
+      ================================================== -->
 
       <div class="home-content">
         <!-- =================================================
-           ヒーロー
-      ================================================== -->
+             ヒーロー
+        ================================================== -->
 
         <section class="hero-section">
-          <div class="hero-logo">
-            <img
-              src="../assets/images/icons/lumia-logo-main.png"
-              alt="LumiA"
-              class="lumia-main-logo"
-            />
-          </div>
-
           <h1 class="hero-title">
             津高技の「知りたい」を、<br />
             いつでもサポート
           </h1>
 
           <p class="hero-description">
-            三重県立津高等技術学校の情報について、<br />
-            LumiAに質問してみてください。
+            学校のこと、訓練のこと、資格のこと。<br />
+            知りたいことをLumiAに質問してみてください。
           </p>
         </section>
 
         <!-- =================================================
-           質問エリア
-      ================================================== -->
-
-        <section class="question-section" aria-label="質問入力">
-          <!-- =================================================
-             コーギくん
+             質問エリア
         ================================================== -->
+
+        <section class="question-section" aria-label="LumiAへの質問">
+          <!-- =================================================
+               コーギくん
+          ================================================== -->
 
           <div class="mascot-area">
             <!-- 吹き出し -->
-
             <div class="mascot-speech">
-              <strong> なんでも聞いてね！ </strong>
+              <strong>なんでも聞いてね！</strong>
             </div>
 
-            <!-- コーギくん -->
-
             <img
-              src="../assets/images/characters/corgi-kun.png"
+              src="../assets/images/characters/corgi_basic.png"
               alt="LumiAの案内役 コーギくん"
               class="corgi-main"
             />
           </div>
 
           <!-- =================================================
-             質問入力
-        ================================================== -->
+               質問入力
+          ================================================== -->
 
           <div class="question-area">
             <form id="question-form" class="question-form">
@@ -278,21 +279,24 @@ LumiAのホーム画面。
                 質問を入力してください
               </label>
 
+              <div class="question-heading">
+                <span class="question-heading-label"> LumiAに質問する </span>
+              </div>
+
               <textarea
                 id="question-input"
                 name="question"
                 class="question-input"
                 maxlength="1000"
                 rows="5"
-                placeholder="知りたいことを入力してください…"
+                placeholder="例：ICTエンジニア科では、どんな訓練がありますか？"
               ></textarea>
 
-              <!-- 下部 -->
-
+              <!-- フォーム下部 -->
               <div class="question-form-bottom">
-                <!-- 左側は空けておく -->
-
-                <div class="question-form-spacer"></div>
+                <div class="question-form-note">
+                  <span>Enterでは送信されません</span>
+                </div>
 
                 <button
                   type="submit"
@@ -301,13 +305,12 @@ LumiAのホーム画面。
                 >
                   <span>質問する</span>
 
-                  <span class="submit-arrow"> → </span>
+                  <span class="submit-arrow" aria-hidden="true"> → </span>
                 </button>
               </div>
             </form>
 
             <!-- 個人情報注意 -->
-
             <p class="privacy-notice">
               ※
               名前・電話番号・メールアドレス・住所・学生番号などの個人情報は入力しないでください。
@@ -316,30 +319,22 @@ LumiAのホーム画面。
         </section>
 
         <!-- =================================================
-           質問例
-      ================================================== -->
+             質問例
+        ================================================== -->
 
         <section class="example-section" aria-labelledby="example-title">
-          <!-- 見出し -->
-
           <div class="example-heading-wrap">
-            <span class="example-icon" aria-hidden="true"> 💡 </span>
+            <span class="example-heading-line" aria-hidden="true"></span>
 
             <h2 id="example-title" class="example-title">
-              こういう質問ができます
+              こんなことを聞けます
             </h2>
-          </div>
 
-          <!-- =================================================
-             4つの質問例
-             
-             ※ クリック不可
-             ※ 矢印なし
-        ================================================== -->
+            <span class="example-heading-line" aria-hidden="true"></span>
+          </div>
 
           <div class="example-list">
             <!-- 訓練・学科 -->
-
             <div class="example-card example-card-training">
               <span class="example-card-icon" aria-hidden="true">
                 <svg
@@ -382,7 +377,6 @@ LumiAのホーム画面。
             </div>
 
             <!-- 資格 -->
-
             <div class="example-card example-card-qualification">
               <span class="example-card-icon" aria-hidden="true">
                 <svg
@@ -431,7 +425,6 @@ LumiAのホーム画面。
             </div>
 
             <!-- 学校行事 -->
-
             <div class="example-card example-card-event">
               <span class="example-card-icon" aria-hidden="true">
                 <svg
@@ -499,7 +492,6 @@ LumiAのホーム画面。
             </div>
 
             <!-- 就職・進路 -->
-
             <div class="example-card example-card-career">
               <span class="example-card-icon" aria-hidden="true">
                 <svg
@@ -549,19 +541,19 @@ LumiAのホーム画面。
     </main>
 
     <!-- =================================================
-       フッター
-  ================================================== -->
+         フッター
+    ================================================== -->
 
     <footer class="site-footer">
       <p>© 三重県立津高等技術学校｜LumiA</p>
     </footer>
 
     <!-- =================================================
-       JavaScript
-  ================================================== -->
+         JavaScript
+    ================================================== -->
 
     <script src="../js/common.js"></script>
 
-    <script src="../js/question.js"></script>
+    <script src="../js/home.js"></script>
   </body>
 </html>
