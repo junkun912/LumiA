@@ -1,28 +1,129 @@
 <!--
-==================================================
-LumiA
-ファイル名：login.html
+  ============================================================
+  LumiA｜ログイン画面
+  ============================================================
 
-【ファイル概要】
-学生・指導員がLumiAへログインするためのHTMLファイル。
+  画面概要：
+  学生・指導員がLumiAを利用するためのログイン画面。
+  ログインせずに利用するゲスト向けの導線も用意する。
 
-【主な役割】
-・ログイン画面を表示する
-・ユーザーID・パスワードを入力する
-・Cognitoによる認証処理を開始する
+  主な役割：
+  ・学生・指導員のログイン
+  ・ゲスト利用への導線
+  ・LumiAの世界観を伝える
+  ・ホーム画面から独立したログイン画面として構成
 
-【関連ファイル】
-・css/common.css
-・css/login.css
-・js/common.js
-・js/auth.js
+  認証：
+  ・Amazon Cognitoを利用予定
 
-【対象ユーザー】
-・学生
-・指導員
+  画面遷移：
+  ・学生・指導員 → ログイン → ホーム画面
+  ・ゲスト → ホーム画面
 
-【注意】
-ゲストはログインせずに利用する。
-認証・認可はサーバー側で行う。
-==================================================
+  使用ファイル：
+  ・../css/common.css
+  ・../css/login.css
+  ・../js/common.js
+  ・../js/login.js
+
+  使用素材：
+  ・../assets/images/icons/logo_main.png
+
+  ============================================================
 -->
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ログイン｜LumiA</title>
+
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+  </head>
+
+  <body class="login-page">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="site-logo" aria-label="LumiA">
+          <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
+        </div>
+      </div>
+    </header>
+
+    <main class="login-main">
+      <section class="login-content">
+        <div class="login-heading">
+          <p class="login-eyebrow">WELCOME TO LumiA</p>
+
+          <h1>
+            LumiAへ<br />
+            ようこそ
+          </h1>
+
+          <p class="login-description">
+            三重県立津高等技術学校の<br />
+            学校情報をLumiAに聞いてみよう。
+          </p>
+        </div>
+
+        <div class="login-panel">
+          <div class="login-panel-heading">
+            <h2>ログイン</h2>
+
+            <p>学生・指導員の方はこちらからログインしてください。</p>
+          </div>
+
+          <form class="login-form">
+            <div class="form-group">
+              <label for="login-id">ログインID</label>
+
+              <input
+                type="text"
+                id="login-id"
+                name="login-id"
+                placeholder="ログインIDを入力"
+                autocomplete="username"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="login-password">パスワード</label>
+
+              <input
+                type="password"
+                id="login-password"
+                name="login-password"
+                placeholder="パスワードを入力"
+                autocomplete="current-password"
+              />
+            </div>
+
+            <button type="submit" class="login-button">
+              ログイン
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <div class="login-divider">
+            <span>または</span>
+          </div>
+
+          <div class="guest-login">
+            <p>学校について知りたい方はこちら</p>
+
+            <a href="home.html" class="guest-button">
+              ゲストとして利用する
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/login.js"></script>
+  </body>
+</html>

@@ -1,67 +1,103 @@
-/*
-==================================================
+/* ==================================================
 LumiA
 ファイル名：home.css
 
-【ホーム画面専用CSS】
+【ファイル概要】
+LumiAホーム画面専用CSS。
 
-コンセプト
+【画面の役割】
+・LumiAの入口となるホーム画面
+・学校について質問できる場所を明確にする
+・LumiAの世界観を伝える
+・「質問する」という基本操作へ導く
+・コーギくんを案内役として表示する
+
+【デザインコンセプト】
 「かわいい。でも、ちゃんとしてる。」
 
 ・親しみやすい
-・明るく、やさしい
-・AIサービス感を出しすぎない
-・コーギくんをLumiAの案内役として使う
+・清潔感がある
+・学校向けとして落ち着いている
+・AIサービスらしさを出しすぎない
 ・質問入力を画面の主役にする
 ・余白を大切にする
-・学校らしい安心感
-・PC / タブレット / スマートフォン対応
+
+【レスポンシブ】
+・PC
+・タブレット
+・スマートフォン
+・小型スマートフォン
+
+【コーギくん】
+PC：
+・質問フォーム左側から案内
+
+タブレット：
+・質問フォームのてっぺんに座る
+
+スマートフォン：
+・質問フォームのてっぺんにちょこんと座る
+
+重要：
+・コーギくんは完全静止
+・吹き出しも完全静止
+・質問フォーム内の文字と重ならない
+・横スクロールを発生させない
+
+【重要な用語】
+三重県立津高等技術学校では
+「授業」ではなく「訓練」と表記する。
 
 ==================================================
 */
 
-/* =================================================
+/* ==================================================
    基本設定
-================================================= */
+================================================== */
 
 * {
   box-sizing: border-box;
 }
 
 html {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
   scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
+  width: 100%;
   min-width: 320px;
 
-  color: #214e68;
-  background: #f7f3e9;
+  margin: 0;
+  padding: 0;
 
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  overflow-x: hidden;
+
+  background: #f5faff;
 }
 
-/* =================================================
+/* ==================================================
    ヘッダー
-================================================= */
+================================================== */
 
 .site-header {
   position: relative;
-  z-index: 50;
+  z-index: 1000;
 
   width: 100%;
   min-height: 76px;
 
   background: rgba(255, 255, 255, 0.96);
 
-  border-bottom: 1px solid rgba(45, 150, 188, 0.12);
+  border-bottom: 1px solid #e3edf3;
 
-  box-shadow: 0 4px 20px rgba(33, 112, 143, 0.06);
+  box-shadow: 0 4px 18px rgba(38, 107, 132, 0.05);
 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .header-inner {
@@ -72,101 +108,72 @@ body {
   margin: 0 auto;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
-  gap: 30px;
+  gap: 28px;
 }
 
-/* =================================================
+/* ==================================================
    LumiAロゴ
-================================================= */
+================================================== */
 
 .site-logo {
   flex: 0 0 auto;
 
   display: inline-flex;
-
   align-items: center;
 
-  text-decoration: none;
+  cursor: default;
 }
 
 .site-logo img {
   display: block;
 
   width: 138px;
-
   height: auto;
 
   object-fit: contain;
 
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-/* ==================================================
-   LumiAロゴ
-   クリック・ホバー演出なし
-   ================================================== */
-
-.site-logo {
-  cursor: default;
-}
-
-.site-logo img {
-  display: block;
   transition: none !important;
   transform: none !important;
 }
 
 .site-logo:hover img {
-  transform: none !important;
   opacity: 1 !important;
+  transform: none !important;
 }
 
-/* =================================================
-   ナビゲーション
-================================================= */
+/* ==================================================
+   共通ナビゲーション
+================================================== */
 
 .main-nav {
   display: flex;
-
   align-items: center;
-
   justify-content: flex-end;
 
-  gap: 7px;
+  gap: 6px;
+
+  min-width: 0;
 }
 
 .nav-link {
-  position: relative;
-
   min-height: 46px;
 
-  padding: 0 16px;
+  padding: 0 15px;
 
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
 
-  gap: 8px;
-
-  color: #214e69;
-
-  background: transparent;
+  gap: 7px;
 
   border-radius: 15px;
 
-  text-decoration: none;
+  color: #234e67;
 
   font-size: 13px;
-
   font-weight: 700;
 
   letter-spacing: 0.02em;
@@ -174,15 +181,15 @@ body {
   white-space: nowrap;
 
   transition:
-    color 0.2s ease,
     background-color 0.2s ease,
+    color 0.2s ease,
     transform 0.2s ease;
 }
 
 .nav-link:hover {
-  color: #087eaf;
+  color: #087fac;
 
-  background: rgba(225, 247, 255, 0.9);
+  background: #eef8fc;
 
   transform: translateY(-1px);
 }
@@ -203,36 +210,43 @@ body {
   transform: translateY(-1px);
 }
 
-/* =================================================
-   ナビアイコン
-================================================= */
+.nav-link:focus-visible {
+  outline: 3px solid rgba(21, 159, 208, 0.25);
+
+  outline-offset: 3px;
+}
+
+/* ==================================================
+   ナビゲーションアイコン
+================================================== */
 
 .nav-icon {
-  width: 19px;
-  height: 19px;
+  width: 18px;
+  height: 18px;
 
-  flex: 0 0 19px;
+  flex: 0 0 18px;
 
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
 }
 
 .nav-icon svg {
-  width: 19px;
-  height: 19px;
-
   display: block;
+
+  width: 18px;
+  height: 18px;
 }
 
-/* =================================================
-   ホーム本体
-================================================= */
+/* ==================================================
+   ホームメイン
+================================================== */
 
 .home-main {
   position: relative;
+
+  width: 100%;
+  min-width: 0;
 
   min-height: calc(100vh - 76px);
 
@@ -243,9 +257,9 @@ body {
   background: #f7f3e9;
 }
 
-/* =================================================
+/* ==================================================
    背景
-================================================= */
+================================================== */
 
 .home-background {
   position: absolute;
@@ -254,20 +268,21 @@ body {
 
   z-index: 0;
 
+  width: 100%;
+  height: 100%;
+
   background-color: #f7f3e9;
 
   background-image: url("../assets/images/backgrounds/bg_hero.png");
 
-  background-position: center center;
-
+  background-position: center top;
   background-size: cover;
-
   background-repeat: no-repeat;
 }
 
-/* =================================================
+/* ==================================================
    背景オーバーレイ
-================================================= */
+================================================== */
 
 .home-overlay {
   position: absolute;
@@ -280,34 +295,32 @@ body {
 
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.2) 0%,
-    rgba(255, 255, 255, 0.08) 45%,
-    rgba(247, 251, 250, 0.34) 100%
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.07) 48%,
+    rgba(247, 251, 250, 0.32) 100%
   );
 }
 
-/* =================================================
+/* ==================================================
    下部ウェーブ
-================================================= */
+================================================== */
 
 .home-wave {
   position: absolute;
 
-  left: -5%;
-  right: -5%;
-
-  bottom: -5px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   z-index: 1;
 
+  width: 100%;
   height: 190px;
 
   background-image: url("../assets/images/backgrounds/bg_wave.png");
 
   background-position: center bottom;
-
   background-size: 100% auto;
-
   background-repeat: no-repeat;
 
   pointer-events: none;
@@ -315,9 +328,9 @@ body {
   opacity: 0.58;
 }
 
-/* =================================================
-   メインコンテンツ
-================================================= */
+/* ==================================================
+   ホームコンテンツ
+================================================== */
 
 .home-content {
   position: relative;
@@ -331,72 +344,29 @@ body {
   padding: 38px 0 70px;
 }
 
-/* =================================================
+/* ==================================================
    ヒーロー
-================================================= */
+================================================== */
 
 .hero-section {
+  width: 100%;
+
+  margin: 0 auto 30px;
+
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
 
   text-align: center;
-
-  margin: 0 auto 30px;
 }
-
-/* =================================================
-   ヒーローロゴ
-================================================= */
-
-.hero-logo {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  margin-bottom: 5px;
-}
-
-.lumia-main-logo {
-  display: block;
-
-  width: clamp(215px, 22vw, 315px);
-
-  height: auto;
-
-  object-fit: contain;
-
-  filter: drop-shadow(0 7px 12px rgba(41, 105, 133, 0.1));
-}
-
-/* =================================================
-   ヒーロー補足
-================================================= */
-
-.hero-kicker {
-  margin: 2px 0 8px;
-
-  color: #548095;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
-  letter-spacing: 0.08em;
-}
-
-/* =================================================
-   メインタイトル
-================================================= */
 
 .hero-title {
   margin: 0;
 
   color: #173f59;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 
   font-size: clamp(27px, 3vw, 40px);
 
@@ -409,14 +379,13 @@ body {
   text-shadow: 0 2px 8px rgba(255, 255, 255, 0.72);
 }
 
-/* =================================================
-   ヒーロー説明
-================================================= */
-
 .hero-description {
   margin: 10px 0 0;
 
   color: #476d81;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 
   font-size: 14px;
 
@@ -427,36 +396,29 @@ body {
   letter-spacing: 0.035em;
 }
 
-/* =================================================
-   質問エリア
-================================================= */
+/* ==================================================
+   質問セクション
+================================================== */
 
 .question-section {
   position: relative;
 
   width: min(1160px, 100%);
 
-  min-height: 320px;
-
   margin: 0 auto 38px;
 }
 
-/* =================================================
+/* ==================================================
    コーギくんエリア
-   -----------------------------------------------
-   コーギくんはカードに座っている構図。
-   位置・存在感をデザインとして固定する。
-================================================= */
+================================================== */
 
 .mascot-area {
   position: absolute;
 
   left: -105px;
-
-  top: 123px;
+  top: 150px;
 
   width: 330px;
-
   height: 300px;
 
   z-index: 10;
@@ -464,30 +426,26 @@ body {
   pointer-events: none;
 }
 
-/* =================================================
+/* ==================================================
    吹き出し
-================================================= */
+================================================== */
 
 .mascot-speech {
   position: absolute;
 
   left: 45px;
-
   top: 0;
 
   width: 215px;
-
   min-height: 62px;
 
   padding: 12px 16px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
 
   border: 2px solid rgba(76, 185, 217, 0.35);
 
@@ -499,18 +457,16 @@ body {
 
   text-align: center;
 
-  z-index: 12;
-
-  /*
-   * 吹き出しは動かさない。
-   */
-  animation: none !important;
+  z-index: 3;
 }
 
 .mascot-speech strong {
   margin: 0;
 
   color: #087fac;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 
   font-size: 17px;
 
@@ -523,9 +479,9 @@ body {
   white-space: nowrap;
 }
 
-/* =================================================
+/* ==================================================
    吹き出しのしっぽ
-================================================= */
+================================================== */
 
 .mascot-speech::after {
   content: "";
@@ -533,15 +489,12 @@ body {
   position: absolute;
 
   left: 50%;
-
   bottom: -13px;
 
   transform: translateX(-50%);
 
   border-left: 10px solid transparent;
-
   border-right: 10px solid transparent;
-
   border-top: 14px solid rgba(76, 185, 217, 0.35);
 }
 
@@ -551,61 +504,42 @@ body {
   position: absolute;
 
   left: 50%;
-
   bottom: -9px;
 
   transform: translateX(-50%);
 
   border-left: 8px solid transparent;
-
   border-right: 8px solid transparent;
-
   border-top: 11px solid #ffffff;
 
   z-index: 1;
 }
 
-/* =================================================
-   コーギくん本体
-   -----------------------------------------------
-   完全固定。
-   透過処理はCSSで行わない。
-================================================= */
+/* ==================================================
+   コーギくん
+================================================== */
 
 .corgi-main {
   position: absolute;
 
   left: 30px;
-
-  top: 88px;
+  top: 72px;
 
   width: 250px;
-
   height: auto;
 
   display: block;
 
   object-fit: contain;
 
-  opacity: 1;
-
-  visibility: visible;
-
   filter: drop-shadow(0 9px 12px rgba(50, 104, 123, 0.12));
 
-  z-index: 11;
-
-  /*
-   * コーギくんは完全に固定。
-   */
-  animation: none !important;
-
-  transform: none;
+  z-index: 2;
 }
 
-/* =================================================
-   質問入力エリア
-================================================= */
+/* ==================================================
+   質問エリア
+================================================== */
 
 .question-area {
   position: relative;
@@ -617,21 +551,11 @@ body {
   margin-left: 230px;
 
   z-index: 4;
-
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/*
- * 入力中だけほんの少し浮く。
- */
-
-.question-area.is-focus {
-  transform: translateY(-2px);
-}
-
-/* =================================================
+/* ==================================================
    質問フォーム
-================================================= */
+================================================== */
 
 .question-form {
   position: relative;
@@ -644,7 +568,7 @@ body {
 
   overflow: hidden;
 
-  background: rgba(255, 255, 255, 0.93);
+  background: rgba(255, 255, 255, 0.94);
 
   border: 1.5px solid rgba(64, 178, 211, 0.36);
 
@@ -653,27 +577,12 @@ body {
   box-shadow: 0 16px 35px rgba(48, 119, 144, 0.12);
 
   backdrop-filter: blur(7px);
-
   -webkit-backdrop-filter: blur(7px);
-
-  transition:
-    box-shadow 0.28s ease,
-    border-color 0.28s ease;
 }
 
-/*
- * 入力中
- */
-
-.question-area.is-focus .question-form {
-  border-color: rgba(64, 178, 211, 0.55);
-
-  box-shadow: 0 18px 38px rgba(48, 119, 144, 0.14);
-}
-
-/* =================================================
+/* ==================================================
    質問フォーム見出し
-================================================= */
+================================================== */
 
 .question-heading {
   min-height: 56px;
@@ -681,18 +590,25 @@ body {
   padding: 17px 26px 8px;
 
   display: flex;
-
   align-items: baseline;
 
   gap: 12px;
 }
 
+.question-heading h2,
 .question-heading-label {
+  margin: 0;
+
   color: #174965;
+
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 
   font-size: 16px;
 
   font-weight: 900;
+
+  line-height: 1.45;
 
   letter-spacing: 0.03em;
 }
@@ -703,19 +619,16 @@ body {
   font-size: 11px;
 
   font-weight: 500;
-
-  letter-spacing: 0.02em;
 }
 
-/* =================================================
-   質問入力欄
-================================================= */
+/* ==================================================
+   入力欄
+================================================== */
 
 .question-input {
   display: block;
 
   width: 100%;
-
   height: 155px;
 
   margin: 0;
@@ -723,7 +636,6 @@ body {
   padding: 12px 27px 16px;
 
   border: none;
-
   outline: none;
 
   resize: none;
@@ -734,6 +646,9 @@ body {
 
   color: #214e68;
 
+  font-family:
+    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
   font-size: 15px;
 
   line-height: 1.8;
@@ -741,10 +656,6 @@ body {
   font-weight: 500;
 
   letter-spacing: 0.025em;
-
-  transition:
-    background-color 0.25s ease,
-    box-shadow 0.25s ease;
 }
 
 .question-input::placeholder {
@@ -754,22 +665,18 @@ body {
 }
 
 .question-input:focus {
-  background: rgba(250, 254, 255, 0.6);
-
-  box-shadow: inset 0 0 0 1px rgba(64, 178, 211, 0.1);
+  background: rgba(250, 254, 255, 0.62);
 }
 
-/* =================================================
+/* ==================================================
    フォーム下部
-================================================= */
+================================================== */
 
 .question-form-bottom {
   position: absolute;
 
   left: 0;
-
   right: 0;
-
   bottom: 0;
 
   min-height: 65px;
@@ -785,9 +692,9 @@ body {
   gap: 15px;
 }
 
-/* =================================================
-   フォーム補足
-================================================= */
+/* ==================================================
+   Enter補足
+================================================== */
 
 .question-form-note {
   padding-bottom: 6px;
@@ -801,30 +708,23 @@ body {
   font-weight: 500;
 }
 
-/* =================================================
+/* ==================================================
    質問ボタン
-================================================= */
+================================================== */
 
 .question-submit {
-  position: relative;
-
   flex: 0 0 auto;
 
   min-width: 140px;
-
   height: 48px;
 
   padding: 0 19px;
 
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
 
   gap: 10px;
-
-  overflow: hidden;
 
   border: none;
 
@@ -845,50 +745,22 @@ body {
   box-shadow: 0 8px 18px rgba(21, 159, 208, 0.2);
 
   transition:
-    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.22s ease,
-    background-color 0.22s ease;
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
-/* =================================================
-   ボタン無効
-================================================= */
-
-.question-submit:disabled {
-  cursor: default;
-
-  opacity: 0.72;
-
-  background: #67bddb;
-
-  box-shadow: 0 6px 14px rgba(21, 159, 208, 0.12);
-}
-
-/* =================================================
-   ボタン hover
-================================================= */
-
-.question-submit:hover:not(:disabled) {
+.question-submit:hover {
   background: #0d92c3;
 
   transform: translateY(-2px);
 
-  box-shadow: 0 10px 22px rgba(21, 159, 208, 0.22);
+  box-shadow: 0 11px 22px rgba(21, 159, 208, 0.26);
 }
 
-/* =================================================
-   ボタン click
-================================================= */
-
-.question-submit:active:not(:disabled) {
+.question-submit:active {
   transform: translateY(0);
-
-  box-shadow: 0 6px 12px rgba(21, 159, 208, 0.18);
 }
-
-/* =================================================
-   キーボード操作
-================================================= */
 
 .question-submit:focus-visible {
   outline: 3px solid rgba(21, 159, 208, 0.25);
@@ -896,66 +768,60 @@ body {
   outline-offset: 3px;
 }
 
-/* =================================================
-   ボタンの光
-   -----------------------------------------------
-   hover時に一度だけ非常に薄く流れる。
-================================================= */
-
-.question-submit::after {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-
-  left: -120%;
-
-  width: 65%;
-
-  height: 100%;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-
-  transform: skewX(-18deg);
-
-  pointer-events: none;
-}
-
-.question-submit:hover:not(:disabled)::after {
-  left: 140%;
-
-  transition: left 0.55s ease;
-}
-
-/* =================================================
-   送信矢印
-================================================= */
-
 .submit-arrow {
-  display: inline-block;
-
   font-size: 18px;
-
   line-height: 1;
-
-  font-weight: 700;
-
-  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.question-submit:hover:not(:disabled) .submit-arrow {
-  transform: translateX(4px);
+/* ==================================================
+   質問エラー
+================================================== */
+
+.question-status {
+  position: relative;
+
+  margin: 7px 25px 0;
+
+  color: #c45a5a;
+
+  font-size: 0.85rem;
+
+  line-height: 1.5;
+
+  font-weight: 600;
+
+  animation: lumiAStatusIn 0.25s ease both;
 }
 
-/* =================================================
+@keyframes lumiAStatusIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+.question-form:has(.question-status) {
+  min-height: 305px;
+}
+
+.question-form:has(.question-status) .question-form-bottom {
+  min-height: 65px;
+}
+
+.question-area:has(.question-status) .privacy-notice {
+  margin-top: 9px;
+}
+
+/* ==================================================
    個人情報注意
-================================================= */
+================================================== */
 
 .privacy-notice {
   margin: 9px 0 0;
@@ -973,9 +839,9 @@ body {
   letter-spacing: 0.015em;
 }
 
-/* =================================================
+/* ==================================================
    質問例
-================================================= */
+================================================== */
 
 .example-section {
   width: 100%;
@@ -983,15 +849,10 @@ body {
   margin: 0 auto;
 }
 
-/* =================================================
-   質問例見出し
-================================================= */
-
 .example-heading-wrap {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   gap: 16px;
@@ -1001,7 +862,6 @@ body {
 
 .example-heading-line {
   width: 52px;
-
   height: 1px;
 
   background: rgba(35, 146, 185, 0.28);
@@ -1023,38 +883,33 @@ body {
   text-align: center;
 }
 
-/* =================================================
+/* ==================================================
    質問例カード一覧
-================================================= */
+================================================== */
 
 .example-list {
+  width: 100%;
+
   display: grid;
 
   grid-template-columns: repeat(4, minmax(0, 1fr));
 
   gap: 16px;
-
-  width: 100%;
 }
 
-/* =================================================
+/* ==================================================
    質問例カード
-   -----------------------------------------------
-   ホバーなし。
-   常に静かに表示する。
-================================================= */
+================================================== */
 
 .example-card {
   position: relative;
 
   min-width: 0;
-
   min-height: 138px;
 
   padding: 20px 17px 18px 72px;
 
   display: flex;
-
   align-items: center;
 
   background: rgba(255, 255, 255, 0.91);
@@ -1068,11 +923,21 @@ body {
   box-shadow: 0 7px 20px rgba(48, 120, 143, 0.07);
 
   user-select: none;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* =================================================
+.example-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 24px rgba(48, 120, 143, 0.1);
+}
+
+/* ==================================================
    カードカラー
-================================================= */
+================================================== */
 
 .example-card-training {
   border-left-color: #7f68d9;
@@ -1090,27 +955,23 @@ body {
   border-left-color: #2399cc;
 }
 
-/* =================================================
+/* ==================================================
    カードアイコン
-================================================= */
+================================================== */
 
 .example-card-icon {
   position: absolute;
 
   left: 14px;
-
   top: 50%;
 
   width: 43px;
-
   height: 43px;
 
   transform: translateY(-50%);
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   border: 1px solid rgba(60, 176, 209, 0.25);
@@ -1124,21 +985,19 @@ body {
 
 .example-card-icon svg {
   width: 22px;
-
   height: 22px;
 
   display: block;
 }
 
-/* =================================================
+/* ==================================================
    カード文章
-================================================= */
+================================================== */
 
 .example-card-content {
   min-width: 0;
 
   display: flex;
-
   flex-direction: column;
 
   gap: 7px;
@@ -1175,14 +1034,12 @@ body {
 
   font-weight: 500;
 
-  letter-spacing: 0.01em;
-
   word-break: keep-all;
 }
 
-/* =================================================
+/* ==================================================
    フッター
-================================================= */
+================================================== */
 
 .site-footer {
   position: relative;
@@ -1194,9 +1051,7 @@ body {
   padding: 17px 20px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   background: rgba(255, 255, 255, 0.95);
@@ -1218,365 +1073,20 @@ body {
   text-align: center;
 }
 
-/* =================================================
-   アクセシビリティ
-================================================= */
-
-.visually-hidden {
-  position: absolute;
-
-  width: 1px;
-
-  height: 1px;
-
-  padding: 0;
-
-  margin: -1px;
-
-  overflow: hidden;
-
-  clip: rect(0, 0, 0, 0);
-
-  white-space: nowrap;
-
-  border: 0;
-}
-
-/* =================================================
-   ================================================
-   ページ表示アニメーション
-   ================================================
-================================================= */
-
-/*
- * 最初は非表示。
- */
-
-.home-main {
-  opacity: 0;
-}
-
-/*
- * 表示開始。
- */
-
-body.is-ready .home-main {
-  opacity: 1;
-
-  transition: opacity 0.45s ease;
-}
-
-/* =================================================
-   ヒーロー表示
-================================================= */
-
-.hero-section {
-  opacity: 0;
-
-  transform: translateY(10px);
-}
-
-body.is-ready .hero-section {
-  animation: lumiAHeroIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes lumiAHeroIn {
-  from {
-    opacity: 0;
-
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/* =================================================
-   質問エリア表示
-================================================= */
-
-.question-section {
-  opacity: 0;
-
-  transform: translateY(12px);
-}
-
-body.is-ready .question-section {
-  animation: lumiAQuestionIn 0.65s 0.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes lumiAQuestionIn {
-  from {
-    opacity: 0;
-
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/* =================================================
-   質問例表示
-================================================= */
-
-.example-section {
-  opacity: 0;
-
-  transform: translateY(10px);
-}
-
-body.is-ready .example-section {
-  animation: lumiAExamplesIn 0.65s 0.18s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes lumiAExamplesIn {
-  from {
-    opacity: 0;
-
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/* =================================================
-   エラー入力
-================================================= */
-
-.question-input.is-error {
-  animation: lumiAInputError 0.32s ease;
-}
-
-@keyframes lumiAInputError {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-3px);
-  }
-
-  75% {
-    transform: translateX(3px);
-  }
-}
-
-/* =================================================
-   エラーメッセージ
-================================================= */
-
-.question-status {
-  margin: 10px 25px 0;
-
-  color: #c45a5a;
-
-  font-size: 0.85rem;
-
-  line-height: 1.6;
-
-  animation: lumiAStatusIn 0.25s ease both;
-}
-
-@keyframes lumiAStatusIn {
-  from {
-    opacity: 0;
-
-    transform: translateY(-4px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
 /* ==================================================
-   エラーメッセージ
-   -----------------------------------------------
-   エラー表示時もフォーム下部と重ならないようにする。
-   ================================================== */
-
-.question-status {
-  position: relative;
-
-  margin: 7px 25px 0;
-
-  color: #c45a5a;
-
-  font-size: 0.85rem;
-
-  line-height: 1.5;
-
-  font-weight: 600;
-
-  animation: lumiAStatusIn 0.25s ease both;
-}
-
-/*
- * エラーが表示されたときは、
- * フォーム全体に少しだけ高さを持たせる。
- *
- * これによって
- *
- * 入力欄
- * ↓
- * エラーメッセージ
- * ↓
- * Enterでは送信されません
- * ↓
- * 質問する
- *
- * の順番で自然に配置できる。
- */
-
-.question-form:has(.question-status) {
-  min-height: 305px;
-}
-
-/*
- * エラー表示中は下部エリアを
- * 通常より少し下へ確保する。
- */
-
-.question-form:has(.question-status) .question-form-bottom {
-  min-height: 65px;
-}
-
-/*
- * エラー表示中の個人情報注意文との
- * 距離も確保する。
- */
-
-.question-area:has(.question-status) .privacy-notice {
-  margin-top: 9px;
-}
-
-/* =================================================
-   送信中
-================================================= */
-
-.question-submit.is-loading {
-  cursor: wait;
-
-  pointer-events: none;
-
-  opacity: 0.82;
-}
-
-/* =================================================
    タブレット
-================================================= */
+   761px ～ 1050px
+================================================== */
 
-@media (max-width: 1050px) {
+@media (min-width: 761px) and (max-width: 1050px) {
   .header-inner {
     width: calc(100% - 36px);
+
+    gap: 18px;
   }
 
   .site-logo img {
-    width: 125px;
-  }
-
-  .nav-link {
-    padding: 0 11px;
-
-    font-size: 12px;
-  }
-
-  .home-content {
-    width: calc(100% - 36px);
-
-    padding-top: 32px;
-  }
-
-  .question-section {
-    min-height: 305px;
-  }
-
-  .mascot-area {
-    left: -10px;
-
-    width: 300px;
-  }
-
-  .corgi-main {
-    width: 245px;
-
-    left: 15px;
-
-    top: 84px;
-
-    transform: none;
-  }
-
-  .mascot-speech {
-    left: 18px;
-
-    width: 210px;
-  }
-
-  .question-area {
-    width: calc(100% - 190px);
-
-    margin-left: 165px;
-  }
-
-  .example-list {
-    gap: 12px;
-  }
-
-  .example-card {
-    padding-left: 62px;
-  }
-
-  .example-card-icon {
-    left: 10px;
-
-    width: 40px;
-
-    height: 40px;
-  }
-
-  .example-card-content strong {
-    font-size: 12.5px;
-  }
-
-  .example-card-content > span {
-    font-size: 10.5px;
-  }
-}
-
-/* =================================================
-   スマートフォン
-================================================= */
-
-@media (max-width: 760px) {
-  .site-header {
-    min-height: 68px;
-  }
-
-  .header-inner {
-    width: calc(100% - 20px);
-
-    min-height: 68px;
-
-    gap: 10px;
-  }
-
-  .site-logo img {
-    width: 100px;
+    width: 120px;
   }
 
   .main-nav {
@@ -1586,300 +1096,249 @@ body.is-ready .example-section {
   .nav-link {
     min-height: 43px;
 
-    padding: 0 7px;
+    padding: 0 9px;
 
-    gap: 4px;
+    gap: 5px;
 
-    border-radius: 12px;
-
-    font-size: 10px;
+    font-size: 11.5px;
   }
 
-  .nav-icon {
-    width: 16px;
-
-    height: 16px;
-
-    flex-basis: 16px;
-  }
-
+  .nav-icon,
   .nav-icon svg {
-    width: 16px;
-
-    height: 16px;
+    width: 17px;
+    height: 17px;
   }
 
-  /* -----------------------------------------------
+  /* ----------------------------------------------
      メイン
-  ----------------------------------------------- */
+  ---------------------------------------------- */
 
   .home-main {
     min-height: auto;
   }
 
   .home-background {
-    background-image: url("../assets/images/backgrounds/bg_hero_mobile.png");
-
     background-position: center top;
+
+    background-size: cover;
   }
 
   .home-wave {
-    height: 110px;
+    height: 140px;
 
-    background-size: auto 100%;
+    background-size: cover;
 
-    background-position: center bottom;
-
-    opacity: 0.48;
+    opacity: 0.5;
   }
 
   .home-content {
-    width: calc(100% - 24px);
+    width: calc(100% - 42px);
 
-    padding: 25px 0 45px;
+    padding: 34px 0 58px;
   }
 
-  /* -----------------------------------------------
+  /* ----------------------------------------------
      ヒーロー
-  ----------------------------------------------- */
+  ---------------------------------------------- */
 
   .hero-section {
-    margin-bottom: 24px;
-  }
+    margin-bottom: 8px;
 
-  .lumia-main-logo {
-    width: 190px;
-  }
-
-  .hero-kicker {
-    margin-top: 3px;
-
-    font-size: 9px;
-
-    letter-spacing: 0.05em;
+    transform: translateY(-22px);
   }
 
   .hero-title {
-    font-size: 23px;
-
-    line-height: 1.55;
+    font-size: 31px;
   }
 
   .hero-description {
-    margin-top: 8px;
-
-    font-size: 11px;
-
-    line-height: 1.8;
+    display: none;
   }
 
-  /* -----------------------------------------------
-     質問エリア
-  ----------------------------------------------- */
+  /* ----------------------------------------------
+     質問セクション
+  ---------------------------------------------- */
 
   .question-section {
-    min-height: auto;
+    width: 100%;
 
-    margin-bottom: 30px;
+    margin: 0 auto 34px;
 
     display: flex;
-
     flex-direction: column;
+    align-items: center;
   }
 
-  /* -----------------------------------------------
-     コーギくん
-  ----------------------------------------------- */
+  /* ----------------------------------------------
+     コーギくんエリア
+  ---------------------------------------------- */
 
   .mascot-area {
     position: relative;
 
-    order: 1;
-
     left: auto;
-
     top: auto;
 
     width: 100%;
 
-    height: 235px;
+    height: 112px;
 
-    margin: 0;
+    margin: 0 0 35px;
+
+    overflow: visible;
 
     z-index: 10;
+
+    transform: translateY(-24px);
   }
 
+  /* ----------------------------------------------
+     タブレット吹き出し
+  ---------------------------------------------- */
+
   .mascot-speech {
-    left: 50%;
+    left: 15%;
+    top: -10%;
 
-    top: 0;
+    width: 140px;
 
-    width: 210px;
+    min-height: 42px;
 
-    min-height: 65px;
+    padding: 7px 10px;
 
     transform: translateX(-50%);
 
-    border-radius: 20px;
+    border-width: 1.5px;
 
-    z-index: 12;
+    border-radius: 13px;
+
+    box-shadow: 0 5px 12px rgba(41, 113, 143, 0.07);
   }
 
   .mascot-speech strong {
-    font-size: 17px;
+    font-size: 11px;
+
+    line-height: 1.3;
+
+    letter-spacing: 0;
   }
+
+  .mascot-speech::after {
+    bottom: -9px;
+
+    border-left-width: 7px;
+    border-right-width: 7px;
+
+    border-top-width: 10px;
+  }
+
+  .mascot-speech::before {
+    bottom: -7px;
+
+    border-left-width: 5.5px;
+    border-right-width: 5.5px;
+
+    border-top-width: 8px;
+  }
+
+  /* ----------------------------------------------
+     タブレット コーギくん
+  ---------------------------------------------- */
 
   .corgi-main {
-    left: 50%;
+    left: 10%;
+    top: 45px;
 
-    top: 82px;
-
-    width: 235px;
+    width: 160px;
+    max-width: 160px;
 
     transform: translateX(-50%);
-
-    opacity: 1;
-
-    visibility: visible;
-
-    animation: none !important;
-
-    z-index: 11;
   }
 
-  /* -----------------------------------------------
-     質問入力
-  ----------------------------------------------- */
+  /* ----------------------------------------------
+     質問エリア
+  ---------------------------------------------- */
 
   .question-area {
-    order: 2;
+    width: min(760px, 100%);
 
-    width: 100%;
+    max-width: none;
 
-    max-width: 100%;
+    margin: 0 auto;
 
-    margin-left: 0;
+    z-index: 4;
   }
 
+  /* ----------------------------------------------
+     質問フォーム
+  ---------------------------------------------- */
+
   .question-form {
-    min-height: 245px;
+    min-height: 265px;
+
+    padding-top: 40px;
 
     border-radius: 21px;
   }
 
   .question-heading {
-    min-height: 52px;
+    min-height: 50px;
 
-    padding: 15px 18px 7px;
-
-    gap: 8px;
-  }
-
-  .question-heading-label {
-    font-size: 14px;
-  }
-
-  .question-heading-sub {
-    font-size: 9px;
+    padding: 0 24px 8px;
   }
 
   .question-input {
-    height: 140px;
-
-    padding: 10px 18px 14px;
-
-    font-size: 13px;
-
-    line-height: 1.7;
+    height: 150px;
   }
 
   .question-form-bottom {
-    min-height: 61px;
-
-    padding: 0 13px 10px 17px;
+    padding: 0 18px 11px 23px;
   }
 
-  .question-form-note {
-    padding-bottom: 5px;
+  /* ----------------------------------------------
+     個人情報注意
 
-    font-size: 9px;
-  }
-
-  .question-submit {
-    min-width: 120px;
-
-    height: 43px;
-
-    padding: 0 14px;
-
-    border-radius: 12px;
-
-    font-size: 12px;
-  }
-
-  .submit-arrow {
-    font-size: 16px;
-  }
+     タブレットでは少し読みやすくする。
+  ---------------------------------------------- */
 
   .privacy-notice {
-    font-size: 8.5px;
+    margin-top: 9px;
 
-    line-height: 1.6;
+    padding: 0 3px;
+
+    color: #58788a;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    font-weight: 500;
+
+    letter-spacing: 0.015em;
   }
 
-  /* エラー表示時 */
-  .question-form:has(.question-status) {
-    min-height: 285px;
-  }
-
-  /* -----------------------------------------------
+  /* ----------------------------------------------
      質問例
-  ----------------------------------------------- */
+  ---------------------------------------------- */
 
   .example-heading-wrap {
-    gap: 9px;
-
-    margin-bottom: 15px;
-  }
-
-  .example-heading-line {
-    width: 28px;
+    margin-bottom: 16px;
   }
 
   .example-title {
-    font-size: 20px;
+    font-size: 23px;
   }
 
   .example-list {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    gap: 9px;
+    gap: 13px;
   }
 
   .example-card {
-    min-height: 103px;
-
-    padding: 16px 17px 16px 66px;
-
-    border-radius: 15px;
-  }
-
-  .example-card-icon {
-    left: 13px;
-
-    width: 40px;
-
-    height: 40px;
-  }
-
-  .example-card-icon svg {
-    width: 21px;
-
-    height: 21px;
-  }
-
-  .example-card-content {
-    gap: 5px;
+    min-height: 120px;
   }
 
   .example-card-content strong {
@@ -1887,119 +1346,674 @@ body.is-ready .example-section {
   }
 
   .example-card-content > span {
-    font-size: 11px;
-
-    line-height: 1.55;
-  }
-
-  /* -----------------------------------------------
-     フッター
-  ----------------------------------------------- */
-
-  .site-footer {
-    min-height: 52px;
-
-    padding: 14px;
-  }
-
-  .site-footer p {
-    font-size: 9px;
+    font-size: 10.5px;
   }
 }
 
-/* =================================================
-   小さいスマートフォン
-================================================= */
+/* ==================================================
+   スマートフォン
+   760px以下
+================================================== */
 
-@media (max-width: 420px) {
+@media (max-width: 760px) {
+  /* ----------------------------------------------
+     ヘッダー
+  ---------------------------------------------- */
+
+  .site-header {
+    min-height: 64px;
+  }
+
+  .header-inner {
+    width: 100%;
+
+    min-height: 64px;
+
+    padding: 0 15px;
+
+    gap: 0;
+  }
+
   .site-logo img {
-    width: 92px;
+    width: 96px;
   }
 
-  .nav-link {
-    padding: 0 5px;
-
-    font-size: 9px;
+  .main-nav {
+    display: none;
   }
 
-  .nav-icon {
-    width: 14px;
+  /* ----------------------------------------------
+     メイン
+  ---------------------------------------------- */
 
-    height: 14px;
+  .home-main {
+    width: 100%;
+    min-width: 0;
 
-    flex-basis: 14px;
+    min-height: auto;
+
+    overflow-x: hidden;
   }
 
-  .nav-icon svg {
-    width: 14px;
+  /* ----------------------------------------------
+     スマホ背景
+  ---------------------------------------------- */
 
-    height: 14px;
+  .home-background {
+    background-image: url("../assets/images/backgrounds/bg_hero_mobile.png");
+
+    background-position: center top;
+
+    background-size: cover;
+
+    background-repeat: no-repeat;
   }
 
-  .lumia-main-logo {
-    width: 175px;
+  .home-wave {
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    height: 110px;
+
+    background-size: auto 100%;
+
+    background-position: center bottom;
+
+    opacity: 0.46;
+  }
+
+  /* ----------------------------------------------
+     コンテンツ
+  ---------------------------------------------- */
+
+  .home-content {
+    width: calc(100% - 24px);
+
+    max-width: none;
+
+    margin: 0 auto;
+
+    padding: 25px 0 40px;
+  }
+
+  /* ----------------------------------------------
+     ヒーロー
+
+     スマホだけタイトルを少し上へ。
+  ---------------------------------------------- */
+
+  .hero-section {
+    width: 100%;
+
+    margin: 0 auto 7px;
+
+    transform: translateY(-8px);
   }
 
   .hero-title {
-    font-size: 21px;
+    width: 100%;
+
+    font-size: 22px;
+
+    line-height: 1.55;
+
+    letter-spacing: 0.02em;
   }
 
   .hero-description {
-    font-size: 10px;
+    display: none;
   }
+
+  /* ----------------------------------------------
+     質問セクション
+  ---------------------------------------------- */
+
+  .question-section {
+    width: 100%;
+    min-width: 0;
+
+    margin: 0 auto 28px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ----------------------------------------------
+     コーギくんエリア
+  ---------------------------------------------- */
 
   .mascot-area {
-    height: 220px;
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    width: 100%;
+
+    height: 105px;
+
+    margin: 0 0 28px;
+
+    overflow: visible;
+
+    z-index: 10;
   }
 
-  .corgi-main {
-    width: 220px;
+  /* ----------------------------------------------
+     スマホ吹き出し
+  ---------------------------------------------- */
 
-    top: 78px;
+  .mascot-speech {
+    left: 20%;
+    top: 0%;
+
+    width: 92px;
+
+    min-height: 29px;
+
+    padding: 5px 7px;
 
     transform: translateX(-50%);
 
-    animation: none !important;
-  }
+    border-width: 1px;
 
-  .mascot-speech {
-    width: 195px;
+    border-radius: 9px;
+
+    box-shadow: 0 3px 8px rgba(41, 113, 143, 0.05);
   }
 
   .mascot-speech strong {
-    font-size: 16px;
+    font-size: 8px;
+
+    line-height: 1.3;
+
+    letter-spacing: 0;
   }
+
+  .mascot-speech::after {
+    bottom: -5px;
+
+    border-left-width: 3.5px;
+    border-right-width: 3.5px;
+
+    border-top-width: 5px;
+  }
+
+  .mascot-speech::before {
+    bottom: -3px;
+
+    border-left-width: 2.5px;
+    border-right-width: 2.5px;
+
+    border-top-width: 4px;
+  }
+
+  /* ----------------------------------------------
+     スマホ コーギくん
+  ---------------------------------------------- */
+
+  .corgi-main {
+    left: 15%;
+    top: 36px;
+
+    width: 120px;
+    max-width: 120px;
+
+    transform: translateX(-50%);
+  }
+
+  /* ----------------------------------------------
+     質問エリア
+  ---------------------------------------------- */
+
+  .question-area {
+    width: 100%;
+    max-width: none;
+
+    margin: 0 auto;
+
+    z-index: 4;
+  }
+
+  /* ----------------------------------------------
+     質問フォーム
+  ---------------------------------------------- */
 
   .question-form {
-    min-height: 230px;
+    width: 100%;
+
+    min-height: 245px;
+
+    padding-top: 38px;
+
+    border-radius: 19px;
   }
 
-  .question-input {
-    height: 130px;
+  /* ----------------------------------------------
+     見出し
+  ---------------------------------------------- */
+
+  .question-heading {
+    min-height: 49px;
+
+    padding: 0 17px 7px;
+
+    gap: 6px;
   }
 
+  .question-heading h2,
   .question-heading-label {
-    font-size: 13px;
+    font-size: 13.5px;
   }
 
   .question-heading-sub {
     display: none;
   }
 
-  .question-submit {
-    min-width: 112px;
+  /* ----------------------------------------------
+     入力欄
+  ---------------------------------------------- */
 
-    font-size: 11px;
+  .question-input {
+    width: 100%;
+
+    height: 135px;
+
+    padding: 9px 17px 13px;
+
+    font-size: 12.5px;
+
+    line-height: 1.7;
+  }
+
+  /* ----------------------------------------------
+     フォーム下部
+  ---------------------------------------------- */
+
+  .question-form-bottom {
+    left: 0;
+    right: 0;
+
+    min-height: 60px;
+
+    padding: 0 11px 9px 15px;
+
+    gap: 7px;
+  }
+
+  .question-form-note {
+    padding-bottom: 4px;
+
+    font-size: 8px;
+
+    white-space: nowrap;
+  }
+
+  /* ----------------------------------------------
+     質問ボタン
+  ---------------------------------------------- */
+
+  .question-submit {
+    min-width: 108px;
+
+    height: 41px;
+
+    padding: 0 12px;
+
+    border-radius: 11px;
+
+    font-size: 10.5px;
+  }
+
+  .submit-arrow {
+    font-size: 15px;
+  }
+
+  /* ----------------------------------------------
+     エラー
+  ---------------------------------------------- */
+
+  .question-status {
+    margin: 7px 17px 0;
+
+    font-size: 0.76rem;
+
+    line-height: 1.5;
+  }
+
+  .question-form:has(.question-status) {
+    min-height: 280px;
+  }
+
+  /* ----------------------------------------------
+     個人情報注意
+
+     スマホでも読めるサイズへ。
+  ---------------------------------------------- */
+
+.privacy-notice {
+  margin-top: 7px;
+
+  padding: 0;
+
+  font-size: 9px;
+
+  line-height: 1.6;
+
+  white-space: nowrap;
+
+  letter-spacing: -0.02em;
+}
+
+  /* ----------------------------------------------
+     質問例
+  ---------------------------------------------- */
+
+  .example-section {
+    width: 100%;
+  }
+
+  .example-heading-wrap {
+    width: 100%;
+
+    gap: 8px;
+
+    margin-bottom: 13px;
+  }
+
+  .example-heading-line {
+    width: 24px;
   }
 
   .example-title {
     font-size: 18px;
+
+    letter-spacing: 0.03em;
+  }
+
+  /* ----------------------------------------------
+     カード一覧
+  ---------------------------------------------- */
+
+  .example-list {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+  }
+
+  .example-card {
+    width: 100%;
+    min-width: 0;
+
+    min-height: 94px;
+
+    padding: 14px 14px 14px 61px;
+
+    border-radius: 14px;
+  }
+
+  .example-card-icon {
+    left: 11px;
+
+    width: 38px;
+    height: 38px;
+  }
+
+  .example-card-icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .example-card-content {
+    min-width: 0;
+
+    gap: 4px;
+  }
+
+  .example-card-content strong {
+    font-size: 12px;
+
+    line-height: 1.45;
+
+    white-space: normal;
+  }
+
+  .example-card-content > span {
+    font-size: 10px;
+
+    line-height: 1.55;
+
+    word-break: normal;
+  }
+
+  /* ----------------------------------------------
+     フッター
+  ---------------------------------------------- */
+
+  .site-footer {
+    min-height: 50px;
+
+    padding: 13px;
+  }
+
+  .site-footer p {
+    font-size: 8px;
   }
 }
 
-/* =================================================
-   動きを減らす設定
-================================================= */
+/* ==================================================
+   小型スマートフォン
+   420px以下
+================================================== */
+
+@media (max-width: 420px) {
+  .header-inner {
+    padding: 0 12px;
+  }
+
+  .site-logo img {
+    width: 90px;
+  }
+
+  /* ----------------------------------------------
+     コンテンツ
+  ---------------------------------------------- */
+
+  .home-content {
+    width: calc(100% - 20px);
+
+    padding: 22px 0 36px;
+  }
+
+  /* ----------------------------------------------
+     ヒーロー
+  ---------------------------------------------- */
+
+  .hero-title {
+    font-size: 20px;
+
+    line-height: 1.5;
+  }
+
+  .hero-description {
+    display: none;
+  }
+
+  /* ----------------------------------------------
+     コーギくんエリア
+  ---------------------------------------------- */
+
+  .mascot-area {
+    height: 101px;
+
+    margin-bottom: 24px;
+  }
+
+  /* ----------------------------------------------
+     吹き出し
+  ---------------------------------------------- */
+
+  .mascot-speech {
+    width: 88px;
+
+    min-height: 27px;
+
+    padding: 4px 6px;
+
+    border-width: 1px;
+
+    border-radius: 8px;
+  }
+
+  .mascot-speech strong {
+    font-size: 7.5px;
+
+    line-height: 1.3;
+  }
+
+  .mascot-speech::after {
+    bottom: -4px;
+
+    border-left-width: 3px;
+    border-right-width: 3px;
+
+    border-top-width: 4px;
+  }
+
+  .mascot-speech::before {
+    bottom: -2.5px;
+
+    border-left-width: 2px;
+    border-right-width: 2px;
+
+    border-top-width: 3px;
+  }
+
+  /* ----------------------------------------------
+     コーギくん
+  ---------------------------------------------- */
+
+  .corgi-main {
+    top: 35px;
+
+    width: 112px;
+    max-width: 112px;
+  }
+
+  /* ----------------------------------------------
+     質問エリア
+  ---------------------------------------------- */
+
+  .question-area {
+    margin-top: 0;
+  }
+
+  /* ----------------------------------------------
+     質問フォーム
+  ---------------------------------------------- */
+
+  .question-form {
+    min-height: 230px;
+
+    padding-top: 36px;
+  }
+
+  .question-heading {
+    min-height: 46px;
+
+    padding: 0 15px 6px;
+  }
+
+  .question-heading h2,
+  .question-heading-label {
+    font-size: 13px;
+  }
+
+  .question-input {
+    height: 127px;
+
+    padding: 8px 15px 12px;
+
+    font-size: 12px;
+  }
+
+  /* ----------------------------------------------
+     フォーム下部
+  ---------------------------------------------- */
+
+  .question-form-bottom {
+    min-height: 58px;
+
+    padding: 0 9px 8px 13px;
+  }
+
+  .question-form-note {
+    font-size: 7.5px;
+  }
+
+  .question-submit {
+    min-width: 102px;
+
+    height: 39px;
+
+    padding: 0 10px;
+
+    font-size: 10px;
+  }
+
+  /* ----------------------------------------------
+     エラー
+  ---------------------------------------------- */
+
+  .question-status {
+    margin: 6px 13px 0;
+
+    font-size: 0.72rem;
+  }
+
+  .question-form:has(.question-status) {
+    min-height: 260px;
+  }
+
+  /* ----------------------------------------------
+     個人情報注意
+
+     小型スマホでも読みやすさを確保。
+  ---------------------------------------------- */
+
+  .privacy-notice {
+    font-size: 8.5px;
+  }
+
+  /* ----------------------------------------------
+     質問例
+  ---------------------------------------------- */
+
+  .example-title {
+    font-size: 17px;
+  }
+
+  .example-card {
+    min-height: 91px;
+  }
+
+  .example-card-content strong {
+    font-size: 11.5px;
+  }
+
+  .example-card-content > span {
+    font-size: 9.5px;
+  }
+}
+
+/* ==================================================
+   動きを減らす設定への対応
+================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -2014,31 +2028,5 @@ body.is-ready .example-section {
     animation-iteration-count: 1 !important;
 
     transition-duration: 0.01ms !important;
-
-    scroll-behavior: auto !important;
   }
-
-  .home-main,
-  .hero-section,
-  .question-section,
-  .example-section {
-    opacity: 1;
-
-    transform: none;
-  }
-}
-
-/* =================================================
-   JavaScript側の動き無効化
-================================================= */
-
-body.motion-reduced .home-main,
-body.motion-reduced .hero-section,
-body.motion-reduced .question-section,
-body.motion-reduced .example-section {
-  opacity: 1;
-
-  transform: none;
-
-  animation: none !important;
 }

@@ -9,7 +9,10 @@ LumiA全画面で共通して使用するCSSファイル。
 【主な役割】
 ・ページ全体の基本スタイル
 ・ヘッダーのレイアウト
+・LumiAロゴの表示
 ・共通ナビゲーションのデザイン
+・ハンバーガーメニュー
+・サイドメニュー
 ・フッターのデザイン
 ・共通リンクのスタイル
 ・共通ボタンや状態表示の基本設定
@@ -27,12 +30,13 @@ LumiA全画面で共通して使用するCSSファイル。
 ・css/home.css
 ・css/login.css
 ・css/answer.css
+・js/common.js
 
 【デザイン方針】
 ・白を基調とする
 ・淡いブルー・ミント系をアクセントとして使用する
 ・清潔感のある学校向けデザインとする
-・親しみやすさとAIらしい先進性を両立する
+・親しみやすさと先進性を両立する
 ・情報を詰め込みすぎない
 ・PC・タブレット・スマートフォンに対応する
 ・色だけに頼らず、文字や形でも状態を伝える
@@ -53,20 +57,23 @@ LumiA全画面で共通して使用するCSSファイル。
    基本設定
    ================================================== */
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   margin: 0;
   padding: 0;
-
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   padding: 0;
+
+  min-width: 320px;
 
   background: #f5faff;
   color: #243746;
@@ -81,33 +88,46 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+body.is-menu-open {
+  overflow: hidden;
+}
+
 /* ==================================================
-   共通リンク
+   共通要素
    ================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
 
 a {
   color: inherit;
   text-decoration: none;
 }
 
-button,
-input,
-textarea {
-  font: inherit;
-}
-
 /* ==================================================
-   ヘッダー
-   --------------------------------------------------
-   LumiA全画面で共通して使用する
+   共通ヘッダー
    ================================================== */
 
 .site-header {
-  width: 100%;
-
   position: sticky;
   top: 0;
   z-index: 1000;
+
+  width: 100%;
 
   background: rgba(255, 255, 255, 0.96);
 
@@ -138,10 +158,42 @@ textarea {
 }
 
 /* ==================================================
-   ヘッダー LumiAロゴ
+   正式LumiAロゴ
    --------------------------------------------------
-   ※正式ロゴ画像ではなく、
-   共通ヘッダー用のテキストロゴ
+   現在の共通ヘッダーで使用
+   ================================================== */
+
+.site-logo {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  cursor: default;
+}
+
+.site-logo img {
+  display: block;
+
+  width: 138px;
+  height: auto;
+
+  max-height: 48px;
+
+  object-fit: contain;
+
+  transition: none;
+}
+
+.site-logo:hover img {
+  transform: none;
+  opacity: 1;
+}
+
+/* ==================================================
+   旧テキストロゴ互換
+   --------------------------------------------------
+   既存ページとの互換性を維持するため残す
    ================================================== */
 
 .lumia-logo {
@@ -173,7 +225,7 @@ textarea {
 }
 
 /* ==================================================
-   共通ナビゲーション
+   PC共通ナビゲーション
    ================================================== */
 
 .main-nav {
@@ -211,10 +263,6 @@ textarea {
     transform 0.2s ease;
 }
 
-/* ==================================================
-   ナビゲーション hover
-   ================================================== */
-
 .nav-link:hover {
   background: #eef8fc;
   color: #187da5;
@@ -222,22 +270,248 @@ textarea {
   transform: translateY(-1px);
 }
 
-/* ==================================================
-   現在表示中のページ
-   ================================================== */
-
 .nav-link.active {
   background: #e8f5fa;
   color: #176f91;
 }
 
-/* ==================================================
-   キーボード操作時
-   ================================================== */
-
 .nav-link:focus-visible {
   outline: 3px solid rgba(55, 166, 207, 0.35);
   outline-offset: 2px;
+}
+
+/* ==================================================
+   ハンバーガーメニューボタン
+   --------------------------------------------------
+   タブレット・スマートフォンで表示
+   ================================================== */
+
+.menu-toggle {
+  display: none;
+
+  position: relative;
+  z-index: 1100;
+
+  width: 44px;
+  height: 44px;
+
+  padding: 0;
+
+  background: transparent;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.menu-toggle:hover {
+  background: #eef8fc;
+}
+
+.menu-toggle:focus-visible {
+  outline: 3px solid rgba(55, 166, 207, 0.35);
+  outline-offset: 2px;
+}
+
+/* ==================================================
+   ハンバーガーの3本線
+   ================================================== */
+
+.menu-toggle::before,
+.menu-toggle::after,
+.menu-toggle span {
+  content: "";
+
+  position: absolute;
+  left: 11px;
+
+  width: 22px;
+  height: 2px;
+
+  background: #31576a;
+
+  border-radius: 999px;
+
+  transition:
+    transform 0.25s ease,
+    top 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.menu-toggle::before {
+  top: 14px;
+}
+
+.menu-toggle span {
+  top: 21px;
+}
+
+.menu-toggle::after {
+  top: 28px;
+}
+
+/* ==================================================
+   ハンバーガー → 閉じるアイコン
+   ================================================== */
+
+.menu-toggle.is-open::before {
+  top: 21px;
+  transform: rotate(45deg);
+}
+
+.menu-toggle.is-open span {
+  opacity: 0;
+}
+
+.menu-toggle.is-open::after {
+  top: 21px;
+  transform: rotate(-45deg);
+}
+
+/* ==================================================
+   サイドメニュー
+   ================================================== */
+
+.side-menu {
+  position: fixed;
+  z-index: 1050;
+
+  top: 0;
+  right: 0;
+
+  width: min(380px, 88vw);
+  height: 100vh;
+
+  padding: 92px 28px 32px;
+
+  background: #ffffff;
+
+  box-shadow: -12px 0 35px rgba(44, 70, 82, 0.12);
+
+  overflow-y: auto;
+
+  transform: translateX(100%);
+
+  visibility: hidden;
+
+  transition:
+    transform 0.28s ease,
+    visibility 0.28s ease;
+}
+
+.side-menu.is-open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+/* ==================================================
+   サイドメニュー ナビゲーション
+   ================================================== */
+
+.side-menu-nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.side-menu-nav a {
+  display: flex;
+  align-items: center;
+
+  min-height: 54px;
+
+  padding: 0 16px;
+
+  gap: 12px;
+
+  color: #3f5664;
+
+  font-size: 0.94rem;
+  font-weight: 600;
+
+  border-radius: 12px;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.side-menu-nav a:hover {
+  color: #2f6f8b;
+  background: #f2f8fa;
+
+  transform: translateX(2px);
+}
+
+.side-menu-nav a.active {
+  color: #2f6f8b;
+  background: #eef7fa;
+}
+
+.side-menu-nav a svg {
+  width: 19px;
+  height: 19px;
+
+  flex-shrink: 0;
+}
+
+/* ==================================================
+   サイドメニュー見出し
+   ================================================== */
+
+.side-menu-label {
+  margin: 0 0 10px;
+
+  padding: 0 16px;
+
+  color: #91a0a8;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+}
+
+/* ==================================================
+   サイドメニュー区切り
+   ================================================== */
+
+.side-menu-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 22px 0;
+
+  background: #e7eef1;
+}
+
+/* ==================================================
+   メニュー背景オーバーレイ
+   ================================================== */
+
+.menu-overlay {
+  position: fixed;
+  z-index: 1040;
+
+  inset: 0;
+
+  background: rgba(25, 43, 53, 0.28);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.menu-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* ==================================================
@@ -264,22 +538,18 @@ main {
   text-align: center;
 }
 
-/* ==================================================
-   フッター文字
-   ================================================== */
-
 .site-footer p {
   margin: 0;
 
   color: #607684;
 
   font-size: 12px;
+
   line-height: 1.6;
 }
 
 /* ==================================================
-   画面上では表示しないが、
-   スクリーンリーダーでは読み上げる要素
+   スクリーンリーダー用
    ================================================== */
 
 .visually-hidden {
@@ -294,13 +564,14 @@ main {
   overflow: hidden;
 
   clip: rect(0, 0, 0, 0);
+
   white-space: nowrap;
 
   border: 0;
 }
 
 /* ==================================================
-   共通の選択状態
+   選択状態
    ================================================== */
 
 ::selection {
@@ -309,99 +580,99 @@ main {
 }
 
 /* ==================================================
-   タブレット対応
+   タブレット
    ================================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .header-inner {
-    min-height: 70px;
+    min-height: 68px;
 
     padding: 0 20px;
 
     gap: 20px;
   }
 
-  .lumia-logo {
-    font-size: 24px;
+  .site-logo img {
+    width: 124px;
+    max-height: 44px;
   }
+
+  /*
+   PCナビゲーションを非表示
+  */
 
   .main-nav {
-    gap: 2px;
+    display: none;
   }
 
-  .nav-link {
-    padding: 8px 11px;
+  /*
+   ハンバーガーメニューを表示
+  */
 
-    font-size: 13px;
+  .menu-toggle {
+    display: block;
   }
 }
 
 /* ==================================================
-   スマートフォン対応
+   スマートフォン
    ================================================== */
 
 @media (max-width: 600px) {
   .site-header {
-    position: static;
+    position: sticky;
   }
 
   .header-inner {
-    min-height: auto;
+    min-height: 64px;
 
-    padding: 14px 14px 12px;
+    width: calc(100% - 24px);
 
-    flex-direction: column;
+    padding: 0;
 
-    gap: 10px;
+    gap: 12px;
   }
 
-  .lumia-logo {
-    font-size: 23px;
+  .site-logo img {
+    width: 116px;
+    max-height: 40px;
   }
 
-  .main-nav {
-    width: 100%;
-
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-    gap: 4px;
+  .menu-toggle {
+    width: 42px;
+    height: 42px;
   }
 
-  .nav-link {
-    min-height: 40px;
+  .side-menu {
+    width: min(340px, 90vw);
 
-    padding: 7px 10px;
-
-    border-radius: 10px;
-
-    font-size: 12px;
+    padding: 82px 20px 28px;
   }
 
-  main {
-    min-height: calc(100vh - 150px);
+  .side-menu-nav a {
+    min-height: 52px;
+
+    padding: 0 14px;
+
+    font-size: 0.9rem;
   }
 }
 
 /* ==================================================
-   小型スマートフォン対応
+   小型スマートフォン
    ================================================== */
 
 @media (max-width: 420px) {
   .header-inner {
-    padding-left: 10px;
-    padding-right: 10px;
+    width: calc(100% - 20px);
   }
 
-  .main-nav {
-    gap: 2px;
+  .site-logo img {
+    width: 110px;
   }
 
-  .nav-link {
-    padding: 7px 8px;
-
-    font-size: 11px;
+  .side-menu {
+    width: 90vw;
   }
 
   .site-footer {
@@ -410,7 +681,7 @@ main {
 }
 
 /* ==================================================
-   動きを減らす設定への対応
+   動きを減らす設定
    ================================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -418,11 +689,14 @@ main {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  .menu-toggle::before,
+  .menu-toggle::after,
+  .menu-toggle span,
+  .side-menu,
+  .menu-overlay,
+  .main-nav a,
+  .side-menu-nav a,
+  .site-logo img {
+    transition: none;
   }
 }

@@ -19,3 +19,457 @@ LumiAログイン画面専用のCSSファイル。
 ・css/common.css
 ==================================================
 */
+
+/* ==================================================
+   ログイン画面 基本設定
+   ================================================== */
+
+.login-page {
+  min-height: 100vh;
+  background: #f8fbfc;
+  color: #1f3040;
+}
+
+/* ==================================================
+   メインレイアウト
+   ================================================== */
+
+.login-main {
+  min-height: calc(100vh - 76px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px 80px;
+}
+
+.login-content {
+  width: min(1080px, 100%);
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 80px;
+}
+
+/* ==================================================
+   左側：見出し
+   ================================================== */
+
+.login-heading {
+  padding: 10px 0;
+}
+
+.login-eyebrow {
+  margin: 0 0 18px;
+  color: #4d8fa8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+}
+
+.login-heading h1 {
+  margin: 0;
+  color: #1e3447;
+  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+}
+
+.login-description {
+  margin: 28px 0 0;
+  color: #657582;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+
+/* ==================================================
+   右側：ログインパネル
+   ================================================== */
+
+.login-panel {
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  padding: 42px 44px 38px;
+  background: #ffffff;
+  border: 1px solid rgba(84, 128, 148, 0.12);
+  border-radius: 24px;
+  box-shadow:
+    0 16px 45px rgba(49, 79, 94, 0.08),
+    0 3px 10px rgba(49, 79, 94, 0.04);
+}
+
+/* ==================================================
+   パネル見出し
+   ================================================== */
+
+.login-panel-heading {
+  margin-bottom: 30px;
+}
+
+.login-panel-heading h2 {
+  margin: 0;
+  color: #20394c;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+
+.login-panel-heading p {
+  margin: 10px 0 0;
+  color: #74828c;
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+/* ==================================================
+   ログインフォーム
+   ================================================== */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ==================================================
+   入力項目
+   ================================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #30485a;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+}
+
+.form-group input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid #d7e2e7;
+  border-radius: 12px;
+  background: #fbfdfe;
+  color: #243b4b;
+  font-family: inherit;
+  font-size: 0.94rem;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+  color: #a6b2b9;
+}
+
+.form-group input:hover {
+  border-color: #b9cdd6;
+}
+
+.form-group input:focus {
+  border-color: #5c9ab1;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(92, 154, 177, 0.11);
+}
+
+/* ==================================================
+   ログインボタン
+   ================================================== */
+
+.login-button {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 4px;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #2f6f8b;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(47, 111, 139, 0.16);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login-button span {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.login-button:hover {
+  background: #285f78;
+  transform: translateY(-1px);
+  box-shadow: 0 9px 20px rgba(47, 111, 139, 0.2);
+}
+
+.login-button:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 12px rgba(47, 111, 139, 0.14);
+}
+
+.login-button:focus-visible {
+  outline: 3px solid rgba(92, 154, 177, 0.25);
+  outline-offset: 3px;
+}
+
+/* ==================================================
+   区切り
+   ================================================== */
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 30px 0 25px;
+  color: #a1adb4;
+  font-size: 0.76rem;
+  line-height: 1;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e3eaed;
+}
+
+.login-divider span {
+  flex-shrink: 0;
+}
+
+/* ==================================================
+   ゲスト利用
+   ================================================== */
+
+.guest-login {
+  text-align: center;
+}
+
+.guest-login p {
+  margin: 0 0 12px;
+  color: #74828c;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.guest-button {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-sizing: border-box;
+  border: 1px solid #c7dce4;
+  border-radius: 12px;
+  background: #f8fcfd;
+  color: #39738b;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.guest-button span {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.guest-button:hover {
+  background: #eef7fa;
+  border-color: #9fc4d1;
+  color: #2d657b;
+  transform: translateY(-1px);
+}
+
+.guest-button:active {
+  transform: translateY(0);
+}
+
+.guest-button:focus-visible {
+  outline: 3px solid rgba(92, 154, 177, 0.2);
+  outline-offset: 3px;
+}
+
+/* ==================================================
+   ページ表示アニメーション
+   ================================================== */
+
+.login-content {
+  animation: loginFadeIn 0.55s ease both;
+}
+
+@keyframes loginFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================================================
+   タブレット
+   ================================================== */
+
+@media (max-width: 900px) {
+  .login-main {
+    padding: 52px 24px 70px;
+  }
+
+  .login-content {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    max-width: 620px;
+  }
+
+  .login-heading {
+    text-align: center;
+  }
+
+  .login-panel {
+    margin: 0 auto;
+  }
+}
+
+/* ==================================================
+   スマートフォン
+   ================================================== */
+
+@media (max-width: 600px) {
+  .login-main {
+    min-height: calc(100vh - 64px);
+    padding: 40px 18px 56px;
+  }
+
+  .login-content {
+    gap: 34px;
+  }
+
+  .login-heading {
+    padding: 0;
+  }
+
+  .login-eyebrow {
+    margin-bottom: 14px;
+    font-size: 0.7rem;
+  }
+
+  .login-heading h1 {
+    font-size: 2.55rem;
+    line-height: 1.25;
+  }
+
+  .login-description {
+    margin-top: 20px;
+    font-size: 0.88rem;
+    line-height: 1.9;
+  }
+
+  .login-panel {
+    padding: 30px 22px 28px;
+    border-radius: 20px;
+  }
+
+  .login-panel-heading {
+    margin-bottom: 25px;
+  }
+
+  .login-panel-heading h2 {
+    font-size: 1.35rem;
+  }
+
+  .login-panel-heading p {
+    font-size: 0.78rem;
+  }
+
+  .login-form {
+    gap: 19px;
+  }
+
+  .form-group input {
+    min-height: 50px;
+    font-size: 0.9rem;
+  }
+
+  .login-button {
+    min-height: 52px;
+  }
+
+  .login-divider {
+    margin: 27px 0 22px;
+  }
+
+  .guest-button {
+    min-height: 49px;
+    font-size: 0.84rem;
+  }
+}
+
+/* ==================================================
+   小型スマートフォン
+   ================================================== */
+
+@media (max-width: 380px) {
+  .login-main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .login-heading h1 {
+    font-size: 2.25rem;
+  }
+
+  .login-panel {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* ==================================================
+   動きを抑える設定
+   ================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .login-content,
+  .login-button,
+  .guest-button,
+  .form-group input {
+    animation: none;
+    transition: none;
+  }
+}
