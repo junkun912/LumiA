@@ -31,35 +31,55 @@ LumiAのホーム画面。
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>LumiA｜三重県立津高等技術学校</title>
+    <!-- =================================================
+       ブラウザタブ
+    ================================================== -->
 
-    <!-- 共通CSS -->
+    <title>LumiA</title>
+
+    <!-- =================================================
+       ファビコン
+    ================================================== -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="../assets/images/icons/logo_app.png"
+    />
+
+    <!-- =================================================
+       CSS
+    ================================================== -->
+
     <link rel="stylesheet" href="../css/common.css" />
 
-    <!-- ホーム専用CSS -->
     <link rel="stylesheet" href="../css/home.css" />
   </head>
 
   <body>
     <!-- =================================================
-         ヘッダー
+       ヘッダー
     ================================================== -->
 
     <header class="site-header">
       <div class="header-inner">
-        <!--
-          LumiAロゴ
+        <!-- =================================================
+           LumiAロゴ
+        ================================================== -->
 
-          ホーム画面ではクリックできない
-          ブランド表示として使用する。
-        -->
         <div class="site-logo" aria-label="LumiA">
           <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
         </div>
 
-        <!-- ナビゲーション -->
+        <!-- =================================================
+           PC・タブレット用ナビ
+        ================================================== -->
+
         <nav class="main-nav" aria-label="メインメニュー">
-          <!-- ホーム -->
+          <!-- =================================================
+             ホーム
+          ================================================== -->
+
           <a href="home.html" class="nav-link active" aria-current="page">
             <span class="nav-icon" aria-hidden="true">
               <svg
@@ -91,10 +111,13 @@ LumiAのホーム画面。
               </svg>
             </span>
 
-            <span>ホーム</span>
+            <span> ホーム </span>
           </a>
 
-          <!-- LumiAについて -->
+          <!-- =================================================
+             LumiAについて
+          ================================================== -->
+
           <a href="about.html" class="nav-link">
             <span class="nav-icon" aria-hidden="true">
               <svg
@@ -135,10 +158,13 @@ LumiAのホーム画面。
               </svg>
             </span>
 
-            <span>LumiAについて</span>
+            <span> LumiAについて </span>
           </a>
 
-          <!-- よくある質問 -->
+          <!-- =================================================
+             よくある質問
+          ================================================== -->
+
           <a href="faq.html" class="nav-link">
             <span class="nav-icon" aria-hidden="true">
               <svg
@@ -165,10 +191,13 @@ LumiAのホーム画面。
               </svg>
             </span>
 
-            <span>よくある質問</span>
+            <span> よくある質問 </span>
           </a>
 
-          <!-- 使い方 -->
+          <!-- =================================================
+             使い方
+          ================================================== -->
+
           <a href="howto.html" class="nav-link">
             <span class="nav-icon" aria-hidden="true">
               <svg
@@ -206,33 +235,301 @@ LumiAのホーム画面。
               </svg>
             </span>
 
-            <span>使い方</span>
+            <span> 使い方 </span>
           </a>
         </nav>
+
+        <!-- =================================================
+           ハンバーガーボタン
+        ================================================== -->
+
+        <button
+          type="button"
+          class="menu-toggle"
+          id="menu-toggle"
+          aria-label="メニューを開く"
+          aria-expanded="false"
+          aria-controls="side-menu"
+        >
+          <span></span>
+        </button>
       </div>
+
+      <!-- =================================================
+         スマートフォン用サイドメニュー
+      ================================================== -->
+
+      <aside
+        class="side-menu"
+        id="side-menu"
+        aria-label="メニュー"
+        aria-hidden="true"
+      >
+        <!-- =================================================
+           LumiAブランド
+        ================================================== -->
+
+        <div class="side-menu-brand">
+          <img
+            src="../assets/images/icons/logo_symbol.png"
+            alt=""
+            class="side-menu-brand-symbol"
+          />
+
+          <div class="side-menu-brand-text">
+            <strong> LumiA </strong>
+
+            <span> 学校情報アシスタント </span>
+          </div>
+        </div>
+
+        <!-- =================================================
+           MENU
+        ================================================== -->
+
+        <p class="side-menu-label">MENU</p>
+
+        <!-- =================================================
+           モバイルナビ
+        ================================================== -->
+
+        <nav class="side-menu-nav" aria-label="モバイルメニュー">
+          <!-- =================================================
+             ホーム
+          ================================================== -->
+
+          <a href="home.html" class="active" aria-current="page">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 10.5L12 3L21 10.5"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <path
+                d="M5.5 9.5V20H18.5V9.5"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+
+              <path
+                d="M9.5 20V14H14.5V20"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <span> ホーム </span>
+          </a>
+
+          <!-- =================================================
+             LumiAについて
+          ================================================== -->
+
+          <a href="about.html">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <rect
+                x="4"
+                y="3"
+                width="16"
+                height="18"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+
+              <path
+                d="M8 8H16"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M8 12H16"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M8 16H13"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+
+            <span> LumiAについて </span>
+          </a>
+
+          <!-- =================================================
+             よくある質問
+          ================================================== -->
+
+          <a href="faq.html">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="9"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+
+              <path
+                d="M9.8 9.2C10.1 7.9 11 7.2 12.3 7.2C13.8 7.2 14.8 8.1 14.8 9.4C14.8 10.7 14 11.3 13 12C12.1 12.6 11.8 13.1 11.8 14"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+
+              <circle cx="11.9" cy="16.8" r="1" fill="currentColor" />
+            </svg>
+
+            <span> よくある質問 </span>
+          </a>
+
+          <!-- =================================================
+             使い方
+          ================================================== -->
+
+          <a href="howto.html">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 5.5C4 4.67 4.67 4 5.5 4H10.5C11.88 4 13 5.12 13 6.5V20C13 18.9 12.1 18 11 18H5.5C4.67 18 4 17.33 4 16.5V5.5Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+
+              <path
+                d="M20 5.5C20 4.67 19.33 4 18.5 4H13.5C12.12 4 11 5.12 11 6.5V20C11 18.9 11.9 18 13 18H18.5C19.33 18 20 17.33 20 16.5V5.5Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+
+              <path
+                d="M7 8H10"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M14 8H17"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+              />
+            </svg>
+
+            <span> 使い方 </span>
+          </a>
+        </nav>
+
+        <!-- =================================================
+           区切り線
+        ================================================== -->
+
+        <div class="side-menu-divider"></div>
+
+        <!-- =================================================
+           下部案内
+        ================================================== -->
+
+        <div class="side-menu-footer">
+          <!-- =================================================
+             コーギくんのセリフ
+          ================================================== -->
+
+          <div class="side-menu-message">
+            <span> どこへ行く？ </span>
+          </div>
+
+          <!-- =================================================
+             コーギくん
+          ================================================== -->
+
+          <img
+            src="../assets/images/characters/corgi_greeting.png"
+            alt=""
+            class="side-menu-corgi"
+          />
+
+          <!-- =================================================
+             キャッチコピー
+          ================================================== -->
+
+          <p class="side-menu-catch">
+            人と情報をつなぎ、<br />
+            未来への挑戦を照らす
+          </p>
+        </div>
+      </aside>
+
+      <!-- =================================================
+         メニュー背景
+      ================================================== -->
+
+      <div class="menu-overlay" id="menu-overlay" aria-hidden="true"></div>
     </header>
 
     <!-- =================================================
-         メイン
+       メイン
     ================================================== -->
 
     <main class="home-main">
-      <!-- メイン背景 -->
+      <!-- =================================================
+         背景
+      ================================================== -->
+
       <div class="home-background" aria-hidden="true"></div>
 
-      <!-- 背景オーバーレイ -->
+      <!-- =================================================
+         背景オーバーレイ
+      ================================================== -->
+
       <div class="home-overlay" aria-hidden="true"></div>
 
-      <!-- 下部ウェーブ -->
+      <!-- =================================================
+         下部ウェーブ
+      ================================================== -->
+
       <div class="home-wave" aria-hidden="true"></div>
 
       <!-- =================================================
-           メインコンテンツ
+         メインコンテンツ
       ================================================== -->
 
       <div class="home-content">
         <!-- =================================================
-             ヒーロー
+           ヒーロー
         ================================================== -->
 
         <section class="hero-section">
@@ -248,18 +545,17 @@ LumiAのホーム画面。
         </section>
 
         <!-- =================================================
-             質問エリア
+           質問エリア
         ================================================== -->
 
         <section class="question-section" aria-label="LumiAへの質問">
           <!-- =================================================
-               コーギくん
+             コーギくん
           ================================================== -->
 
           <div class="mascot-area">
-            <!-- 吹き出し -->
             <div class="mascot-speech">
-              <strong>なんでも聞いてね！</strong>
+              <strong> なんでも聞いてね！ </strong>
             </div>
 
             <img
@@ -270,7 +566,7 @@ LumiAのホーム画面。
           </div>
 
           <!-- =================================================
-               質問入力
+             質問入力
           ================================================== -->
 
           <div class="question-area">
@@ -292,10 +588,9 @@ LumiAのホーム画面。
                 placeholder="例：ICTエンジニア科では、どんな訓練がありますか？"
               ></textarea>
 
-              <!-- フォーム下部 -->
               <div class="question-form-bottom">
                 <div class="question-form-note">
-                  <span>Enterでは送信されません</span>
+                  <span> Enterで送信 / Shift + Enterで改行 </span>
                 </div>
 
                 <button
@@ -303,14 +598,17 @@ LumiAのホーム画面。
                   id="question-submit"
                   class="question-submit"
                 >
-                  <span>質問する</span>
+                  <span> 質問する </span>
 
                   <span class="submit-arrow" aria-hidden="true"> → </span>
                 </button>
               </div>
             </form>
 
-            <!-- 個人情報注意 -->
+            <!-- =================================================
+               個人情報注意
+            ================================================== -->
+
             <p class="privacy-notice">
               ※
               名前・電話番号・メールアドレス・住所・学生番号などの個人情報は入力しないでください。
@@ -319,7 +617,7 @@ LumiAのホーム画面。
         </section>
 
         <!-- =================================================
-             質問例
+           質問例
         ================================================== -->
 
         <section class="example-section" aria-labelledby="example-title">
@@ -333,8 +631,15 @@ LumiAのホーム画面。
             <span class="example-heading-line" aria-hidden="true"></span>
           </div>
 
+          <!-- =================================================
+             質問例カード
+          ================================================== -->
+
           <div class="example-list">
-            <!-- 訓練・学科 -->
+            <!-- =================================================
+               訓練・学科
+            ================================================== -->
+
             <div class="example-card example-card-training">
               <span class="example-card-icon" aria-hidden="true">
                 <svg
@@ -376,7 +681,10 @@ LumiAのホーム画面。
               </div>
             </div>
 
-            <!-- 資格 -->
+            <!-- =================================================
+               資格
+            ================================================== -->
+
             <div class="example-card example-card-qualification">
               <span class="example-card-icon" aria-hidden="true">
                 <svg
@@ -424,7 +732,10 @@ LumiAのホーム画面。
               </div>
             </div>
 
-            <!-- 学校行事 -->
+            <!-- =================================================
+               学校行事
+            ================================================== -->
+
             <div class="example-card example-card-event">
               <span class="example-card-icon" aria-hidden="true">
                 <svg
@@ -491,7 +802,10 @@ LumiAのホーム画面。
               </div>
             </div>
 
-            <!-- 就職・進路 -->
+            <!-- =================================================
+               就職・進路
+            ================================================== -->
+
             <div class="example-card example-card-career">
               <span class="example-card-icon" aria-hidden="true">
                 <svg
@@ -537,19 +851,20 @@ LumiAのホーム画面。
             </div>
           </div>
         </section>
+
+        <!-- =================================================
+           ホーム画面内 著作権表記
+           --------------------------------------------------
+           独立した白いフッターにはせず、
+           ホーム背景の中に自然に配置する。
+        ================================================== -->
+
+        <div class="home-credit">© 三重県立津高等技術学校｜LumiA</div>
       </div>
     </main>
 
     <!-- =================================================
-         フッター
-    ================================================== -->
-
-    <footer class="site-footer">
-      <p>© 三重県立津高等技術学校｜LumiA</p>
-    </footer>
-
-    <!-- =================================================
-         JavaScript
+       JavaScript
     ================================================== -->
 
     <script src="../js/common.js"></script>
