@@ -19,7 +19,7 @@ LumiAのホーム画面。
 ・ユーザーが迷わず質問できるようにする
 ・LumiAの世界観を最初に伝える
 ・コーギくんを案内役として表示する
-・質問例から利用方法をイメージできるようにする
+・質問とファイルを入力できるようにする
 
 ==================================================
 -->
@@ -52,7 +52,6 @@ LumiAのホーム画面。
     ================================================== -->
 
     <link rel="stylesheet" href="../css/common.css" />
-
     <link rel="stylesheet" href="../css/home.css" />
   </head>
 
@@ -111,7 +110,7 @@ LumiAのホーム画面。
               </svg>
             </span>
 
-            <span> ホーム </span>
+            <span>ホーム</span>
           </a>
 
           <!-- =================================================
@@ -158,7 +157,7 @@ LumiAのホーム画面。
               </svg>
             </span>
 
-            <span> LumiAについて </span>
+            <span>LumiAについて</span>
           </a>
 
           <!-- =================================================
@@ -191,7 +190,7 @@ LumiAのホーム画面。
               </svg>
             </span>
 
-            <span> よくある質問 </span>
+            <span>よくある質問</span>
           </a>
 
           <!-- =================================================
@@ -235,7 +234,7 @@ LumiAのホーム画面。
               </svg>
             </span>
 
-            <span> 使い方 </span>
+            <span>使い方</span>
           </a>
         </nav>
 
@@ -277,9 +276,8 @@ LumiAのホーム画面。
           />
 
           <div class="side-menu-brand-text">
-            <strong> LumiA </strong>
-
-            <span> 学校情報アシスタント </span>
+            <strong>LumiA</strong>
+            <span>学校情報アシスタント</span>
           </div>
         </div>
 
@@ -328,7 +326,7 @@ LumiAのホーム画面。
               />
             </svg>
 
-            <span> ホーム </span>
+            <span>ホーム</span>
           </a>
 
           <!-- =================================================
@@ -374,7 +372,7 @@ LumiAのホーム画面。
               />
             </svg>
 
-            <span> LumiAについて </span>
+            <span>LumiAについて</span>
           </a>
 
           <!-- =================================================
@@ -406,7 +404,7 @@ LumiAのホーム画面。
               <circle cx="11.9" cy="16.8" r="1" fill="currentColor" />
             </svg>
 
-            <span> よくある質問 </span>
+            <span>よくある質問</span>
           </a>
 
           <!-- =================================================
@@ -449,7 +447,7 @@ LumiAのホーム画面。
               />
             </svg>
 
-            <span> 使い方 </span>
+            <span>使い方</span>
           </a>
         </nav>
 
@@ -469,7 +467,7 @@ LumiAのホーム画面。
           ================================================== -->
 
           <div class="side-menu-message">
-            <span> どこへ行く？ </span>
+            <span>どこへ行く？</span>
           </div>
 
           <!-- =================================================
@@ -534,7 +532,7 @@ LumiAのホーム画面。
 
         <section class="hero-section">
           <h1 class="hero-title">
-            津高技の「知りたい」を、<br />
+            津高技の「知りたい」を<br />
             いつでもサポート
           </h1>
 
@@ -551,11 +549,12 @@ LumiAのホーム画面。
         <section class="question-section" aria-label="LumiAへの質問">
           <!-- =================================================
              コーギくん
+             質問欄の外側に配置
           ================================================== -->
 
           <div class="mascot-area">
             <div class="mascot-speech">
-              <strong> なんでも聞いてね！ </strong>
+              <strong>なんでも聞いてね！</strong>
             </div>
 
             <img
@@ -566,39 +565,90 @@ LumiAのホーム画面。
           </div>
 
           <!-- =================================================
-             質問入力
+             質問入力エリア
           ================================================== -->
 
           <div class="question-area">
             <form id="question-form" class="question-form">
+              <!-- =================================================
+                 質問入力ラベル
+              ================================================== -->
+
               <label for="question-input" class="visually-hidden">
                 質問を入力してください
               </label>
 
+              <!-- =================================================
+                 質問欄タイトル
+              ================================================== -->
+
               <div class="question-heading">
                 <span class="question-heading-label"> LumiAに質問する </span>
               </div>
+
+              <!-- =================================================
+                 質問入力
+              ================================================== -->
 
               <textarea
                 id="question-input"
                 name="question"
                 class="question-input"
                 maxlength="1000"
-                rows="5"
+                rows="6"
                 placeholder="例：ICTエンジニア科では、どんな訓練がありますか？"
               ></textarea>
 
+              <!-- =================================================
+                 質問フォーム下部
+              ================================================== -->
+
               <div class="question-form-bottom">
+                <!-- =================================================
+                   ファイル添付
+                ================================================== -->
+
+                <div class="file-upload-area">
+                  <input
+                    type="file"
+                    id="file-input"
+                    class="file-input"
+                    accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg"
+                  />
+
+                  <label for="file-input" class="file-upload-button">
+                    <span class="file-upload-icon" aria-hidden="true">
+                      📎
+                    </span>
+
+                    <span>ファイルを添付</span>
+                  </label>
+
+                  <span
+                    id="file-name"
+                    class="file-name"
+                    aria-live="polite"
+                  ></span>
+                </div>
+
+                <!-- =================================================
+                   Enter操作案内
+                ================================================== -->
+
                 <div class="question-form-note">
                   <span> Enterで送信 / Shift + Enterで改行 </span>
                 </div>
+
+                <!-- =================================================
+                   質問ボタン
+                ================================================== -->
 
                 <button
                   type="submit"
                   id="question-submit"
                   class="question-submit"
                 >
-                  <span> 質問する </span>
+                  <span>質問する</span>
 
                   <span class="submit-arrow" aria-hidden="true"> → </span>
                 </button>
@@ -613,242 +663,6 @@ LumiAのホーム画面。
               ※
               名前・電話番号・メールアドレス・住所・学生番号などの個人情報は入力しないでください。
             </p>
-          </div>
-        </section>
-
-        <!-- =================================================
-           質問例
-        ================================================== -->
-
-        <section class="example-section" aria-labelledby="example-title">
-          <div class="example-heading-wrap">
-            <span class="example-heading-line" aria-hidden="true"></span>
-
-            <h2 id="example-title" class="example-title">
-              こんなことを聞けます
-            </h2>
-
-            <span class="example-heading-line" aria-hidden="true"></span>
-          </div>
-
-          <!-- =================================================
-             質問例カード
-          ================================================== -->
-
-          <div class="example-list">
-            <!-- =================================================
-               訓練・学科
-            ================================================== -->
-
-            <div class="example-card example-card-training">
-              <span class="example-card-icon" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3 8L12 4L21 8L12 12L3 8Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                  />
-
-                  <path
-                    d="M6 10V15.5C8.2 17.2 10.1 18 12 18C13.9 18 15.8 17.2 18 15.5V10"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-
-                  <path
-                    d="M21 8V14"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </span>
-
-              <div class="example-card-content">
-                <strong> 訓練や学科について </strong>
-
-                <span>
-                  ICTエンジニア科では<br />
-                  どんな訓練がありますか？
-                </span>
-              </div>
-            </div>
-
-            <!-- =================================================
-               資格
-            ================================================== -->
-
-            <div class="example-card example-card-qualification">
-              <span class="example-card-icon" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6 3.5H14L18 7.5V20.5H6V3.5Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                  />
-
-                  <path
-                    d="M14 3.5V7.5H18"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                  />
-
-                  <path
-                    d="M9 11H15"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-
-                  <path
-                    d="M9 14.5H15"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </span>
-
-              <div class="example-card-content">
-                <strong> 資格について </strong>
-
-                <span>
-                  ITパスポートについて<br />
-                  教えてください。
-                </span>
-              </div>
-            </div>
-
-            <!-- =================================================
-               学校行事
-            ================================================== -->
-
-            <div class="example-card example-card-event">
-              <span class="example-card-icon" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="4"
-                    y="5"
-                    width="16"
-                    height="15"
-                    rx="2"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-
-                  <path
-                    d="M8 3V7"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-
-                  <path
-                    d="M16 3V7"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-
-                  <path d="M4 10H20" stroke="currentColor" stroke-width="1.8" />
-
-                  <path
-                    d="M8 14H8.01"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                  />
-
-                  <path
-                    d="M12 14H12.01"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                  />
-
-                  <path
-                    d="M16 14H16.01"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </span>
-
-              <div class="example-card-content">
-                <strong> 学校行事について </strong>
-
-                <span>
-                  学校行事には<br />
-                  どんなものがありますか？
-                </span>
-              </div>
-            </div>
-
-            <!-- =================================================
-               就職・進路
-            ================================================== -->
-
-            <div class="example-card example-card-career">
-              <span class="example-card-icon" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="4"
-                    y="7"
-                    width="16"
-                    height="13"
-                    rx="2"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-
-                  <path
-                    d="M9 7V5.5C9 4.67 9.67 4 10.5 4H13.5C14.33 4 15 4.67 15 5.5V7"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-
-                  <path d="M4 12H20" stroke="currentColor" stroke-width="1.8" />
-
-                  <path
-                    d="M10 12V14H14V12"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </span>
-
-              <div class="example-card-content">
-                <strong> 就職・進路について </strong>
-
-                <span>
-                  卒業後の就職先について<br />
-                  教えてください。
-                </span>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -868,7 +682,6 @@ LumiAのホーム画面。
     ================================================== -->
 
     <script src="../js/common.js"></script>
-
     <script src="../js/home.js"></script>
   </body>
 </html>
