@@ -1,129 +1,332 @@
 <!--
-  ============================================================
-  LumiA｜ログイン画面
-  ============================================================
+==================================================
+LumiA
+ファイル名：login.html
 
-  画面概要：
-  学生・指導員がLumiAを利用するためのログイン画面。
-  ログインせずに利用するゲスト向けの導線も用意する。
+【ファイル概要】
+津高技専用AI学校アシスタント LumiAの共通ログイン画面。
 
-  主な役割：
-  ・学生・指導員のログイン
-  ・ゲスト利用への導線
-  ・LumiAの世界観を伝える
-  ・ホーム画面から独立したログイン画面として構成
+【対象ユーザー】
+・学生
+・指導員
+・管理者
+・来校者（ゲスト）
 
-  認証：
-  ・Amazon Cognitoを利用予定
+【基本操作】
+・学生、指導員、管理者：ユーザー名とパスワードでログイン
+・ゲスト：ログインせずに公開情報を利用
+・ログイン後：ホーム画面で権限に応じた機能を表示
 
-  画面遷移：
-  ・学生・指導員 → ログイン → ホーム画面
-  ・ゲスト → ホーム画面
+【設計方針】
+・絵本のようなデザインを採用
+・本の背景とフォームを一体化
+・ログイン画面に管理者専用リンクを置かない
+・権限の確認は認証情報とバックエンドで行う
 
-  使用ファイル：
-  ・../css/common.css
-  ・../css/login.css
-  ・../js/common.js
-  ・../js/login.js
+【関連ファイル】
+・../css/common.css
+・../css/login.css
+・../js/login.js
+・../assets/images/backgrounds/login_background.png
+・../assets/images/icons/logo_main.png
+・../assets/images/characters/corgi_basic.png
 
-  使用素材：
-  ・../assets/images/icons/logo_main.png
-
-  ============================================================
+==================================================
 -->
 
 <!doctype html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>ログイン｜LumiA</title>
+    <meta
+      name="description"
+      content="LumiAは津高技専用のAI学校アシスタントです。学校での学びをサポートします。"
+    />
 
+    <meta name="theme-color" content="#fff3dc" />
+
+    <title>ログイン | LumiA</title>
+
+    <!-- 共通スタイル -->
     <link rel="stylesheet" href="../css/common.css" />
+
+    <!-- ログイン画面専用スタイル -->
     <link rel="stylesheet" href="../css/login.css" />
+
+    <!-- アプリアイコン -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="../assets/images/icons/logo_app.png"
+    />
+
+    <!-- ログイン処理 -->
+    <script src="../js/login.js" defer></script>
   </head>
 
   <body class="login-page">
-    <header class="site-header">
-      <div class="header-inner">
-        <div class="site-logo" aria-label="LumiA">
-          <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
-        </div>
-      </div>
-    </header>
+    <main class="login-screen">
+      <!-- ========================================
+           背景：絵本の風景
+           ======================================== -->
 
-    <main class="login-main">
-      <section class="login-content">
-        <div class="login-heading">
-          <p class="login-eyebrow">WELCOME TO LumiA</p>
+      <div class="login-screen__background" aria-hidden="true"></div>
 
-          <h1>
-            LumiAへ<br />
-            ようこそ
+      <div class="login-screen__overlay" aria-hidden="true"></div>
+
+      <!-- ========================================
+           本の左右ページ
+           ======================================== -->
+
+      <div class="login-book">
+        <!-- ======================================
+             左ページ：LumiAの紹介
+             ====================================== -->
+
+        <section class="login-intro" aria-labelledby="intro-title">
+          <!-- LumiAロゴ -->
+
+          <a
+            class="login-intro__logo"
+            href="../index.html"
+            aria-label="LumiA ホーム"
+          >
+            <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
+          </a>
+
+          <!-- サービス名 -->
+
+          <p class="login-intro__subtitle">津高技専用 AI学校アシスタント</p>
+
+          <!-- キャッチコピー -->
+
+          <h1 id="intro-title" class="login-intro__message">
+            知りたいが、<br />
+            学びに変わる。
           </h1>
 
-          <p class="login-description">
-            三重県立津高等技術学校の<br />
-            学校情報をLumiAに聞いてみよう。
-          </p>
-        </div>
+          <!-- 飾り線 -->
 
-        <div class="login-panel">
-          <div class="login-panel-heading">
-            <h2>ログイン</h2>
-
-            <p>学生・指導員の方はこちらからログインしてください。</p>
+          <div class="login-intro__ornament" aria-hidden="true">
+            <span></span>
+            <span class="login-intro__ornament-star">✦</span>
+            <span></span>
           </div>
 
-          <form class="login-form">
-            <div class="form-group">
-              <label for="login-id">ログインID</label>
+          <!-- 紹介文 -->
 
-              <input
-                type="text"
-                id="login-id"
-                name="login-id"
-                placeholder="ログインIDを入力"
-                autocomplete="username"
-              />
+          <p class="login-intro__description">
+            学校での学びを、もっと身近に。<br />
+            LumiAがあなたの学習をサポートします。
+          </p>
+
+          <!-- ====================================
+               案内役：コーギくん
+               ==================================== -->
+
+          <div class="login-mascot">
+            <img
+              class="login-mascot__image"
+              src="../assets/images/characters/corgi_basic.png"
+              alt="LumiAの案内役、コーギくん"
+            />
+
+            <div class="login-mascot__message">
+              <span class="login-mascot__name"> コーギくん </span>
+
+              <p>いっしょに学んでいこう！</p>
+            </div>
+          </div>
+
+          <!-- 左ページ下部 -->
+
+          <p class="login-intro__footer">Your learning journey starts here.</p>
+        </section>
+
+        <!-- ======================================
+             右ページ：共通ログインフォーム
+             ====================================== -->
+
+        <section class="login-panel" aria-labelledby="login-title">
+          <!-- 飾り -->
+
+          <div class="login-panel__decoration" aria-hidden="true">
+            <span>✦</span>
+          </div>
+
+          <!-- 見出し -->
+
+          <header class="login-panel__header">
+            <p class="login-panel__eyebrow">WELCOME TO LumiA</p>
+
+            <h2 id="login-title" class="login-panel__title">ログイン</h2>
+
+            <div class="login-panel__ornament" aria-hidden="true">
+              <span></span>
+              <span>✧</span>
+              <span></span>
             </div>
 
-            <div class="form-group">
-              <label for="login-password">パスワード</label>
+            <p class="login-panel__description">
+              アカウント情報を入力してください。
+            </p>
+          </header>
 
-              <input
-                type="password"
-                id="login-password"
-                name="login-password"
-                placeholder="パスワードを入力"
-                autocomplete="current-password"
-              />
+          <!-- ====================================
+               ログインフォーム
+               ==================================== -->
+
+          <form id="login-form" class="login-form" autocomplete="on">
+            <!-- ユーザー名 -->
+
+            <div class="login-form__field">
+              <label for="username"> ユーザー名 </label>
+
+              <div class="login-input">
+                <span class="login-input__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 21v-2a8 8 0 0 1 16 0v2Z" />
+                  </svg>
+                </span>
+
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  placeholder="ユーザー名を入力"
+                  autocomplete="username"
+                  autocapitalize="none"
+                  spellcheck="false"
+                  required
+                />
+              </div>
             </div>
 
-            <button type="submit" class="login-button">
-              ログイン
-              <span aria-hidden="true">→</span>
+            <!-- パスワード -->
+
+            <div class="login-form__field">
+              <label for="password"> パスワード </label>
+
+              <div class="login-input">
+                <span class="login-input__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="5" y="10" width="14" height="11" rx="2" />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                    <circle cx="12" cy="15" r="1" />
+                    <path d="M12 16v2" />
+                  </svg>
+                </span>
+
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="パスワードを入力"
+                  autocomplete="current-password"
+                  required
+                />
+
+                <!-- パスワード表示切り替え -->
+
+                <button
+                  class="login-input__toggle"
+                  id="password-toggle"
+                  type="button"
+                  aria-label="パスワードを表示"
+                  aria-pressed="false"
+                >
+                  <svg
+                    class="login-input__eye"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"
+                    />
+
+                    <circle cx="12" cy="12" r="3" />
+
+                    <path class="eye-slash" d="M3 3 21 21" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ログイン状態を保持 -->
+
+            <div class="login-form__options">
+              <label class="login-remember">
+                <input id="remember-me" name="rememberMe" type="checkbox" />
+
+                <span class="login-remember__box" aria-hidden="true"></span>
+
+                <span> ログイン状態を保持する </span>
+              </label>
+            </div>
+
+            <!-- ログインボタン -->
+
+            <button class="login-submit" type="submit">
+              <span>ログイン</span>
+
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 12h15M13 5l7 7-7 7" />
+              </svg>
             </button>
+
+            <!-- ログイン結果・エラーメッセージ -->
+
+            <p
+              id="login-message"
+              class="login-message"
+              role="status"
+              aria-live="polite"
+            ></p>
+
+            <!-- 区切り -->
+
+            <div class="login-form__divider" aria-hidden="true">
+              <span></span>
+              <span>LEARNING STARTS HERE</span>
+              <span></span>
+            </div>
+
+            <!-- パスワード再設定 -->
+
+            <a class="login-forgot" href="./forgot-password.html">
+              <span>パスワードを忘れた方はこちら</span>
+              <span aria-hidden="true">›</span>
+            </a>
+
+            <!-- ==================================
+                 ゲスト利用
+                 ================================== -->
+
+            <a class="login-guest" href="../index.html?mode=guest">
+              <span class="login-guest__icon" aria-hidden="true"> ✦ </span>
+
+              <span> ログインせずにゲストとして利用する </span>
+
+              <span class="login-guest__arrow" aria-hidden="true"> › </span>
+            </a>
           </form>
 
-          <div class="login-divider">
-            <span>または</span>
-          </div>
+          <!-- ====================================
+               フッター
+               ==================================== -->
 
-          <div class="guest-login">
-            <p>学校について知りたい方はこちら</p>
+          <footer class="login-panel__footer">
+            <span class="login-panel__footer-mark" aria-hidden="true"> ✦ </span>
 
-            <a href="home.html" class="guest-button">
-              ゲストとして利用する
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </div>
-      </section>
+            <p>津高技専用 AI学校アシスタント LumiA</p>
+          </footer>
+        </section>
+      </div>
     </main>
-
-    <script src="../js/common.js"></script>
-    <script src="../js/login.js"></script>
   </body>
 </html>

@@ -3,473 +3,1313 @@
 LumiA
 ファイル名：login.css
 
-【ファイル概要】
-LumiAログイン画面専用のCSSファイル。
+【概要】
+津高技専用AI学校アシスタント LumiAのログイン画面。
 
-【主な役割】
-・ログインフォーム
-・入力欄
-・ログインボタン
-・ゲスト利用案内
-・ログイン画面のレスポンシブ対応
+【デザイン方針】
+・絵本の本の背景を活かす
+・左右のページに自然にコンテンツを配置
+・ログインフォームの外側にカードを作らない
+・入力欄は紙色と繊細な金色で統一
+・文字を読みやすく調整
+・ゲスト利用の導線を設ける
+・PC、タブレット、スマートフォンに対応
 
 【関連ファイル】
-・pages/login.html
-・js/auth.js
-・css/common.css
+・../pages/login.html
+・../css/common.css
+・../js/login.js
+・../assets/images/backgrounds/login_background.png
 ==================================================
 */
 
 /* ==================================================
-   ログイン画面 基本設定
+   1. 基本設定
    ================================================== */
 
 .login-page {
+  --paper: #fff2d8;
+  --paper-light: #fff7e8;
+  --ink: #17486a;
+  --ink-light: #607989;
+  --blue: #2476a5;
+  --blue-dark: #104d79;
+  --gold: #c58b32;
+  --gold-light: #e2b45e;
+  --line: #d9bb83;
+
+  min-width: 320px;
   min-height: 100vh;
-  background: #f8fbfc;
-  color: #1f3040;
+  margin: 0;
+
+  color: var(--ink);
+
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+.login-page *,
+.login-page *::before,
+.login-page *::after {
+  box-sizing: border-box;
+}
+
+.login-page button,
+.login-page input {
+  font: inherit;
+}
+
+.login-page a {
+  color: inherit;
+  text-decoration: none;
 }
 
 /* ==================================================
-   メインレイアウト
+   2. 背景
    ================================================== */
 
-.login-main {
-  min-height: calc(100vh - 76px);
+.login-screen {
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  padding: clamp(12px, 2vw, 28px);
+
+  overflow: hidden;
+
+  background: #ead9b8;
+}
+
+.login-screen__background {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+
+  background-image: url("../assets/images/backgrounds/login_background.png");
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-screen__overlay {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+
+  background: rgb(255 244 218 / 3%);
+
+  pointer-events: none;
+}
+
+/* ==================================================
+   3. 本の左右ページ
+   ================================================== */
+
+.login-book {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  align-items: center;
+
+  width: min(100%, 1500px);
+  min-height: min(82vh, 850px);
+
+  margin: auto;
+}
+
+/* ==================================================
+   4. 左ページ：LumiA紹介
+   ================================================== */
+
+.login-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+
+  padding: clamp(20px, 3vw, 44px);
+
+  text-align: center;
+}
+
+/* ロゴ */
+
+.login-intro__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(100%, 320px);
+
+  margin-bottom: 8px;
+}
+
+.login-intro__logo img {
+  display: block;
+
+  width: 100%;
+  max-height: 110px;
+
+  object-fit: contain;
+}
+
+/* サービス名 */
+
+.login-intro__subtitle {
+  margin: 0;
+
+  color: #294e68;
+
+  font-size: clamp(0.78rem, 0.9vw, 0.92rem);
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
+}
+
+/* キャッチコピー */
+
+.login-intro__message {
+  margin: 24px 0 0;
+
+  color: #173e5d;
+
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+
+  font-size: clamp(1.6rem, 2.1vw, 2.15rem);
+  font-weight: 700;
+
+  line-height: 1.9;
+  letter-spacing: 0.1em;
+}
+
+/* 飾り線 */
+
+.login-intro__ornament {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 64px 24px 80px;
+
+  gap: 12px;
+
+  width: min(100%, 240px);
+
+  margin: 5px 0 13px;
+
+  color: var(--gold);
 }
 
-.login-content {
-  width: min(1080px, 100%);
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  align-items: center;
-  gap: 80px;
+.login-intro__ornament span:first-child,
+.login-intro__ornament span:last-child {
+  flex: 1;
+
+  height: 1px;
+
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+
+.login-intro__ornament span:last-child {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.login-intro__ornament-star {
+  font-size: 1rem;
+}
+
+/* 紹介文 */
+
+.login-intro__description {
+  margin: 0;
+
+  color: #496272;
+
+  font-size: clamp(0.82rem, 0.95vw, 0.94rem);
+
+  line-height: 2.1;
 }
 
 /* ==================================================
-   左側：見出し
+   5. コーギくん
    ================================================== */
 
-.login-heading {
-  padding: 10px 0;
+.login-mascot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 4px;
+
+  width: 100%;
+
+  margin-top: 16px;
 }
 
-.login-eyebrow {
-  margin: 0 0 18px;
-  color: #4d8fa8;
+.login-mascot__image {
+  display: block;
+
+  width: clamp(130px, 14vw, 205px);
+  max-height: 220px;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 4px 5px rgb(83 61 34 / 8%));
+}
+
+.login-mascot__message {
+  padding: 10px 22px;
+
+  border: 1px solid #d4ad68;
+  border-radius: 12px;
+
+  background: #fff2d8;
+
+  box-shadow: 0 2px 5px rgb(90 60 25 / 5%);
+}
+
+.login-mascot__name {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #9a7336;
+
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
-  line-height: 1.4;
 }
 
-.login-heading h1 {
+.login-mascot__message p {
   margin: 0;
-  color: #1e3447;
-  font-size: clamp(2.8rem, 5vw, 4.4rem);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0.04em;
+
+  color: #34576b;
+
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
-.login-description {
-  margin: 28px 0 0;
-  color: #657582;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 2;
-  letter-spacing: 0.04em;
+.login-intro__footer {
+  margin: 17px 0 0;
+
+  color: #8c805e;
+
+  font-family: Georgia, serif;
+  font-size: 0.68rem;
+
+  letter-spacing: 0.06em;
 }
 
 /* ==================================================
-   右側：ログインパネル
+   6. 右ページ：ログインフォーム
+
+   本のページを直接見せる。
+   独立したカード背景・外枠・影は使用しない。
    ================================================== */
 
 .login-panel {
-  width: 100%;
-  max-width: 500px;
-  margin-left: auto;
-  padding: 42px 44px 38px;
-  background: #ffffff;
-  border: 1px solid rgba(84, 128, 148, 0.12);
-  border-radius: 24px;
-  box-shadow:
-    0 16px 45px rgba(49, 79, 94, 0.08),
-    0 3px 10px rgba(49, 79, 94, 0.04);
+  position: relative;
+  justify-self: center;
+
+  width: min(100%, 510px);
+  min-width: 0;
+
+  /* 右ページ内の位置調整 */
+  margin-left: 20px;
+  margin-top: 24px;
+
+  /* フォームの内側余白 */
+  padding: 38px 30px;
+
+  /* 本の背景と一体化 */
+  background: transparent;
+
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* カード風の枠を削除 */
+
+.login-panel::before,
+.login-panel::after {
+  content: none;
+}
+
+/* 内部要素 */
+
+.login-panel__header,
+.login-form,
+.login-panel__footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* 右上の星 */
+
+.login-panel__decoration {
+  position: absolute;
+
+  top: 14px;
+  right: 18px;
+
+  color: var(--gold);
+
+  font-size: 1rem;
 }
 
 /* ==================================================
-   パネル見出し
+   7. ログイン見出し
    ================================================== */
 
-.login-panel-heading {
-  margin-bottom: 30px;
+.login-panel__header {
+  text-align: center;
 }
 
-.login-panel-heading h2 {
-  margin: 0;
-  color: #20394c;
-  font-size: 1.55rem;
+.login-panel__eyebrow {
+  margin: 0 0 10px;
+
+  color: #946d34;
+
+  font-size: 0.76rem;
   font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 0.04em;
+
+  letter-spacing: 0.17em;
 }
 
-.login-panel-heading p {
-  margin: 10px 0 0;
-  color: #74828c;
-  font-size: 0.84rem;
-  line-height: 1.7;
+.login-panel__title {
+  margin: 0;
+
+  color: var(--ink);
+
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+
+  font-size: 2.1rem;
+  font-weight: 700;
+
+  letter-spacing: 0.15em;
+}
+
+/* タイトル下の飾り */
+
+.login-panel__ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin: 13px auto 16px;
+
+  color: var(--gold);
+}
+
+.login-panel__ornament span:first-child,
+.login-panel__ornament span:last-child {
+  width: 46px;
+  height: 1px;
+
+  background: #d2a04b;
+}
+
+/* 説明文 */
+
+.login-panel__description {
+  margin: 0 0 25px;
+
+  color: #647989;
+
+  font-size: 0.92rem;
+  line-height: 1.9;
 }
 
 /* ==================================================
-   ログインフォーム
+   8. 入力フォーム
    ================================================== */
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+
+  gap: 17px;
 }
 
-/* ==================================================
-   入力項目
-   ================================================== */
-
-.form-group {
+.login-form__field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+
+  gap: 9px;
 }
 
-.form-group label {
-  color: #30485a;
-  font-size: 0.86rem;
+.login-form__field label {
+  color: #244b61;
+
+  font-size: 0.92rem;
   font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 0.03em;
 }
 
-.form-group input {
-  width: 100%;
-  min-height: 52px;
-  padding: 0 16px;
-  border: 1px solid #d7e2e7;
-  border-radius: 12px;
-  background: #fbfdfe;
-  color: #243b4b;
-  font-family: inherit;
-  font-size: 0.94rem;
-  outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
-  box-sizing: border-box;
-}
+/* 入力欄 */
 
-.form-group input::placeholder {
-  color: #a6b2b9;
-}
-
-.form-group input:hover {
-  border-color: #b9cdd6;
-}
-
-.form-group input:focus {
-  border-color: #5c9ab1;
-  background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(92, 154, 177, 0.11);
-}
-
-/* ==================================================
-   ログインボタン
-   ================================================== */
-
-.login-button {
-  width: 100%;
-  min-height: 54px;
-  margin-top: 4px;
-  padding: 0 22px;
+.login-input {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  border: none;
-  border-radius: 12px;
-  background: #2f6f8b;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  box-shadow: 0 7px 18px rgba(47, 111, 139, 0.16);
+
+  min-height: 52px;
+
+  padding: 0 13px;
+
+  border: 1px solid #d6b77e;
+  border-radius: 5px;
+
+  background: #fff3d9;
+
   transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
+    border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-.login-button span {
-  font-size: 1.05rem;
-  line-height: 1;
+.login-input:focus-within {
+  border-color: #8eaaad;
+
+  box-shadow: 0 0 0 2px rgb(76 126 148 / 12%);
 }
 
-.login-button:hover {
-  background: #285f78;
-  transform: translateY(-1px);
-  box-shadow: 0 9px 20px rgba(47, 111, 139, 0.2);
+/* 入力欄アイコン */
+
+.login-input__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 24px;
+
+  width: 24px;
+  height: 24px;
+
+  margin-right: 10px;
+
+  color: #6798b4;
 }
 
-.login-button:active {
-  transform: translateY(0);
-  box-shadow: 0 5px 12px rgba(47, 111, 139, 0.14);
+.login-input__icon svg,
+.login-input__eye {
+  width: 100%;
+  height: 100%;
+
+  stroke: currentColor;
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.login-button:focus-visible {
-  outline: 3px solid rgba(92, 154, 177, 0.25);
+/* テキスト入力 */
+
+.login-input input {
+  width: 100%;
+  min-width: 0;
+  min-height: 50px;
+
+  padding: 8px 0;
+
+  border: 0;
+  outline: 0;
+
+  color: #294b5b;
+  background: transparent;
+
+  font-size: 0.95rem;
+}
+
+.login-input input::placeholder {
+  color: #999b95;
+}
+
+/* ==================================================
+   9. パスワード表示切り替え
+   ================================================== */
+
+.login-input__toggle {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 36px;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 7px;
+
+  border: 0;
+  border-radius: 5px;
+
+  color: #6798b4;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.login-input__toggle:hover {
+  background: #f3e3c3;
+}
+
+.login-input__toggle:focus-visible {
+  outline: 2px solid #5088a5;
+  outline-offset: 3px;
+}
+
+.login-input__toggle[aria-pressed="true"] .eye-slash {
+  opacity: 0;
+}
+
+/* ==================================================
+   10. ログイン状態を保持
+   ================================================== */
+
+.login-form__options {
+  margin-top: -2px;
+}
+
+.login-remember {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #526671;
+
+  font-size: 0.86rem;
+
+  cursor: pointer;
+}
+
+.login-remember input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+}
+
+.login-remember__box {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 19px;
+
+  width: 19px;
+  height: 19px;
+
+  border: 1px solid #c9ab75;
+  border-radius: 4px;
+
+  background: #fff3d9;
+}
+
+.login-remember input:checked + .login-remember__box {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.login-remember input:checked + .login-remember__box::after {
+  width: 9px;
+  height: 5px;
+
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #fff;
+
+  content: "";
+
+  transform: translateY(-1px) rotate(-45deg);
+}
+
+.login-remember input:focus-visible + .login-remember__box {
+  outline: 2px solid #5088a5;
   outline-offset: 3px;
 }
 
 /* ==================================================
-   区切り
+   11. ログインボタン
    ================================================== */
 
-.login-divider {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin: 30px 0 25px;
-  color: #a1adb4;
-  font-size: 0.76rem;
-  line-height: 1;
-}
-
-.login-divider::before,
-.login-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: #e3eaed;
-}
-
-.login-divider span {
-  flex-shrink: 0;
-}
-
-/* ==================================================
-   ゲスト利用
-   ================================================== */
-
-.guest-login {
-  text-align: center;
-}
-
-.guest-login p {
-  margin: 0 0 12px;
-  color: #74828c;
-  font-size: 0.82rem;
-  line-height: 1.6;
-}
-
-.guest-button {
-  width: 100%;
-  min-height: 50px;
-  padding: 0 20px;
+.login-submit {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  box-sizing: border-box;
-  border: 1px solid #c7dce4;
-  border-radius: 12px;
-  background: #f8fcfd;
-  color: #39738b;
-  text-decoration: none;
-  font-size: 0.9rem;
+
+  gap: 15px;
+
+  width: 100%;
+  min-height: 56px;
+
+  padding: 11px 18px;
+
+  border: 1px solid #175174;
+  border-radius: 7px;
+
+  color: #fff8e9;
+
+  background: linear-gradient(110deg, #2476a5, #104d79);
+
+  box-shadow:
+    0 3px 0 #c69a4e,
+    inset 0 0 0 1px rgb(255 255 255 / 13%);
+
+  cursor: pointer;
+
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+
+  letter-spacing: 0.12em;
+
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
+    filter 0.2s ease,
     transform 0.2s ease;
 }
 
-.guest-button span {
-  font-size: 1rem;
-  line-height: 1;
+.login-submit:hover {
+  filter: brightness(1.06);
 }
 
-.guest-button:hover {
-  background: #eef7fa;
-  border-color: #9fc4d1;
-  color: #2d657b;
-  transform: translateY(-1px);
+.login-submit:active {
+  transform: translateY(2px);
+
+  box-shadow: 0 1px 0 #c69a4e;
 }
 
-.guest-button:active {
-  transform: translateY(0);
+.login-submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+  transform: none;
 }
 
-.guest-button:focus-visible {
-  outline: 3px solid rgba(92, 154, 177, 0.2);
+.login-submit svg {
+  width: 21px;
+  height: 21px;
+
+  stroke: currentColor;
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.login-submit:focus-visible,
+.login-forgot:focus-visible {
+  outline: 2px solid #5088a5;
   outline-offset: 3px;
 }
 
 /* ==================================================
-   ページ表示アニメーション
+   12. ログイン結果メッセージ
    ================================================== */
 
-.login-content {
-  animation: loginFadeIn 0.55s ease both;
+.login-message {
+  min-height: 0;
+
+  margin: -6px 0 0;
+
+  color: #9b3c36;
+
+  font-size: 0.82rem;
+  line-height: 1.7;
 }
 
-@keyframes loginFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.login-message:empty {
+  display: none;
 }
 
-/* ==================================================
-   タブレット
-   ================================================== */
-
-@media (max-width: 900px) {
-  .login-main {
-    padding: 52px 24px 70px;
-  }
-
-  .login-content {
-    grid-template-columns: 1fr;
-    gap: 44px;
-    max-width: 620px;
-  }
-
-  .login-heading {
-    text-align: center;
-  }
-
-  .login-panel {
-    margin: 0 auto;
-  }
+.login-message.is-success {
+  color: #31734e;
 }
 
 /* ==================================================
-   スマートフォン
+   13. 区切り装飾
    ================================================== */
 
-@media (max-width: 600px) {
-  .login-main {
-    min-height: calc(100vh - 64px);
-    padding: 40px 18px 56px;
+.login-form__divider {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin: 0;
+
+  color: #a48a5c;
+
+  font-family: Georgia, serif;
+  font-size: 0.59rem;
+
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+.login-form__divider span:first-child,
+.login-form__divider span:last-child {
+  flex: 1;
+
+  height: 1px;
+
+  background: #dfc48e;
+}
+
+/* ==================================================
+   14. パスワード再設定
+   ================================================== */
+
+.login-forgot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 40px;
+
+  color: #245f85;
+
+  font-size: 0.88rem;
+  font-weight: 600;
+
+  text-align: center;
+
+  text-decoration: underline;
+  text-decoration-color: rgb(36 95 133 / 28%);
+  text-underline-offset: 4px;
+}
+
+.login-forgot:hover {
+  color: #0d456b;
+  text-decoration-color: currentColor;
+}
+
+.login-forgot span:last-child {
+  font-size: 1.2rem;
+}
+
+/* ==================================================
+   15. ゲスト利用ボタン
+   ================================================== */
+
+.login-guest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  width: 100%;
+  min-height: 46px;
+
+  margin-top: 1px;
+  padding: 10px 12px;
+
+  border: 1px solid #d5b779;
+  border-radius: 5px;
+
+  color: #245875;
+
+  /* 紙色をベースにする */
+  background: #fff2d8;
+
+  font-size: 0.86rem;
+  font-weight: 600;
+
+  text-align: center;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.login-guest:hover {
+  border-color: #bc9146;
+  background: #ffedc7;
+}
+
+.login-guest:focus-visible {
+  outline: 2px solid #5088a5;
+  outline-offset: 3px;
+}
+
+.login-guest__icon {
+  flex: 0 0 auto;
+
+  color: #bd8a36;
+}
+
+.login-guest__arrow {
+  flex: 0 0 auto;
+
+  color: #bd8a36;
+
+  font-size: 1.3rem;
+}
+
+/* ==================================================
+   16. フッター
+   ================================================== */
+
+.login-panel__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  margin-top: 24px;
+  padding-top: 15px;
+
+  border-top: 1px solid #dfc48e;
+
+  color: #8d805f;
+
+  text-align: center;
+}
+
+.login-panel__footer-mark {
+  color: var(--gold);
+  font-size: 0.8rem;
+}
+
+.login-panel__footer p {
+  margin: 0;
+
+  font-size: 0.72rem;
+}
+
+/* ==================================================
+   17. 小さめのPC・タブレット
+   ================================================== */
+
+@media (max-width: 1100px) {
+  .login-book {
+    grid-template-columns:
+      minmax(0, 0.95fr)
+      minmax(0, 1.05fr);
   }
 
-  .login-content {
-    gap: 34px;
+  .login-intro {
+    padding: 22px 18px;
   }
 
-  .login-heading {
-    padding: 0;
-  }
-
-  .login-eyebrow {
-    margin-bottom: 14px;
-    font-size: 0.7rem;
-  }
-
-  .login-heading h1 {
-    font-size: 2.55rem;
-    line-height: 1.25;
-  }
-
-  .login-description {
-    margin-top: 20px;
-    font-size: 0.88rem;
-    line-height: 1.9;
+  .login-intro__logo {
+    width: min(100%, 270px);
   }
 
   .login-panel {
-    padding: 30px 22px 28px;
-    border-radius: 20px;
+    width: min(100%, 480px);
+
+    margin-left: 12px;
+    margin-top: 16px;
+
+    padding: 30px 24px;
   }
 
-  .login-panel-heading {
-    margin-bottom: 25px;
+  .login-panel__title {
+    font-size: 1.9rem;
   }
 
-  .login-panel-heading h2 {
-    font-size: 1.35rem;
-  }
-
-  .login-panel-heading p {
-    font-size: 0.78rem;
+  .login-panel__description {
+    margin-bottom: 20px;
+    font-size: 0.86rem;
   }
 
   .login-form {
-    gap: 19px;
+    gap: 14px;
   }
 
-  .form-group input {
-    min-height: 50px;
+  .login-panel__footer {
+    margin-top: 18px;
+  }
+}
+
+/* ==================================================
+   18. スマートフォン
+   ================================================== */
+
+@media (max-width: 640px) {
+  .login-screen {
+    display: block;
+
+    min-height: 100svh;
+
+    padding: 18px 12px 28px;
+
+    overflow: visible;
+  }
+
+  .login-screen__background {
+    position: fixed;
+
+    background-position: center;
+    background-size: auto 100%;
+  }
+
+  .login-screen__overlay {
+    position: fixed;
+
+    background: rgb(255 244 218 / 12%);
+  }
+
+  .login-book {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    width: min(100%, 430px);
+    min-height: 0;
+
+    margin: 0 auto;
+  }
+
+  /* 紹介ページ */
+
+  .login-intro {
+    padding: 16px 12px 6px;
+  }
+
+  .login-intro__logo {
+    width: min(70%, 225px);
+    margin-bottom: 5px;
+  }
+
+  .login-intro__logo img {
+    max-height: 75px;
+  }
+
+  .login-intro__subtitle {
+    font-size: 0.76rem;
+  }
+
+  .login-intro__message {
+    margin-top: 12px;
+
+    font-size: 1.45rem;
+    line-height: 1.65;
+  }
+
+  .login-intro__ornament {
+    margin: 4px 0 8px;
+  }
+
+  .login-intro__description {
+    font-size: 0.8rem;
+  }
+
+  .login-mascot {
+    flex-direction: row;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 10px;
+  }
+
+  .login-mascot__image {
+    width: 108px;
+    max-height: 116px;
+  }
+
+  .login-mascot__message {
+    padding: 9px 12px;
+  }
+
+  .login-mascot__message p {
+    font-size: 0.78rem;
+  }
+
+  .login-intro__footer {
+    display: none;
+  }
+
+  /* ログインフォーム */
+
+  .login-panel {
+    width: 100%;
+
+    margin: 0;
+    padding: 29px 22px 24px;
+  }
+
+  .login-panel__decoration {
+    top: 12px;
+    right: 12px;
+  }
+
+  .login-panel__eyebrow {
+    font-size: 0.68rem;
+  }
+
+  .login-panel__title {
+    font-size: 1.8rem;
+  }
+
+  .login-panel__description {
+    margin-bottom: 18px;
+    font-size: 0.85rem;
+  }
+
+  .login-form {
+    gap: 14px;
+  }
+
+  .login-form__field label {
+    font-size: 0.86rem;
+  }
+
+  .login-input {
+    min-height: 48px;
+  }
+
+  .login-input input {
+    min-height: 46px;
     font-size: 0.9rem;
   }
 
-  .login-button {
+  .login-remember {
+    font-size: 0.82rem;
+  }
+
+  .login-submit {
     min-height: 52px;
+    font-size: 0.95rem;
   }
 
-  .login-divider {
-    margin: 27px 0 22px;
+  .login-form__divider {
+    font-size: 0.52rem;
   }
 
-  .guest-button {
-    min-height: 49px;
-    font-size: 0.84rem;
+  .login-forgot {
+    min-height: 38px;
+    font-size: 0.82rem;
+  }
+
+  .login-guest {
+    min-height: 44px;
+    font-size: 0.8rem;
+  }
+
+  .login-panel__footer {
+    margin-top: 18px;
+    padding-top: 12px;
+  }
+
+  .login-panel__footer p {
+    font-size: 0.66rem;
   }
 }
 
 /* ==================================================
-   小型スマートフォン
+   19. 小さなスマートフォン
    ================================================== */
 
 @media (max-width: 380px) {
-  .login-main {
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
-  .login-heading h1 {
-    font-size: 2.25rem;
+  .login-screen {
+    padding-right: 8px;
+    padding-left: 8px;
   }
 
   .login-panel {
-    padding-left: 18px;
-    padding-right: 18px;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .login-panel__title {
+    font-size: 1.65rem;
+  }
+
+  .login-panel__description {
+    font-size: 0.79rem;
+  }
+
+  .login-form__divider {
+    gap: 6px;
+    font-size: 0.46rem;
+  }
+
+  .login-forgot {
+    font-size: 0.76rem;
+  }
+
+  .login-guest {
+    gap: 6px;
+    padding-right: 6px;
+    padding-left: 6px;
+    font-size: 0.74rem;
   }
 }
 
 /* ==================================================
-   動きを抑える設定
+   20. 画面の高さが低い場合
+   ================================================== */
+
+@media (min-width: 641px) and (max-height: 760px) {
+  .login-screen {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .login-book {
+    min-height: 0;
+  }
+
+  .login-intro {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .login-intro__message {
+    margin-top: 14px;
+    line-height: 1.65;
+  }
+
+  .login-mascot {
+    margin-top: 8px;
+  }
+
+  .login-mascot__image {
+    width: clamp(100px, 12vw, 155px);
+    max-height: 155px;
+  }
+
+  .login-panel {
+    margin-top: 10px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .login-panel__description {
+    margin-bottom: 16px;
+  }
+
+  .login-form {
+    gap: 12px;
+  }
+
+  .login-input {
+    min-height: 46px;
+  }
+
+  .login-input input {
+    min-height: 44px;
+  }
+
+  .login-submit {
+    min-height: 49px;
+  }
+
+  .login-panel__footer {
+    margin-top: 15px;
+    padding-top: 10px;
+  }
+}
+
+/* ==================================================
+   21. 動きを減らす設定に対応
    ================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .login-content,
-  .login-button,
-  .guest-button,
-  .form-group input {
-    animation: none;
-    transition: none;
+  .login-page *,
+  .login-page *::before,
+  .login-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ==================================================
+   LumiA ページめくり演出
+   ================================================== */
+
+.login-screen {
+  perspective: 1800px;
+  perspective-origin: center center;
+}
+
+/* めくれる紙 */
+.login-screen::after {
+  content: "";
+  position: absolute;
+  z-index: 20;
+  inset: 0;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    #e9d0a0 0%,
+    #fff3d9 12%,
+    #fff8e9 45%,
+    #e8c991 78%,
+    #c69a4e 100%
+  );
+
+  border-left: 1px solid rgb(158 111 43 / 45%);
+
+  box-shadow:
+    -12px 0 24px rgb(80 48 15 / 12%),
+    inset 14px 0 20px rgb(255 255 255 / 28%);
+
+  transform: rotateY(90deg);
+  transform-origin: right center;
+
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ページめくり開始 */
+.login-screen.is-page-turning::after {
+  visibility: visible;
+  animation: lumia-page-turn 1s cubic-bezier(0.55, 0.05, 0.35, 1) forwards;
+}
+
+/* 操作を重ねない */
+.login-screen.is-page-turning {
+  pointer-events: none;
+}
+
+/* 紙が右から左へめくれる演出 */
+@keyframes lumia-page-turn {
+  0% {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+
+  12% {
+    opacity: 1;
+    transform: rotateY(65deg);
+  }
+
+  45% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotateY(-180deg);
+  }
+}
+
+/* ゲストボタンの操作状態 */
+.login-guest[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* 動きを減らす設定 */
+@media (prefers-reduced-motion: reduce) {
+  .login-screen.is-page-turning::after {
+    animation-duration: 0.01ms;
   }
 }

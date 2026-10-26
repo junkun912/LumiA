@@ -1,2004 +1,426 @@
-/* ==================================================
-LumiA
-ファイル名：home.css
+/* ========================================
+   LumiA ホーム画面
+   第1段階：左上の紹介エリア
+======================================== */
 
-【ファイル概要】
-LumiAホーム画面専用CSS。
+.home-page {
+  margin: 0;
+  min-height: 100vh;
+  color: #123f69;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+}
 
-【画面の役割】
-・LumiAの入口となるホーム画面
-・学校について質問できる場所を明確にする
-・LumiAの世界観を伝える
-・「質問する」という基本操作へ導く
-・コーギくんを案内役として表示する
-・質問へのファイル添付を可能にする
-
-【デザインコンセプト】
-「かわいい。でも、ちゃんとしてる。」
-
-・親しみやすい
-・清潔感がある
-・学校向けとして落ち着いている
-・AIサービスらしさを出しすぎない
-・質問入力を画面の主役にする
-・余白を大切にする
-・文字を小さくしすぎない
-
-【重要な用語】
-三重県立津高等技術学校では
-「授業」ではなく「訓練」と表記する。
-
-================================================== */
-
-/* ==================================================
-   基本設定
-================================================== */
-
-* {
+.home-page *,
+.home-page *::before,
+.home-page *::after {
   box-sizing: border-box;
 }
 
-html {
+.home-page .home-screen {
   width: 100%;
-  height: 100%;
-
+  min-height: 100vh;
   margin: 0;
   padding: 0;
-
-  overflow: hidden;
-
-  scroll-behavior: smooth;
 }
 
-body {
-  width: 100%;
-  height: 100%;
-
-  min-width: 320px;
-
-  margin: 0;
-  padding: 0;
-
-  overflow: hidden;
-
-  background: #f5faff;
-  color: #263f4d;
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-/* ==================================================
-   ヘッダー
-================================================== */
-
-.site-header {
+.home-page .home-book {
   position: relative;
-  z-index: 1000;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
-  min-height: 76px;
-
-  background: rgba(255, 255, 255, 0.96);
-
-  border-bottom: 1px solid #e3edf3;
-
-  box-shadow: 0 4px 18px rgba(38, 107, 132, 0.05);
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.header-inner {
-  width: min(1240px, calc(100% - 48px));
-
-  min-height: 76px;
-
-  margin: 0 auto;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 28px;
-}
-
-/* ==================================================
-   LumiAロゴ
-================================================== */
-
-.site-logo {
-  flex: 0 0 auto;
-
-  display: inline-flex;
-  align-items: center;
-
-  cursor: default;
-}
-
-.site-logo img {
-  display: block;
-
-  width: 138px;
-  height: auto;
-
-  object-fit: contain;
-
-  transition: none !important;
-  transform: none !important;
-}
-
-.site-logo:hover img {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-/* ==================================================
-   共通ナビゲーション
-================================================== */
-
-.main-nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  gap: 6px;
-
-  min-width: 0;
-}
-
-.nav-link {
-  min-height: 46px;
-
-  padding: 0 15px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 7px;
-
-  border-radius: 15px;
-
-  color: #234e67;
-
-  font-size: 13px;
-  font-weight: 700;
-
-  letter-spacing: 0.02em;
-
-  white-space: nowrap;
-
-  text-decoration: none;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.nav-link:hover {
-  color: #087fac;
-  background: #eef8fc;
-
-  transform: translateY(-1px);
-}
-
-.nav-link.active {
-  color: #ffffff;
-  background: #159fd0;
-
-  box-shadow: 0 7px 18px rgba(21, 159, 208, 0.18);
-}
-
-.nav-link.active:hover {
-  color: #ffffff;
-  background: #159fd0;
-
-  transform: translateY(-1px);
-}
-
-.nav-link:focus-visible {
-  outline: 3px solid rgba(21, 159, 208, 0.25);
-  outline-offset: 3px;
-}
-
-/* ==================================================
-   ナビゲーションアイコン
-================================================== */
-
-.nav-icon {
-  width: 18px;
-  height: 18px;
-
-  flex: 0 0 18px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-icon svg {
-  display: block;
-
-  width: 18px;
-  height: 18px;
-}
-
-/* ==================================================
-   ホームメイン
-================================================== */
-
-.home-main {
-  position: relative;
-
-  width: 100%;
-  height: calc(100vh - 76px);
-
-  min-width: 0;
-  min-height: 0;
-
+  min-height: 100vh;
   overflow: hidden;
 
-  isolation: isolate;
-
-  background: #f7f3e9;
-}
-
-/* ==================================================
-   背景
-================================================== */
-
-.home-background {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background-color: #f7f3e9;
-
-  background-image: url("../assets/images/backgrounds/bg_hero.png");
-
-  /* 背景を少し上へ移動 */
-  background-position: center 60%;
-
-  background-size: cover;
+  /* 既存の完成図用背景をそのまま使用 */
+  background-image: url("../assets/images/backgrounds/home_background.png");
+  background-position: center;
   background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
-/* ==================================================
-   背景オーバーレイ
-================================================== */
+/* ========================================
+   左ページ
+======================================== */
 
-.home-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 1;
-
-  pointer-events: none;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.18) 0%,
-    rgba(255, 255, 255, 0.07) 48%,
-    rgba(247, 251, 250, 0.32) 100%
-  );
-}
-
-/* ==================================================
-   下部ウェーブ
-================================================== */
-
-.home-wave {
-  position: absolute;
-
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  z-index: 1;
-
-  width: 100%;
-  height: 190px;
-
-  background-position: center bottom;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-
-  pointer-events: none;
-
-  opacity: 0.58;
-}
-
-/* ==================================================
-   ホームコンテンツ
-================================================== */
-
-.home-content {
+.home-page .home-intro {
   position: relative;
-
-  z-index: 2;
-
-  width: min(1240px, calc(100% - 48px));
-
-  margin: 0 auto;
-
-  padding: 38px 0 22px;
-}
-
-/* ==================================================
-   ヒーロー
-   --------------------------------------------------
-   空いた中央スペースにタイトルを配置。
-   質問欄とのバランスを優先。
-================================================== */
-
-.hero-section {
-  position: relative;
-
-  width: 100%;
-
-  margin: 0 auto 30px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+  transform: translate(120px, 0);
+
+  min-width: 0;
+  min-height: 100vh;
+
+  /*
+    左ページ内側の余白。
+    背景画像の装飾枠を避けて配置する。
+  */
+  padding: 180px 130px 30px;
 
   text-align: center;
-
-  /* 現在より少し上へ */
-  left: 100px;
-  top: 60px;
 }
 
-.hero-title {
+/* LumiAロゴ */
+
+.home-page .home-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: min(45%, 190px);
+  margin: 0 auto 8px;
+}
+
+.home-page .home-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 90px;
+  object-fit: contain;
+}
+
+/* 英字サブタイトル */
+
+.home-page .home-eyebrow {
+  margin: 0 0 17px;
+
+  color: #a96c19;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(10px, 0.95vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+}
+
+/* メインタイトル */
+
+.home-page .home-intro h1 {
+  max-width: 100%;
   margin: 0;
 
-  color: #173f59;
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: clamp(27px, 3vw, 40px);
-
-  line-height: 1.5;
-
-  font-weight: 900;
-
-  letter-spacing: 0.035em;
-
-  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.72);
+  color: #123f69;
+  font-size: clamp(30px, 3.15vw, 45px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.55;
 }
 
-.hero-description {
-  margin: 10px 0 0;
+/* 金色の装飾ライン */
 
-  color: #476d81;
-
-  font-size: 14px;
-
-  line-height: 1.85;
-
-  font-weight: 500;
-
-  letter-spacing: 0.035em;
-}
-
-/* ==================================================
-   質問セクション
-================================================== */
-
-.question-section {
-  position: relative;
-
-  width: min(1160px, 100%);
-
-  /* 質問欄をさらに下へ */
-  margin: 220px auto 38px;
-}
-
-/* ==================================================
-   コーギくんエリア
-   --------------------------------------------------
-   質問欄と重ならないように左側へ配置。
-================================================== */
-
-.mascot-area {
-  position: absolute;
-
-  left: -125px;
-  top: 22px;
-
-  width: 330px;
-  height: 300px;
-
-  z-index: 10;
-
-  pointer-events: none;
-}
-
-/* ==================================================
-   吹き出し
-   --------------------------------------------------
-   コーギくんの耳に重ならないよう、
-   吹き出しを少し上へ配置。
-================================================== */
-
-.mascot-speech {
-  position: absolute;
-
-  left: 75px;
-  top: -25px;
-
-  width: 205px;
-  min-height: 62px;
-
-  padding: 12px 16px;
-
+.home-page .home-ornament {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
 
-  background: rgba(255, 255, 255, 0.97);
+  width: min(100%, 320px);
+  margin: 22px auto 16px;
 
-  border: 2px solid rgba(76, 185, 217, 0.35);
-
-  border-radius: 21px;
-
-  box-shadow: 0 7px 18px rgba(41, 113, 143, 0.09);
-
-  color: #234f67;
-
-  text-align: center;
-
-  z-index: 3;
+  color: #d99a2b;
 }
 
-/* ==================================================
-   コーギくん
-================================================== */
+.home-page .home-ornament span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d99a2b);
+}
 
-.corgi-main {
+.home-page .home-ornament span:last-child {
+  background: linear-gradient(90deg, #d99a2b, transparent);
+}
+
+.home-page .home-ornament b {
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* 説明文 */
+
+.home-page .home-description {
+  margin: 0;
+
+  color: #536f89;
+  font-family: "Yu Gothic", "Meiryo", sans-serif;
+  font-size: clamp(12px, 1.05vw, 15px);
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  line-height: 2;
+}
+
+/* ========================================
+   タブレット
+======================================== */
+
+@media (max-width: 900px) {
+  .home-page .home-intro {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .home-page .home-logo {
+    width: min(50%, 170px);
+  }
+
+  .home-page .home-intro h1 {
+    font-size: clamp(27px, 4vw, 36px);
+  }
+
+  .home-page .home-ornament {
+    margin-top: 17px;
+    margin-bottom: 13px;
+  }
+}
+
+/* ========================================
+   スマートフォン
+======================================== */
+
+@media (max-width: 600px) {
+  .home-page .home-book {
+    display: block;
+    min-height: 100vh;
+    background-size: auto 100%;
+    background-position: center top;
+  }
+
+  .home-page .home-intro {
+    min-height: 600px;
+    padding: 30px 24px;
+  }
+
+  .home-page .home-logo {
+    width: min(48%, 160px);
+  }
+
+  .home-page .home-intro h1 {
+    font-size: clamp(28px, 7.5vw, 36px);
+  }
+
+  .home-page .home-description {
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   左下：コーギくんと吹き出し
+======================================== */
+
+.home-page .home-intro {
+  position: relative;
+}
+
+.home-page .home-mascot {
   position: absolute;
-
-  left: 20px;
-  top: 60px;
-
-  width: 250px;
-  height: auto;
-
-  display: block;
-
-  object-fit: contain;
-
-  filter: drop-shadow(0 9px 12px rgba(50, 104, 123, 0.12));
-
+  left: 16%;
+  bottom: 20%;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  width: 65%;
   z-index: 2;
 }
 
-/* ==================================================
-   質問エリア
-   --------------------------------------------------
-   コーギくんのスペースを確保しつつ、
-   質問欄を以前より大きくする。
-================================================== */
-
-.question-area {
-  position: relative;
-
-  width: calc(100% - 235px);
-
-  max-width: 910px;
-
-  margin-left: 225px;
-
-  z-index: 4;
-}
-
-/* ==================================================
-   質問フォーム
-   --------------------------------------------------
-   中央の余白を活かすため、
-   縦方向を少し大きくする。
-================================================== */
-
-.question-form {
-  position: relative;
-
-  width: 100%;
-
-  min-height: 350px;
-
-  padding: 0;
-
-  overflow: hidden;
-
-  background: rgba(255, 255, 255, 0.94);
-
-  border: 1.5px solid rgba(64, 178, 211, 0.36);
-
-  border-radius: 24px;
-
-  box-shadow: 0 16px 35px rgba(48, 119, 144, 0.12);
-
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
-}
-
-/* ==================================================
-   質問フォーム見出し
-================================================== */
-
-.question-heading {
-  min-height: 58px;
-
-  padding: 17px 28px 8px;
-
-  display: flex;
-  align-items: baseline;
-
-  gap: 12px;
-}
-
-.question-heading h2,
-.question-heading-label {
-  margin: 0;
-
-  color: #174965;
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 17px;
-
-  font-weight: 900;
-
-  line-height: 1.45;
-
-  letter-spacing: 0.03em;
-}
-
-.question-heading-sub {
-  color: #7b9aaa;
-
-  font-size: 11px;
-
-  font-weight: 500;
-}
-
-/* ==================================================
-   入力欄
-================================================== */
-
-.question-input {
+.home-page .home-mascot__image {
   display: block;
-
-  width: 100%;
-
-  height: 215px;
-
-  margin: 0;
-
-  padding: 12px 28px 16px;
-
-  border: none;
-
-  outline: none;
-
-  resize: none;
-
-  overflow-y: auto;
-
-  background: rgba(255, 255, 255, 0.28);
-
-  color: #214e68;
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 15px;
-
-  line-height: 1.8;
-
-  font-weight: 500;
-
-  letter-spacing: 0.025em;
-}
-
-.question-input::placeholder {
-  color: #94acba;
-  opacity: 1;
-}
-
-.question-input:focus {
-  background: rgba(250, 254, 255, 0.62);
-}
-
-/* ==================================================
-   フォーム下部
-================================================== */
-
-.question-form-bottom {
-  position: absolute;
-
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  min-height: 72px;
-
-  padding: 0 20px 13px 25px;
-
-  display: flex;
-  align-items: flex-end;
-
-  gap: 14px;
-}
-
-/* ==================================================
-   ファイル添付
-================================================== */
-
-.file-upload-area {
-  min-width: 0;
-
-  flex: 1 1 auto;
-
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  padding-bottom: 6px;
-}
-
-.file-input {
-  position: absolute;
-
-  width: 1px;
-  height: 1px;
-
-  opacity: 0;
-
-  overflow: hidden;
-
-  pointer-events: none;
-}
-
-.file-upload-button {
-  flex: 0 0 auto;
-
-  min-height: 38px;
-
-  padding: 0 13px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 6px;
-
-  border: 1px solid rgba(64, 178, 211, 0.35);
-
-  border-radius: 10px;
-
-  background: rgba(239, 249, 253, 0.9);
-
-  color: #267c99;
-
-  font-size: 11px;
-
-  line-height: 1;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  white-space: nowrap;
-
-  transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.file-upload-button:hover {
-  background: #e8f7fc;
-
-  border-color: rgba(64, 178, 211, 0.55);
-
-  transform: translateY(-1px);
-}
-
-.file-upload-button:focus-within {
-  outline: 3px solid rgba(21, 159, 208, 0.2);
-  outline-offset: 2px;
-}
-
-.file-upload-icon {
-  font-size: 15px;
-  line-height: 1;
-}
-
-.file-name {
-  min-width: 0;
-
+  width: 48%;
   max-width: 230px;
-
-  overflow: hidden;
-
-  color: #658594;
-
-  font-size: 10px;
-
-  line-height: 1.4;
-
-  font-weight: 500;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
-/* ==================================================
-   Enter補足
-================================================== */
-
-.question-form-note {
-  flex: 0 0 auto;
-
-  padding-bottom: 7px;
-
-  color: #7894a2;
-
-  font-size: 10px;
-
-  line-height: 1.5;
-
-  font-weight: 500;
-
-  white-space: nowrap;
-}
-
-/* ==================================================
-   質問ボタン
-================================================== */
-
-.question-submit {
-  flex: 0 0 auto;
-
-  min-width: 145px;
-
-  height: 48px;
-
-  padding: 0 19px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 10px;
-
-  border: none;
-
-  border-radius: 14px;
-
-  background: #159fd0;
-
-  color: #ffffff;
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 14px;
-
-  font-weight: 800;
-
-  letter-spacing: 0.04em;
-
-  cursor: pointer;
-
-  box-shadow: 0 8px 18px rgba(21, 159, 208, 0.2);
-
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    background-color 0.18s ease;
-}
-
-.question-submit:hover {
-  background: #0d92c3;
-
-  transform: translateY(-2px);
-
-  box-shadow: 0 11px 22px rgba(21, 159, 208, 0.26);
-}
-
-.question-submit:active {
-  transform: translateY(0);
-}
-
-.question-submit:focus-visible {
-  outline: 3px solid rgba(21, 159, 208, 0.25);
-  outline-offset: 3px;
-}
-
-.question-submit:disabled {
-  opacity: 0.6;
-
-  cursor: not-allowed;
-
-  transform: none;
-
-  box-shadow: 0 8px 18px rgba(21, 159, 208, 0.12);
-}
-
-.submit-arrow {
-  font-size: 18px;
-  line-height: 1;
-}
-
-/* ==================================================
-   質問エラー
-================================================== */
-
-.question-status {
+.home-page .home-mascot__bubble {
   position: relative;
+  width: 52%;
+  margin-bottom: 80px;
+  padding: 16px 18px;
 
-  margin: 7px 25px 0;
+  background: rgba(255, 244, 216, 0.78);
+  border: 1px solid rgba(190, 132, 43, 0.55);
+  border-radius: 18px;
 
-  color: #c45a5a;
+  color: #123f69;
+  font-family: "Yu Gothic", "Meiryo", sans-serif;
+  font-size: 13px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
 
-  font-size: 0.85rem;
+  box-shadow: 0 2px 5px rgba(112, 76, 30, 0.06);
+}
 
-  line-height: 1.5;
+.home-page .home-mascot__bubble::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  bottom: 24px;
 
+  width: 14px;
+  height: 14px;
+
+  background: #fff4d8;
+  border-left: 1px solid rgba(190, 132, 43, 0.55);
+  border-bottom: 1px solid rgba(190, 132, 43, 0.55);
+
+  transform: rotate(45deg);
+}
+
+.home-page .home-mascot__bubble strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #a96c19;
+  font-size: 12px;
   font-weight: 600;
-
-  animation: lumiAStatusIn 0.25s ease both;
 }
 
-@keyframes lumiAStatusIn {
-  from {
-    opacity: 0;
-
-    transform: translateY(-3px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
+.home-page .home-mascot__bubble p {
+  margin: 0;
+  color: #123f69;
+  font-size: 13px;
+  line-height: 1.8;
 }
 
-.question-form:has(.question-status) {
-  min-height: 385px;
-}
-
-.question-area:has(.question-status) .privacy-notice {
-  margin-top: 9px;
-}
-
-/* ==================================================
-   個人情報注意
-================================================== */
-
-.privacy-notice {
-  margin: 9px 0 0;
-
-  color: #58788a;
-
-  text-align: center;
-
-  font-size: 10px;
-
-  line-height: 1.7;
-
-  font-weight: 500;
-
-  letter-spacing: 0.015em;
-}
-
-/* ==================================================
-   ホーム画面内 著作権表記
-================================================== */
-
-.home-credit {
-  position: relative;
-
-  z-index: 5;
-
+.home-page .home-intro__footer {
+  position: absolute;
+  bottom: 12.7%;
+  left: 0;
   width: 100%;
-
-  margin: -5px auto 0;
-
-  padding: 0 0 4px;
-
-  color: rgba(48, 92, 111, 0.72);
-
-  font-family:
-    "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-
-  font-size: 10px;
-
-  line-height: 1.5;
-
-  font-weight: 500;
-
-  letter-spacing: 0.025em;
-
+  margin: 0;
+  color: #b88b4b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-style: italic;
   text-align: center;
-
-   left: 100px;
+  transform: rotate(-3deg);
 }
 
-/* ==================================================
-   タブレット
-   761px ～ 1050px
-================================================== */
-
-@media (min-width: 761px) and (max-width: 1050px) {
-  .header-inner {
-    width: calc(100% - 36px);
-
-    gap: 18px;
+/* 小さな画面では左ページ内に収める */
+@media (max-width: 900px) {
+  .home-page .home-mascot {
+    left: 8%;
+    width: 84%;
+    gap: 8px;
   }
 
-  .site-logo img {
-    width: 120px;
-  }
-
-  .main-nav {
-    gap: 2px;
-  }
-
-  .nav-link {
-    min-height: 43px;
-
-    padding: 0 9px;
-
-    gap: 5px;
-
-    font-size: 11.5px;
-  }
-
-  .nav-icon,
-  .nav-icon svg {
-    width: 17px;
-    height: 17px;
-  }
-
-  /* ----------------------------------------------
-     メイン
-  ---------------------------------------------- */
-
-  .home-main {
-    min-height: auto;
-  }
-
-  .home-background {
-    background-position: center 60%;
-    background-size: cover;
-  }
-
-  .home-wave {
-    height: 140px;
-
-    background-size: cover;
-
-    opacity: 0.5;
-  }
-
-  .home-content {
-    width: calc(100% - 42px);
-
-    padding: 34px 0 30px;
-  }
-
-  /* ----------------------------------------------
-     ヒーロー
-  ---------------------------------------------- */
-
-  .hero-section {
-    margin-bottom: 12px;
-
-    transform: translateY(-10px);
-  }
-
-  .hero-title {
-    font-size: 31px;
-  }
-
-  .hero-description {
-    font-size: 13px;
-  }
-
-  /* ----------------------------------------------
-     質問セクション
-  ---------------------------------------------- */
-
-  .question-section {
-    width: 100%;
-
-    margin: 0 auto 34px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  /* ----------------------------------------------
-     コーギくん
-  ---------------------------------------------- */
-
-  .mascot-area {
-    position: relative;
-
-    left: auto;
-    top: auto;
-
-    width: 100%;
-    height: 112px;
-
-    margin: 0 0 18px;
-
-    overflow: visible;
-
-    z-index: 10;
-
-    transform: translateY(-10px);
-  }
-
-  .mascot-speech {
-    left: 18%;
-
-    top: -4%;
-
-    width: 150px;
-
-    min-height: 44px;
-
-    padding: 7px 10px;
-
-    transform: translateX(-50%);
-
-    border-width: 1.5px;
-
-    border-radius: 13px;
-  }
-
-  .mascot-speech strong {
-    font-size: 11.5px;
-
-    line-height: 1.3;
-
-    letter-spacing: 0;
-  }
-
-  .mascot-speech::after {
-    bottom: -9px;
-
-    border-left-width: 7px;
-    border-right-width: 7px;
-    border-top-width: 10px;
-  }
-
-  .mascot-speech::before {
-    bottom: -7px;
-
-    border-left-width: 5.5px;
-    border-right-width: 5.5px;
-    border-top-width: 8px;
-  }
-
-  .corgi-main {
-    left: 10%;
-
-    top: 42px;
-
-    width: 170px;
-    max-width: 170px;
-
-    transform: translateX(-50%);
-  }
-
-  /* ----------------------------------------------
-     質問エリア
-  ---------------------------------------------- */
-
-  .question-area {
-    width: min(800px, 100%);
-
-    max-width: none;
-
-    margin: 0 auto;
-
-    z-index: 4;
-  }
-
-  .question-form {
-    min-height: 300px;
-
-    border-radius: 21px;
-  }
-
-  .question-heading {
-    min-height: 54px;
-
-    padding: 16px 24px 8px;
-  }
-
-  .question-heading h2,
-  .question-heading-label {
-    font-size: 16px;
-  }
-
-  .question-input {
-    height: 175px;
-
-    font-size: 14px;
-  }
-
-  .question-form-bottom {
-    min-height: 68px;
-
-    padding: 0 18px 11px 20px;
-
-    gap: 10px;
-  }
-
-  .file-upload-button {
-    min-height: 36px;
-
-    padding: 0 11px;
-
-    font-size: 10.5px;
-  }
-
-  .file-name {
-    max-width: 150px;
-
-    font-size: 9.5px;
-  }
-
-  .question-form-note {
-    font-size: 9.5px;
-  }
-
-  .question-submit {
-    min-width: 130px;
-
-    height: 46px;
-
-    font-size: 13px;
-  }
-
-  .privacy-notice {
-    margin-top: 9px;
-
-    padding: 0 3px;
-
-    font-size: 10.5px;
-
-    line-height: 1.7;
-  }
-
-  .home-credit {
-    margin-top: 58px;
-
-    font-size: 9px;
+  .home-page .home-mascot__bubble {
+    padding: 12px;
+    font-size: 12px;
   }
 }
 
-/* ==================================================
-   スマートフォン
-   760px以下
-================================================== */
+/* ========================================
+   第2段階：右上の質問エリア見出し
+======================================== */
 
-@media (max-width: 760px) {
-  /* ----------------------------------------------
-     ヘッダー
-  ---------------------------------------------- */
+.home-page .home-content {
+  position: relative;
+  min-width: 0;
+  min-height: 100vh;
+  padding: 200px 12% 60px 7%;
+  left: -80px;
+  color: #123f69;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  transform: rotate(-3deg);
+}
 
-  .site-header {
-    min-height: 64px;
+.home-page .home-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  text-align: center;
+}
+
+.home-page .home-header__text {
+  width: 100%;
+  padding: 0 24px;
+}
+
+.home-page .home-header__eyebrow {
+  margin: 0 0 10px;
+  color: #b8791d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+}
+
+.home-page .home-header__text h2 {
+  margin: 0;
+  color: #123f69;
+  font-size: clamp(25px, 2.5vw, 36px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.home-page .home-header__description {
+  margin: 12px 0 0;
+  color: #536f89;
+  font-family: "Yu Gothic", "Meiryo", sans-serif;
+  font-size: clamp(11px, 0.95vw, 14px);
+  letter-spacing: 0.04em;
+  line-height: 1.8;
+}
+
+.home-page .home-profile {
+  position: absolute;
+  top: 0;
+  right: -5%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 1px solid #d99a2b;
+  border-radius: 50%;
+  background: rgba(255, 250, 235, 0.85);
+  color: #a96c19;
+  cursor: pointer;
+}
+
+.home-page .home-profile svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 900px) {
+  .home-page .home-content {
+    padding-right: 6%;
+    padding-left: 6%;
   }
 
-  .header-inner {
-    width: 100%;
-
-    min-height: 64px;
-
-    padding: 0 15px;
-
-    gap: 0;
-  }
-
-  .site-logo img {
-    width: 96px;
-  }
-
-  .main-nav {
-    display: none;
-  }
-
-  /* ----------------------------------------------
-     メイン
-  ---------------------------------------------- */
-
-  .home-main {
-    width: 100%;
-
-    min-width: 0;
-
-    min-height: calc(100svh - 64px);
-
-    overflow-x: hidden;
-
-    padding-bottom: 0;
-  }
-
-  /* ----------------------------------------------
-     スマホ背景
-  ---------------------------------------------- */
-
-  .home-background {
-    background-image: url("../assets/images/backgrounds/bg_hero_mobile.png");
-
-    background-position: center top;
-
-    background-size: cover;
-
-    background-repeat: no-repeat;
-
-    min-height: 100%;
-  }
-
-  .home-wave {
-    left: 0;
+  .home-page .home-profile {
     right: 0;
+    width: 38px;
+    height: 38px;
+  }
+}
 
-    width: 100%;
-
-    height: 125px;
-
-    background-size: auto 100%;
-
-    background-position: center bottom;
-
-    opacity: 0.5;
+@media (max-width: 600px) {
+  .home-page .home-content {
+    min-height: 350px;
+    padding: 45px 24px 30px;
   }
 
-  /* ----------------------------------------------
-     コンテンツ
-  ---------------------------------------------- */
-
-  .home-content {
-    width: calc(100% - 24px);
-
-    max-width: none;
-
-    margin: 0 auto;
-
-    padding: 25px 0 22px;
+  .home-page .home-header__text {
+    padding: 0 8px;
   }
 
-  /* ----------------------------------------------
-     ヒーロー
-  ---------------------------------------------- */
-
-  .hero-section {
-    width: 100%;
-
-    margin: 0 auto 7px;
-
-    transform: translateY(-8px);
-  }
-
-  .hero-title {
-    width: 100%;
-
-    color: #173f59;
-
+  .home-page .home-header__text h2 {
     font-size: 24px;
-
-    line-height: 1.55;
-
-    font-weight: 900;
-
-    letter-spacing: 0.015em;
   }
 
-  .hero-description {
-    display: none;
-  }
-
-  /* ----------------------------------------------
-     質問セクション
-  ---------------------------------------------- */
-
-  .question-section {
-    width: 100%;
-
-    min-width: 0;
-
-    margin: 0 auto 28px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  /* ----------------------------------------------
-     コーギくんエリア
-  ---------------------------------------------- */
-
-  .mascot-area {
-    position: relative;
-
-    left: auto;
-    top: auto;
-
-    width: 100%;
-
-    height: 108px;
-
-    margin: 0 0 22px;
-
-    overflow: visible;
-
-    z-index: 10;
-  }
-
-  /* ----------------------------------------------
-     スマホ吹き出し
-  ---------------------------------------------- */
-
-  .mascot-speech {
-    left: 19%;
-
-    top: 0;
-
-    width: 120px;
-
-    min-height: 38px;
-
-    padding: 6px 8px;
-
-    transform: translateX(-50%);
-
-    border-width: 1px;
-
-    border-radius: 10px;
-
-    box-shadow: 0 4px 10px rgba(41, 113, 143, 0.07);
-  }
-
-  .mascot-speech strong {
-    color: #234f67;
-
-    font-size: 10px;
-
-    line-height: 1.3;
-
-    font-weight: 900;
-
-    letter-spacing: 0;
-  }
-
-  .mascot-speech::after {
-    bottom: -6px;
-
-    border-left-width: 4px;
-    border-right-width: 4px;
-    border-top-width: 6px;
-  }
-
-  .mascot-speech::before {
-    bottom: -4px;
-
-    border-left-width: 3px;
-    border-right-width: 3px;
-    border-top-width: 4px;
-  }
-
-  /* ----------------------------------------------
-     スマホ コーギくん
-  ---------------------------------------------- */
-
-  .corgi-main {
-    left: 14%;
-
-    top: 38px;
-
-    width: 130px;
-
-    max-width: 130px;
-
-    transform: translateX(-50%);
-  }
-
-  /* ----------------------------------------------
-     質問エリア
-  ---------------------------------------------- */
-
-  .question-area {
-    width: 100%;
-
-    max-width: none;
-
-    margin: 0 auto;
-
-    z-index: 4;
-  }
-
-  /* ----------------------------------------------
-     質問フォーム
-  ---------------------------------------------- */
-
-  .question-form {
-    width: 100%;
-
-    min-height: 300px;
-
-    border-radius: 19px;
-  }
-
-  /* ----------------------------------------------
-     見出し
-  ---------------------------------------------- */
-
-  .question-heading {
-    min-height: 51px;
-
-    padding: 14px 17px 7px;
-
-    gap: 6px;
-  }
-
-  .question-heading h2,
-  .question-heading-label {
-    color: #174965;
-
-    font-size: 15px;
-
-    line-height: 1.45;
-
-    font-weight: 900;
-  }
-
-  .question-heading-sub {
-    display: none;
-  }
-
-  /* ----------------------------------------------
-     入力欄
-  ---------------------------------------------- */
-
-  .question-input {
-    width: 100%;
-
-    height: 175px;
-
-    padding: 10px 17px 13px;
-
-    color: #214e68;
-
-    font-size: 14px;
-
-    line-height: 1.75;
-
-    font-weight: 500;
-  }
-
-  .question-input::placeholder {
-    color: #8ea8b6;
-  }
-
-  /* ----------------------------------------------
-     フォーム下部
-  ---------------------------------------------- */
-
-  .question-form-bottom {
-    left: 0;
+  .home-page .home-profile {
+    top: -30px;
     right: 0;
-
-    min-height: 68px;
-
-    padding: 0 11px 9px 12px;
-
-    gap: 7px;
-
-    align-items: flex-end;
+    width: 34px;
+    height: 34px;
   }
-
-  /* ----------------------------------------------
-     ファイル添付
-  ---------------------------------------------- */
-
-  .file-upload-area {
-    min-width: 0;
-
-    gap: 5px;
-
-    padding-bottom: 4px;
-  }
-
-  .file-upload-button {
-    min-height: 37px;
-
-    padding: 0 9px;
-
-    gap: 4px;
-
-    border-radius: 9px;
-
-    font-size: 9.5px;
-  }
-
-  .file-upload-icon {
-    font-size: 13px;
-  }
-
-  .file-name {
-    max-width: 80px;
-
-    font-size: 8.5px;
-  }
-
-  /* ----------------------------------------------
-     Enter補足
-  ---------------------------------------------- */
-
-  .question-form-note {
-    display: none;
-  }
-
-  /* ----------------------------------------------
-     質問ボタン
-  ---------------------------------------------- */
-
-  .question-submit {
-    min-width: 108px;
-
-    height: 43px;
-
-    padding: 0 11px;
-
-    border-radius: 11px;
-
-    font-size: 12px;
-
-    font-weight: 800;
-  }
-
-  .submit-arrow {
-    font-size: 16px;
-  }
-
-  /* ----------------------------------------------
-     エラー
-  ---------------------------------------------- */
-
-  .question-status {
-    margin: 7px 17px 0;
-
-    font-size: 0.8rem;
-
-    line-height: 1.5;
-  }
-
-  .question-form:has(.question-status) {
-    min-height: 335px;
-  }
-
-  /* ----------------------------------------------
-     個人情報注意
-  ---------------------------------------------- */
-
-  .privacy-notice {
-    margin-top: 8px;
-
-    padding: 0;
-
-    color: #58788a;
-
-    font-size: 9.5px;
-
-    line-height: 1.6;
-
-    white-space: normal;
-
-    letter-spacing: -0.02em;
-  }
-
-  /* ----------------------------------------------
-     ホーム内著作権
-  ---------------------------------------------- */
-
-  .home-credit {
-    margin-top: 42px;
-
-    padding-bottom: 2px;
-
-    color: rgba(48, 92, 111, 0.7);
-
-    font-size: 9px;
-
-    line-height: 1.5;
-
-    font-weight: 500;
-
-    text-align: center;
-  }
-}
-
-/* ==================================================
-   小型スマートフォン
-   420px以下
-================================================== */
-
-@media (max-width: 420px) {
-  .header-inner {
-    padding: 0 12px;
-  }
-
-  .site-logo img {
-    width: 90px;
-  }
-
-  /* ----------------------------------------------
-     コンテンツ
-  ---------------------------------------------- */
-
-  .home-content {
-    width: calc(100% - 20px);
-
-    padding: 22px 0 20px;
-  }
-
-  /* ----------------------------------------------
-     ヒーロー
-  ---------------------------------------------- */
-
-  .hero-title {
-    font-size: 22px;
-
-    line-height: 1.5;
-  }
-
-  /* ----------------------------------------------
-     コーギくんエリア
-  ---------------------------------------------- */
-
-  .mascot-area {
-    height: 104px;
-
-    margin-bottom: 20px;
-  }
-
-  /* ----------------------------------------------
-     吹き出し
-  ---------------------------------------------- */
-
-  .mascot-speech {
-    left: 20%;
-
-    width: 106px;
-
-    min-height: 33px;
-
-    padding: 5px 7px;
-
-    border-radius: 9px;
-  }
-
-  .mascot-speech strong {
-    font-size: 9.5px;
-
-    line-height: 1.3;
-  }
-
-  .mascot-speech::after {
-    bottom: -4px;
-
-    border-left-width: 3px;
-    border-right-width: 3px;
-    border-top-width: 4px;
-  }
-
-  .mascot-speech::before {
-    bottom: -2.5px;
-
-    border-left-width: 2px;
-    border-right-width: 2px;
-    border-top-width: 3px;
-  }
-
-  /* ----------------------------------------------
-     コーギくん
-  ---------------------------------------------- */
-
-  .corgi-main {
-    top: 36px;
-
-    width: 118px;
-
-    max-width: 118px;
-  }
-
-  /* ----------------------------------------------
-     質問フォーム
-  ---------------------------------------------- */
-
-  .question-form {
-    min-height: 285px;
-  }
-
-  .question-heading {
-    min-height: 47px;
-
-    padding: 12px 15px 6px;
-  }
-
-  .question-heading h2,
-  .question-heading-label {
-    font-size: 14px;
-  }
-
-  /* ----------------------------------------------
-     入力欄
-  ---------------------------------------------- */
-
-  .question-input {
-    height: 165px;
-
-    padding: 9px 15px 12px;
-
-    font-size: 13.5px;
-
-    line-height: 1.7;
-  }
-
-  /* ----------------------------------------------
-     フォーム下部
-  ---------------------------------------------- */
-
-  .question-form-bottom {
-    min-height: 65px;
-
-    padding: 0 8px 8px 10px;
-
-    gap: 5px;
-  }
-
-  /* ----------------------------------------------
-     ファイル添付
-  ---------------------------------------------- */
-
-  .file-upload-area {
-    gap: 4px;
-  }
-
-  .file-upload-button {
-    min-height: 35px;
-
-    padding: 0 7px;
-
-    font-size: 9px;
-  }
-
-  .file-upload-icon {
-    font-size: 12px;
-  }
-
-  .file-name {
-    max-width: 62px;
-
-    font-size: 8px;
-  }
-
-  /* ----------------------------------------------
-     質問ボタン
-  ---------------------------------------------- */
-
-  .question-submit {
-    min-width: 101px;
-
-    height: 40px;
-
-    padding: 0 9px;
-
-    font-size: 11px;
-  }
-
-  .submit-arrow {
-    font-size: 15px;
-  }
-
-  /* ----------------------------------------------
-     エラー
-  ---------------------------------------------- */
-
-  .question-status {
-    margin: 6px 13px 0;
-
-    font-size: 0.75rem;
-  }
-
-  .question-form:has(.question-status) {
-    min-height: 315px;
-  }
-
-  /* ----------------------------------------------
-     個人情報注意
-  ---------------------------------------------- */
-
-  .privacy-notice {
-    font-size: 8.8px;
-  }
-
-  /* ----------------------------------------------
-     ホーム内著作権
-  ---------------------------------------------- */
-
-  .home-credit {
-    margin-top: 30px;
-
-    font-size: 8.5px;
-  }
-}
-
-/* ==================================================
-   初期表示アニメーション
-   ※派手にしない
-================================================== */
-
-.home-main {
-  opacity: 0;
-
-  transform: translateY(8px);
-
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease;
-}
-
-body.is-ready .home-main {
-  opacity: 1;
-
-  transform: translateY(0);
-}
-
-/* ==================================================
-   ヒーロー表示
-================================================== */
-
-.hero-section {
-  opacity: 0;
-
-  transform: translateY(10px);
-}
-
-body.is-ready .hero-section {
-  animation: lumiAHeroIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes lumiAHeroIn {
-  from {
-    opacity: 0;
-
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/* ==================================================
-   質問エリア表示
-================================================== */
-
-.question-section {
-  opacity: 0;
-
-  transform: translateY(12px);
-}
-
-body.is-ready .question-section {
-  animation: lumiAQuestionIn 0.65s 0.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes lumiAQuestionIn {
-  from {
-    opacity: 0;
-
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/* ==================================================
-   エラー入力
-================================================== */
-
-.question-input.is-error {
-  animation: lumiAInputError 0.32s ease;
-}
-
-@keyframes lumiAInputError {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-3px);
-  }
-
-  75% {
-    transform: translateX(3px);
-  }
-}
-
-/* ==================================================
-   動きを減らす設定
-================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-
-    animation-iteration-count: 1 !important;
-
-    transition-duration: 0.01ms !important;
-
-    scroll-behavior: auto !important;
-  }
-
-  .home-main,
-  .hero-section,
-  .question-section {
-    opacity: 1;
-
-    transform: none;
-  }
-}
-
-/* ==================================================
-   JavaScript側の動き無効化
-================================================== */
-
-body.motion-reduced .home-main,
-body.motion-reduced .hero-section,
-body.motion-reduced .question-section {
-  opacity: 1;
-
-  transform: none;
-
-  animation: none !important;
 }
