@@ -120,8 +120,8 @@
 
   min-width: 0;
   min-height: 0;
-  left: 110px;
-  padding: clamp(210px, 10.5vh, 112px) clamp(28px, 4.2vw, 70px) 100px;
+  left: 80px;
+  padding: clamp(140px, 10.5vh, 112px) clamp(28px, 4.2vw, 70px) 100px;
 
   text-align: center;
 }
@@ -150,7 +150,7 @@
 
   /* ロゴを少しだけ控えめにして、本の余白になじませる */
   width: clamp(200px, 23vw, 300px);
-  max-width: 55%;
+  max-width: 60%;
 
   /* ロゴとキャッチコピーの間隔を調整 */
   margin: 0 auto 18px;
@@ -176,10 +176,10 @@
   object-fit: contain;
   object-position: center;
 
-  filter: drop-shadow(0 1px 1px rgb(91 58 17 / 8%));
-
-  /* ロゴ画像の周囲に余計な装飾を足さない */
-  filter: drop-shadow(0 2px 2px rgb(91 58 17 / 10%));
+  /* 紙に印刷されたような自然ななじみ */
+  mix-blend-mode: multiply;
+  opacity: 0.97;
+  filter: drop-shadow(0 0.5px 0 rgb(91 58 17 / 6%));
 }
 
 /* ========================================
@@ -193,13 +193,16 @@
 
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
 
-  font-size: clamp(30px, 2.25vw, 36px);
+  font-size: clamp(45px, 2.25vw, 36px);
   font-weight: 600;
 
   line-height: 1.7;
   letter-spacing: 0.12em;
 
   text-align: center;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
+  mix-blend-mode: multiply;
 }
 
 /* ========================================
@@ -237,6 +240,10 @@
   letter-spacing: 0.045em;
 
   text-align: center;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 18%);
+  mix-blend-mode: multiply;
+  opacity: 0.94;
 }
 
 /* ========================================
@@ -247,8 +254,8 @@
   position: absolute;
   z-index: 2;
 
-  left: 50%;
-  bottom: clamp(82px, 13vh, 125px);
+  left: 42%;
+  bottom: clamp(160px, 13vh, 125px);
 
   display: flex;
   align-items: center;
@@ -365,10 +372,13 @@
   min-width: 0;
   min-height: 0;
 
-  left: -20px;
+  left: 12px;
+
+  transform: rotate(0.7deg);
+  transform-origin: center center;
 
   /* 右ページの上部余白を調整 */
-  padding: clamp(225px, 9.5vh, 105px) clamp(28px, 4.2vw, 70px) 65px;
+  padding: clamp(142px, 9.5vh, 105px) clamp(28px, 4.2vw, 70px) 65px;
 
   color: var(--lumi-navy);
 }
@@ -388,21 +398,27 @@
   margin: 0 0 10px;
   color: #786044;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(12px, 1vw, 15px);
+  font-size: clamp(18px, 1vw, 15px);
   font-weight: 600;
   letter-spacing: 0.12em;
   line-height: 1.7;
+  mix-blend-mode: multiply;
 }
 
 .login-page .login-panel__title {
   margin: 0;
   color: #173e76;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
-  font-size: clamp(32px, 2.6vw, 40px);
+  font-size: clamp(45px, 2.6vw, 40px);
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: 0.22em;
   text-indent: 0.22em;
+
+  /* 紙に印刷された文字のようになじませる */
+  mix-blend-mode: multiply;
+  opacity: 0.98;
+  text-shadow: 0 0.4px 0 rgb(90 62 28 / 8%);
 }
 
 .login-page .login-panel__ornament {
@@ -421,10 +437,11 @@
   color: #426b96;
   font-family:
     "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-  font-size: clamp(14px, 1.05vw, 16px);
+  font-size: clamp(17px, 1.05vw, 16px);
   font-weight: 500;
   line-height: 1.9;
   letter-spacing: 0.045em;
+  mix-blend-mode: multiply;
 }
 
 /* ---------------------------------------------------------
@@ -450,34 +467,40 @@
   display: block;
   margin: 0 0 7px;
   color: #294d78;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 700;
   line-height: 1.6;
   letter-spacing: 0.04em;
+
+  mix-blend-mode: multiply;
+  opacity: 0.96;
 }
 
-/* 入力欄の外枠 */
-
+/* 入力欄：紙の上に自然に印刷されたような枠 */
 .login-page .login-form__input-wrap {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 51px;
+  min-height: 49px;
   overflow: hidden;
-  background: rgb(255 250 238 / 55%);
-  border: 1px solid rgb(180 143 91 / 48%);
-  border-radius: 8px;
-  box-shadow: none;
+
+  background: rgb(255 250 239 / 16%);
+  border: 1px solid rgb(151 119 76 / 30%);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgb(111 81 42 / 3%);
+
   transition:
     border-color 0.2s ease,
-    background-color 0.2s ease;
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
+/* 入力中：紙になじみながら、操作中だと分かる表示 */
 .login-page .login-form__input-wrap:focus-within {
-  background: rgb(255 252 244 / 82%);
-  border-color: #7194b6;
-  box-shadow: 0 0 0 2px rgb(54 105 153 / 8%);
+  background: rgb(255 252 245 / 55%);
+  border-color: rgb(49 105 158 / 65%);
+  box-shadow: 0 0 0 2px rgb(49 105 158 / 8%);
 }
 
 /* 入力アイコン */
@@ -517,7 +540,7 @@
   outline: none;
   font-family:
     "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
 }
@@ -576,7 +599,7 @@
   width: fit-content;
   margin: 2px 0 17px;
   color: #315581;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.8;
   letter-spacing: 0.025em;
@@ -659,18 +682,16 @@
 
   color: #fffaf0;
 
-  background: linear-gradient(105deg, #103c78 0%, #07549b 53%, #2999cf 100%);
+  background: linear-gradient(105deg, #153f76 0%, #1768a8 100%);
 
-  border: 1px solid #d9a04a;
-  border-radius: 999px;
+  border: 1px solid rgb(217 160 74 / 65%);
+  border-radius: 7px;
 
-  box-shadow:
-    0 3px 7px rgb(78 61 34 / 13%),
-    inset 0 1px 0 rgb(255 255 255 / 16%);
+  box-shadow: 0 1px 3px rgb(78 61 34 / 9%);
 
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
 
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.17em;
 
@@ -683,12 +704,8 @@
 }
 
 .login-page .login-form__submit:hover {
-  filter: brightness(1.07);
-
-  box-shadow:
-    0 5px 12px rgb(39 65 103 / 20%),
-    inset 0 1px 0 rgb(255 255 255 / 20%);
-
+  filter: brightness(1.04);
+  box-shadow: 0 2px 5px rgb(39 65 103 / 12%);
   transform: translateY(-1px);
 }
 
@@ -723,49 +740,60 @@
   font-family:
     "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
 
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
   overflow-wrap: anywhere;
 }
 
-/* ---------------------------------------------------------
-   17. パスワード再設定
---------------------------------------------------------- */
-
+/* パスワードを忘れた方はこちら */
 .login-page .login-form__forgot {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
 
   width: fit-content;
   max-width: 100%;
-
   margin: 16px auto 0;
   padding: 2px 4px;
 
   color: #315c8d;
-
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 600;
   line-height: 1.9;
   letter-spacing: 0.025em;
 
   text-decoration: none;
+  border-bottom: 1px solid transparent;
   text-underline-offset: 3px;
 
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+
+  mix-blend-mode: multiply;
 }
 
+/* ホバー時もリンク全体を移動させない */
 .login-page .login-form__forgot:hover {
   color: #0b70b5;
-  text-decoration: underline;
+  border-bottom-color: currentColor;
+  text-decoration: none;
+  transform: none;
 }
 
+/* 右端の矢印 */
 .login-page .login-form__forgot span {
+  display: inline-block;
+  flex: 0 0 auto;
+
   color: #c18a36;
-  font-size: 21px;
+  font-size: 18px;
   line-height: 1;
+  text-decoration: none;
+
+  transform: none;
+  transition: none;
 }
 
 /* ---------------------------------------------------------
@@ -801,12 +829,12 @@
 
   color: #345982;
 
-  background: rgb(255 250 239 / 64%);
+  background: rgb(255 250 239 / 22%);
 
-  border: 1px solid #dba14b;
-  border-radius: 9px;
+  border: 1px solid rgb(190 139 65 / 48%);
+  border-radius: 4px;
 
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.8;
   letter-spacing: 0.025em;
@@ -821,9 +849,8 @@
 }
 
 .login-page .login-form__guest:hover {
-  background: rgb(255 251 242 / 94%);
-  border-color: #bd842f;
-
+  background: rgb(255 251 242 / 48%);
+  border-color: rgb(189 132 47 / 70%);
   transform: translateY(-1px);
 }
 
@@ -850,6 +877,15 @@
 .login-page button:focus-visible {
   outline: 3px solid rgb(35 119 187 / 50%);
   outline-offset: 3px;
+}
+
+/* 右ページ：補助テキスト */
+.login-page .login-panel__eyebrow,
+.login-page .login-panel__description,
+.login-page .login-form__label,
+.login-page .login-form__forgot {
+  mix-blend-mode: multiply;
+  opacity: 0.94;
 }
 
 /* ---------------------------------------------------------
