@@ -107,7 +107,7 @@
   min-width: 0;
   min-height: 0;
   left: 80px;
-  padding: clamp(112px, 10.5vh, 140px) clamp(28px, 4.2vw, 70px) 100px;
+  padding: clamp(145px, 10.5vh, 140px) clamp(28px, 4.2vw, 70px) 100px;
   text-align: center;
 }
 
@@ -201,7 +201,7 @@
   position: absolute;
   z-index: 2;
   left: 42%;
-  bottom: clamp(125px, 13vh, 160px);
+  bottom: clamp(175px, 13vh, 160px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -283,7 +283,7 @@
   left: 12px;
   transform: rotate(0.7deg);
   transform-origin: center center;
-  padding: clamp(105px, 9.5vh, 142px) clamp(28px, 4.2vw, 70px) 65px;
+  padding: clamp(150px, 9.5vh, 142px) clamp(28px, 4.2vw, 70px) 65px;
   color: var(--lumi-navy);
 }
 
