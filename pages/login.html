@@ -19,26 +19,39 @@
 
   <body class="login-page">
     <main class="login-screen">
-      <!-- 背景画像：文字やロゴは画像に含めない -->
+      <!-- 背景画像 -->
       <div class="login-screen__background" aria-hidden="true"></div>
-
       <div class="login-screen__overlay" aria-hidden="true"></div>
+
+      <!-- ページめくりアニメーション専用レイヤー -->
+      <div class="page-turn" aria-hidden="true" hidden>
+        <div class="page-turn__destination">
+          <iframe
+            class="page-turn__home-preview"
+            src="./home.html"
+            title="ホーム画面のプレビュー"
+            tabindex="-1"
+            aria-hidden="true"
+          ></iframe>
+        </div>
+
+        <div class="page-turn__sheet">
+          <div class="page-turn__front">
+            <div class="page-turn__front-image"></div>
+          </div>
+          <div class="page-turn__back"></div>
+        </div>
+      </div>
 
       <!-- 本の左右ページに合わせたコンテンツ -->
       <div class="login-book">
-        <!-- ==============================
-             左ページ：LumiAの紹介
-        =============================== -->
+        <!-- 左ページ：LumiAの紹介 -->
         <section class="login-intro" aria-label="LumiAの紹介">
           <div class="login-intro__content">
-            <!-- メインロゴ -->
-            <a
-              class="login-intro__logo"
-              href="../index.html"
-              aria-label="LumiA ホーム"
-            >
+            <!-- メインロゴ：リンク機能なし -->
+            <div class="login-intro__logo">
               <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
-            </a>
+            </div>
 
             <!-- キャッチコピー -->
             <h1 class="login-intro__message">
@@ -75,13 +88,9 @@
               </span>
             </div>
           </div>
-
-          
         </section>
 
-        <!-- ==============================
-             右ページ：ログイン
-        =============================== -->
+        <!-- 右ページ：ログイン -->
         <section class="login-panel" aria-labelledby="login-title">
           <header class="login-panel__header">
             <p class="login-panel__eyebrow">WELCOME TO LumiA</p>
@@ -218,14 +227,10 @@
             <!-- ゲスト利用 -->
             <a class="login-form__guest" href="./home.html">
               <span class="login-form__guest-star" aria-hidden="true">✦</span>
-
               <span>ログインせずにゲストとして利用する</span>
-
               <span class="login-form__guest-arrow" aria-hidden="true">›</span>
             </a>
           </form>
-
-          
         </section>
       </div>
     </main>

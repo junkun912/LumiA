@@ -3,84 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <meta name="description" content="津高技専用AI学校アシスタント LumiA" />
-    <meta name="theme-color" content="#fff4dc" />
+
     <title>ホーム | LumiA</title>
 
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/home.css" />
+
     <script src="../js/home.js" defer></script>
   </head>
 
   <body class="home-page">
     <main class="home-screen">
+      <!-- 背景画像 -->
+      <div class="home-screen__background" aria-hidden="true"></div>
+
+      <!-- ホーム画面のコンテンツを配置する領域 -->
       <div class="home-book">
-        <!-- 左上：LumiAの紹介 -->
-        <section class="home-intro" aria-labelledby="home-title">
-          <a class="home-logo" href="./home.html" aria-label="LumiA ホーム">
-            <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
-          </a>
-
-          <p class="home-eyebrow">YOUR LEARNING JOURNEY</p>
-
-          <h1 id="home-title">
-            知りたいが、<br />
-            学びに変わる。
-          </h1>
-
-          <div class="home-ornament" aria-hidden="true">
-            <span></span>
-            <b>✦</b>
-            <span></span>
-          </div>
-
-          <p class="home-description">
-            学校での学びを、もっと身近に。<br />
-            LumiAと一緒に知りたいことを見つけよう。
-          </p>
-          <!-- 左下：コーギくんと吹き出し -->
-          <div class="home-mascot">
-            <img
-              class="home-mascot__image"
-              src="../assets/images/characters/corgi_basic.png"
-              alt="LumiAの案内役、コーギくん"
-            />
-
-            <div class="home-mascot__bubble">
-              <strong>気になることは</strong>
-              <p>なんでも聞いてみてね！</p>
-            </div>
-          </div>
-
-          <p class="home-intro__footer">Every question opens a new page.</p>
+        <section class="home-book__left" aria-label="LumiAの紹介">
+          <!-- 次のステップでロゴなどを配置 -->
         </section>
 
-        <!-- 右上：質問エリアの見出し -->
-        <section class="home-content" aria-labelledby="question-title">
-          <header class="home-header">
-            <div class="home-header__text">
-              <p class="home-header__eyebrow">ASK ANYTHING</p>
-
-              <h2 id="question-title">気になることを質問しよう</h2>
-
-              <p class="home-header__description">
-                学びのこと、学校のこと、どんなことでも気軽に聞いてみてください。
-              </p>
-            </div>
-
-            <button
-              class="home-profile"
-              id="profile-button"
-              type="button"
-              aria-label="利用者情報"
-              title="利用者情報"
-            >
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="12" cy="8" r="3.5"></circle>
-                <path d="M5 20a7 7 0 0 1 14 0"></path>
-              </svg>
-            </button>
-          </header>
+        <section class="home-book__right" aria-label="質問・検索">
+          <!-- 次のステップで質問入力欄などを配置 -->
         </section>
       </div>
     </main>

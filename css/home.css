@@ -1,13 +1,13 @@
 /* ========================================
-   LumiA ホーム画面
-   第1段階：左上の紹介エリア
+   LumiA Home
+   STEP 1：背景と本の表示
 ======================================== */
 
 .home-page {
   margin: 0;
+  min-width: 320px;
   min-height: 100vh;
-  color: #123f69;
-  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  overflow: hidden;
 }
 
 .home-page *,
@@ -16,411 +16,56 @@
   box-sizing: border-box;
 }
 
-.home-page .home-screen {
-  width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
-.home-page .home-book {
+.home-screen {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  isolation: isolate;
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
+  background: #f6e9cf;
+}
 
-  /* 既存の完成図用背景をそのまま使用 */
-  background-image: url("../assets/images/backgrounds/home_background.png");
-  background-position: center;
+/* 共通背景画像 */
+.home-screen__background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background-image: url("../assets/images/backgrounds/lumia_background.png");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-position: center center;
+  background-size: cover;
 }
 
-/* ========================================
-   左ページ
-======================================== */
-
-.home-page .home-intro {
+/* 本の左右ページに合わせたコンテンツ領域 */
+.home-book {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: translate(120px, 0);
-
-  min-width: 0;
-  min-height: 100vh;
-
-  /*
-    左ページ内側の余白。
-    背景画像の装飾枠を避けて配置する。
-  */
-  padding: 180px 130px 30px;
-
-  text-align: center;
-}
-
-/* LumiAロゴ */
-
-.home-page .home-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: min(45%, 190px);
-  margin: 0 auto 8px;
-}
-
-.home-page .home-logo img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 90px;
-  object-fit: contain;
-}
-
-/* 英字サブタイトル */
-
-.home-page .home-eyebrow {
-  margin: 0 0 17px;
-
-  color: #a96c19;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(10px, 0.95vw, 13px);
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  line-height: 1.5;
-}
-
-/* メインタイトル */
-
-.home-page .home-intro h1 {
-  max-width: 100%;
-  margin: 0;
-
-  color: #123f69;
-  font-size: clamp(30px, 3.15vw, 45px);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  line-height: 1.55;
-}
-
-/* 金色の装飾ライン */
-
-.home-page .home-ornament {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-
-  width: min(100%, 320px);
-  margin: 22px auto 16px;
-
-  color: #d99a2b;
-}
-
-.home-page .home-ornament span {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #d99a2b);
-}
-
-.home-page .home-ornament span:last-child {
-  background: linear-gradient(90deg, #d99a2b, transparent);
-}
-
-.home-page .home-ornament b {
-  font-size: 19px;
-  font-weight: 400;
-  line-height: 1;
-}
-
-/* 説明文 */
-
-.home-page .home-description {
-  margin: 0;
-
-  color: #536f89;
-  font-family: "Yu Gothic", "Meiryo", sans-serif;
-  font-size: clamp(12px, 1.05vw, 15px);
-  font-weight: 400;
-  letter-spacing: 0.07em;
-  line-height: 2;
-}
-
-/* ========================================
-   タブレット
-======================================== */
-
-@media (max-width: 900px) {
-  .home-page .home-intro {
-    padding-right: 5%;
-    padding-left: 5%;
-  }
-
-  .home-page .home-logo {
-    width: min(50%, 170px);
-  }
-
-  .home-page .home-intro h1 {
-    font-size: clamp(27px, 4vw, 36px);
-  }
-
-  .home-page .home-ornament {
-    margin-top: 17px;
-    margin-bottom: 13px;
-  }
-}
-
-/* ========================================
-   スマートフォン
-======================================== */
-
-@media (max-width: 600px) {
-  .home-page .home-book {
-    display: block;
-    min-height: 100vh;
-    background-size: auto 100%;
-    background-position: center top;
-  }
-
-  .home-page .home-intro {
-    min-height: 600px;
-    padding: 30px 24px;
-  }
-
-  .home-page .home-logo {
-    width: min(48%, 160px);
-  }
-
-  .home-page .home-intro h1 {
-    font-size: clamp(28px, 7.5vw, 36px);
-  }
-
-  .home-page .home-description {
-    font-size: 12px;
-  }
-}
-
-/* ========================================
-   左下：コーギくんと吹き出し
-======================================== */
-
-.home-page .home-intro {
-  position: relative;
-}
-
-.home-page .home-mascot {
-  position: absolute;
-  left: 16%;
-  bottom: 20%;
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
-  width: 65%;
-  z-index: 2;
-}
-
-.home-page .home-mascot__image {
-  display: block;
-  width: 48%;
-  max-width: 230px;
-  height: auto;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.home-page .home-mascot__bubble {
-  position: relative;
-  width: 52%;
-  margin-bottom: 80px;
-  padding: 16px 18px;
-
-  background: rgba(255, 244, 216, 0.78);
-  border: 1px solid rgba(190, 132, 43, 0.55);
-  border-radius: 18px;
-
-  color: #123f69;
-  font-family: "Yu Gothic", "Meiryo", sans-serif;
-  font-size: 13px;
-  line-height: 1.8;
-  overflow-wrap: anywhere;
-
-  box-shadow: 0 2px 5px rgba(112, 76, 30, 0.06);
-}
-
-.home-page .home-mascot__bubble::before {
-  content: "";
-  position: absolute;
-  left: -8px;
-  bottom: 24px;
-
-  width: 14px;
-  height: 14px;
-
-  background: #fff4d8;
-  border-left: 1px solid rgba(190, 132, 43, 0.55);
-  border-bottom: 1px solid rgba(190, 132, 43, 0.55);
-
-  transform: rotate(45deg);
-}
-
-.home-page .home-mascot__bubble strong {
-  display: block;
-  margin-bottom: 4px;
-  color: #a96c19;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.home-page .home-mascot__bubble p {
-  margin: 0;
-  color: #123f69;
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-.home-page .home-intro__footer {
-  position: absolute;
-  bottom: 12.7%;
-  left: 0;
-  width: 100%;
-  margin: 0;
-  color: #b88b4b;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 12px;
-  font-style: italic;
-  text-align: center;
-  transform: rotate(-3deg);
-}
-
-/* 小さな画面では左ページ内に収める */
-@media (max-width: 900px) {
-  .home-page .home-mascot {
-    left: 8%;
-    width: 84%;
-    gap: 8px;
-  }
-
-  .home-page .home-mascot__bubble {
-    padding: 12px;
-    font-size: 12px;
-  }
-}
-
-/* ========================================
-   第2段階：右上の質問エリア見出し
-======================================== */
-
-.home-page .home-content {
-  position: relative;
-  min-width: 0;
-  min-height: 100vh;
-  padding: 200px 12% 60px 7%;
-  left: -80px;
-  color: #123f69;
-  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
-  transform: rotate(-3deg);
-}
-
-.home-page .home-header {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  text-align: center;
-}
-
-.home-page .home-header__text {
-  width: 100%;
-  padding: 0 24px;
-}
-
-.home-page .home-header__eyebrow {
-  margin: 0 0 10px;
-  color: #b8791d;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 12px;
-  letter-spacing: 0.2em;
-}
-
-.home-page .home-header__text h2 {
-  margin: 0;
-  color: #123f69;
-  font-size: clamp(25px, 2.5vw, 36px);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  line-height: 1.5;
-}
-
-.home-page .home-header__description {
-  margin: 12px 0 0;
-  color: #536f89;
-  font-family: "Yu Gothic", "Meiryo", sans-serif;
-  font-size: clamp(11px, 0.95vw, 14px);
-  letter-spacing: 0.04em;
-  line-height: 1.8;
-}
-
-.home-page .home-profile {
-  position: absolute;
-  top: 0;
-  right: -5%;
   display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 10px;
-  border: 1px solid #d99a2b;
-  border-radius: 50%;
-  background: rgba(255, 250, 235, 0.85);
-  color: #a96c19;
-  cursor: pointer;
-}
+  grid-template-columns: 1fr 1fr;
 
-.home-page .home-profile svg {
-  display: block;
   width: 100%;
-  height: 100%;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  min-height: 100vh;
 }
 
-@media (max-width: 900px) {
-  .home-page .home-content {
-    padding-right: 6%;
-    padding-left: 6%;
-  }
-
-  .home-page .home-profile {
-    right: 0;
-    width: 38px;
-    height: 38px;
-  }
+/* 左ページ */
+.home-book__left {
+  min-width: 0;
+  position: relative;
 }
 
-@media (max-width: 600px) {
-  .home-page .home-content {
-    min-height: 350px;
-    padding: 45px 24px 30px;
-  }
+/* 右ページ */
+.home-book__right {
+  min-width: 0;
+  position: relative;
+}
 
-  .home-page .home-header__text {
-    padding: 0 8px;
-  }
-
-  .home-page .home-header__text h2 {
-    font-size: 24px;
-  }
-
-  .home-page .home-profile {
-    top: -30px;
-    right: 0;
-    width: 34px;
-    height: 34px;
+/* 動きを減らす設定への配慮 */
+@media (prefers-reduced-motion: reduce) {
+  .home-page *,
+  .home-page *::before,
+  .home-page *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

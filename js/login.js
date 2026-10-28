@@ -21,11 +21,13 @@ LumiA
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const passwordInput = document.getElementById("password");
-  const passwordToggle = document.getElementById("password-toggle");
-  const loginMessage = document.getElementById("login-message");
-  const guestLink = document.querySelector(".login-guest");
+  const passwordToggle = document.getElementById("toggle-password");
+  const loginMessage = document.getElementById("login-status");
+  const guestLink = document.querySelector(".login-form__guest");
   const loginScreen = document.querySelector(".login-screen");
-  const loginButton = loginForm?.querySelector('.login-submit[type="submit"]');
+  const loginButton = loginForm?.querySelector(
+    '.login-form__submit[type="submit"]',
+  );
 
   if (!loginScreen) {
     console.error("LumiA: ログイン画面が見つかりません。");
@@ -42,14 +44,21 @@ document.addEventListener("DOMContentLoaded", () => {
    * ページめくり演出後に指定先へ移動する。
    * 認証成功後、またはゲスト利用時に使用する。
    */
+
   function startPageTurn(destination) {
     if (isTransitioning || !destination) {
       return;
     }
 
-    isTransitioning = true;
+    const pageSheet = loginScreen.querySelector(".page-turn__sheet");
 
-    loginScreen.classList.add("is-page-turning");
+    // アニメーション用の要素がなければ通常遷移
+    if (!pageSheet) {
+      window.location.href = destination;
+      return;
+    }
+
+    isTransitioning = true;
 
     if (loginButton) {
       loginButton.disabled = true;
@@ -63,11 +72,32 @@ document.addEventListener("DOMContentLoaded", () => {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    const delay = reducedMotion ? 0 : 1000;
-
-    window.setTimeout(() => {
+    if (reducedMotion) {
       window.location.href = destination;
-    }, delay);
+      return;
+    }
+
+    // 古いアニメーション状態をリセット
+    loginScreen.classList.remove("is-page-turning");
+
+    // CSSの再計算後にアニメーションを開始
+    void pageSheet.offsetWidth;
+
+    const handleAnimationEnd = (event) => {
+      if (
+        event.target !== pageSheet ||
+        event.animationName !== "lumi-page-turn"
+      ) {
+        return;
+      }
+
+      pageSheet.removeEventListener("animationend", handleAnimationEnd);
+      window.location.href = destination;
+    };
+
+    pageSheet.addEventListener("animationend", handleAnimationEnd);
+
+    loginScreen.classList.add("is-page-turning");
   }
 
   // 認証処理から呼び出せるように公開する。
