@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <meta name="description" content="津高技専用AI学校アシスタント LumiA" />
+    <meta name="theme-color" content="#f6e9cf" />
 
     <title>ホーム | LumiA</title>
 
@@ -16,17 +17,86 @@
 
   <body class="home-page">
     <main class="home-screen">
-      <!-- 背景画像 -->
+      <!-- 本の背景 -->
       <div class="home-screen__background" aria-hidden="true"></div>
 
-      <!-- ホーム画面のコンテンツを配置する領域 -->
       <div class="home-book">
+        <!-- 左ページ：LumiAの紹介 -->
         <section class="home-book__left" aria-label="LumiAの紹介">
-          <!-- 次のステップでロゴなどを配置 -->
+          <div class="home-intro">
+            <div class="home-intro__content">
+              <img
+                class="home-logo"
+                src="../assets/images/icons/logo_main.png"
+                alt="LumiA"
+              />
+
+              <p class="home-intro__eyebrow">
+                津高技専の学びを、もっと身近に。
+              </p>
+
+              <h1 class="home-intro__headline">
+                知りたいが、<br />
+                学びに変わる。
+              </h1>
+
+              <p class="home-intro__description">
+                津高技専での学びや学校生活について、<br />
+                知りたいことを気軽に質問。<br />
+                LumiAがあなたの学びをサポートします。
+              </p>
+            </div>
+
+            <img
+              class="home-intro__mascot"
+              src="../assets/images/characters/corgi_idea.png"
+              alt="ひらめいた表情のコーギくん"
+            />
+          </div>
         </section>
 
-        <section class="home-book__right" aria-label="質問・検索">
-          <!-- 次のステップで質問入力欄などを配置 -->
+        <!-- 右ページ：質問エリア -->
+        <section class="home-book__right" aria-label="LumiAへの質問">
+          <div class="home-question">
+            <div class="home-question__content">
+              
+      
+
+              
+
+              <!-- 質問入力フォーム -->
+              <form class="home-question__form" id="home-question-form">
+                <label class="home-question__label" for="home-question-input">
+                  あなたの疑問を聞かせてください
+                </label>
+
+                <textarea
+                  class="home-question__input"
+                  id="home-question-input"
+                  name="question"
+                  rows="4"
+                  placeholder="例：これから取得すると良い資格は？"
+                  required
+                ></textarea>
+
+                <div class="home-question__actions">
+                  
+
+                  <button class="home-question__submit" type="submit">
+                    <span>質問する</span>
+                    <span class="home-question__arrow" aria-hidden="true"
+                      >→</span
+                    >
+                  </button>
+                </div>
+              </form>
+
+              <!-- 控えめなページ装飾 -->
+              <div class="home-question__footnote" aria-hidden="true">
+               
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </main>

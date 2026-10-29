@@ -1,13 +1,15 @@
 /* ========================================
    LumiA Home
-   STEP 1：背景と本の表示
+   本の紙面になじむホーム画面
 ======================================== */
+
+/* 基本設定 */
 
 .home-page {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .home-page *,
@@ -15,6 +17,10 @@
 .home-page *::after {
   box-sizing: border-box;
 }
+
+/* ========================================
+   ホーム画面全体
+======================================== */
 
 .home-screen {
   position: relative;
@@ -25,7 +31,6 @@
   background: #f6e9cf;
 }
 
-/* 共通背景画像 */
 .home-screen__background {
   position: absolute;
   inset: 0;
@@ -37,29 +42,506 @@
   background-size: cover;
 }
 
-/* 本の左右ページに合わせたコンテンツ領域 */
+/* ========================================
+   本の左右ページ
+======================================== */
+
 .home-book {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 
   width: 100%;
   min-height: 100vh;
 }
 
-/* 左ページ */
-.home-book__left {
-  min-width: 0;
-  position: relative;
-}
-
-/* 右ページ */
+.home-book__left,
 .home-book__right {
-  min-width: 0;
   position: relative;
+  min-width: 0;
 }
 
-/* 動きを減らす設定への配慮 */
+/* ========================================
+   左ページ：LumiAの紹介
+======================================== */
+
+.home-intro {
+  position: relative;
+  min-width: 0;
+  min-height: 100vh;
+
+  padding: clamp(160px, 14vh, 160px) clamp(24px, 3vw, 48px) 140px;
+
+  left: 250px;
+  overflow: hidden;
+}
+
+.home-intro__content {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+/* ロゴ */
+
+.home-logo {
+  display: block;
+
+  width: clamp(180px, 20vw, 280px);
+  max-width: 100%;
+  height: auto;
+
+  margin-bottom: clamp(26px, 4vh, 36px);
+}
+
+/* サブタイトル */
+
+.home-intro__eyebrow {
+  margin: 0 0 18px;
+
+  color: #345875;
+
+  font-size: clamp(14px, 1.15vw, 16px);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+}
+
+/* キャッチコピー */
+
+.home-intro__headline {
+  margin: 0 0 26px;
+
+  color: #173e5d;
+
+  font-size: clamp(40px, 3.8vw, 48px);
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  line-height: 1.6;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
+  mix-blend-mode: multiply;
+}
+
+/* 紹介文 */
+
+.home-intro__description {
+  margin: 0;
+
+  color: #345875;
+
+  font-size: clamp(15px, 1.25vw, 18px);
+  font-weight: 500;
+  line-height: 2.2;
+  letter-spacing: 0.025em;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 18%);
+  mix-blend-mode: multiply;
+}
+
+/* コーギくん */
+
+.home-intro__mascot {
+  position: absolute;
+  z-index: 0;
+
+  right: clamp(24px, 5vw, 72px);
+  bottom: clamp(28px, 5vh, 52px);
+
+  display: block;
+
+  width: clamp(120px, 15vw, 190px);
+  max-width: 35%;
+  height: auto;
+
+  object-fit: contain;
+  object-position: bottom right;
+  pointer-events: none;
+}
+
+/* ========================================
+   右ページ：質問エリア
+======================================== */
+
+.home-question {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  margin: 0;
+  padding: clamp(195px, 12vh, 135px) clamp(48px, 5vw, 78px) 90px;
+
+  overflow: hidden;
+}
+
+.home-question__content {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+/* ========================================
+   質問フォーム
+======================================== */
+
+.home-question__form {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 85%;
+  min-width: 0;
+  margin: 0;
+}
+
+/* 質問の見出し */
+
+.home-question__label {
+  display: block;
+  width: 100%;
+
+  /* 見出しと質問欄の間隔を広げる */
+  margin: 0 0 28px;
+
+  color: #173e5d;
+  font-size: clamp(22px, 2vw, 25px);
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  line-height: 5;
+
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   本の装飾になじむ質問入力欄
+======================================== */
+
+/* 本の紙面に直接書き込むような質問欄 */
+.home-question__input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: clamp(220px, 29vh, 300px);
+
+  margin: 0;
+  padding: 28px 30px;
+
+  /* 紙面になじむ控えめな枠 */
+  border: 3px solid rgb(166 119 63 / 85%);
+  border-radius: 2px;
+
+  /* 白い箱に見せず、本の紙色を活かす */
+  background: rgb(255 248 232 / 18%);
+
+  color: #173e5d;
+  font-family: inherit;
+  font-size: 18px;
+  line-height: 2.2;
+  letter-spacing: 0.035em;
+
+  /* 浮き上がる影をなくす */
+  box-shadow: none;
+
+  resize: vertical;
+}
+
+.home-question__input::placeholder {
+  color: #786b59;
+  opacity: 1;
+}
+
+/* 入力中 */
+.home-question__input:focus {
+  outline: none;
+  border-color: rgb(52 88 117 / 60%);
+  background: rgb(255 248 232 / 30%);
+  box-shadow: 0 0 0 2px rgb(52 88 117 / 8%);
+}
+
+/* ========================================
+   質問するボタン
+======================================== */
+
+.home-question__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+  min-width: 0;
+
+  /* 質問欄とボタンの間隔を広げる */
+  margin-top: 45px;
+}
+
+/* ボタン */
+
+.home-question__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  width: min(180px, 100%);
+  min-width: 0;
+  min-height: 30px;
+  padding: 14px 14px;
+
+  border: 1px solid #173e5d;
+  border-radius: 5px;
+
+  background: #244f70;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 10px rgb(43 48 48 / 10%);
+  transform: none;
+}
+
+/* 矢印 */
+
+.home-question__arrow {
+  font-size: 25px;
+  line-height: 1;
+}
+
+/* マウス操作時 */
+
+.home-question__submit:hover {
+  background: #173e5d;
+}
+
+/* キーボード操作時 */
+
+.home-question__submit:focus-visible {
+  outline: 3px solid #8bbdca;
+  outline-offset: 4px;
+}
+
+/* ========================================
+   下部の装飾は非表示
+======================================== */
+
+.home-question__footnote {
+  display: none !important;
+}
+
+.home-question__footnote::before,
+.home-question__footnote::after {
+  display: none !important;
+}
+
+/* ========================================
+   タブレット
+======================================== */
+
+@media (min-width: 701px) and (max-width: 1100px) {
+  .home-intro {
+    left: 0;
+    padding: 120px 28px 120px;
+  }
+
+  .home-logo {
+    width: clamp(160px, 19vw, 220px);
+  }
+
+  .home-intro__headline {
+    font-size: clamp(32px, 3.8vw, 44px);
+  }
+
+  .home-intro__description {
+    font-size: 15px;
+  }
+
+  .home-question {
+    padding: 100px 36px 80px;
+  }
+
+  .home-question__label {
+    font-size: clamp(20px, 2.3vw, 26px);
+  }
+
+  .home-question__input {
+    min-height: 210px;
+    padding: 20px;
+  }
+
+  .home-question__submit {
+    width: min(220px, 100%);
+    min-height: 60px;
+  }
+}
+
+/* ========================================
+   スマートフォン
+======================================== */
+
+@media (max-width: 700px) {
+  .home-page {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .home-screen {
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .home-screen__background {
+    background-image: url("../assets/images/backgrounds/lumia_background_mobile.png");
+    background-position: center top;
+    background-size: 100% 100%;
+  }
+
+  .home-book {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .home-book__left,
+  .home-book__right {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* 左ページ */
+
+  .home-intro {
+    left: 0;
+    width: 100%;
+    min-height: auto;
+
+    padding: 44px 24px 180px;
+  }
+
+  .home-intro__content {
+    max-width: 100%;
+  }
+
+  .home-logo {
+    width: 170px;
+    margin-bottom: 26px;
+  }
+
+  .home-intro__eyebrow {
+    font-size: 13px;
+  }
+
+  .home-intro__headline {
+    font-size: clamp(30px, 7.5vw, 40px);
+    margin-bottom: 18px;
+  }
+
+  .home-intro__description {
+    font-size: 14px;
+    line-height: 2;
+  }
+
+  .home-intro__mascot {
+    right: 16px;
+    bottom: 20px;
+
+    width: min(42%, 170px);
+    max-width: none;
+  }
+
+  /* 右ページ */
+
+  .home-question {
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+
+    padding: 44px 24px 64px;
+    overflow: visible;
+  }
+
+  .home-question__content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .home-question__label {
+    margin-bottom: 14px;
+    font-size: clamp(21px, 6vw, 27px);
+    line-height: 1.7;
+  }
+
+  .home-question__input {
+    width: 100%;
+    min-height: 180px;
+    padding: 18px;
+    font-size: 15px;
+  }
+
+  .home-question__actions {
+    margin-top: 14px;
+  }
+
+  .home-question__submit {
+    width: 100%;
+    min-height: 58px;
+    padding: 16px 20px;
+
+    font-size: 16px;
+  }
+
+  .home-question__arrow {
+    font-size: 22px;
+  }
+}
+
+/* ========================================
+   小さなスマートフォン
+======================================== */
+
+@media (max-width: 380px) {
+  .home-intro,
+  .home-question {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .home-logo {
+    width: 150px;
+  }
+
+  .home-intro__headline {
+    font-size: 29px;
+  }
+
+  .home-question__label {
+    font-size: 21px;
+  }
+
+  .home-question__input {
+    min-height: 160px;
+    padding: 14px;
+  }
+}
+
+/* ========================================
+   動きを減らす設定への配慮
+======================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .home-page *,
   .home-page *::before,
