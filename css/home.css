@@ -71,8 +71,8 @@
   min-height: 100vh;
 
   padding: clamp(160px, 14vh, 160px) clamp(24px, 3vw, 48px) 140px;
-
-  left: 250px;
+  top: -15px;
+  left: 147px;
   overflow: hidden;
 }
 
@@ -80,26 +80,44 @@
   position: relative;
   z-index: 1;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   width: 100%;
-  max-width: 560px;
-  margin-inline: auto;
+  max-width: 510px;
+  margin: 0 auto;
+
+  text-align: center;
 }
 
-/* ロゴ */
+/* ========================================
+   LumiAロゴ
+   ログイン画面とデザインを統一
+======================================== */
 
 .home-logo {
   display: block;
 
-  width: clamp(180px, 20vw, 280px);
-  max-width: 100%;
+  width: clamp(200px, 23vw, 300px);
+  max-width: 60%;
   height: auto;
 
-  margin-bottom: clamp(26px, 4vh, 36px);
+  margin: 0 auto 18px;
+  padding: 0;
+  line-height: 0;
+
+  mix-blend-mode: multiply;
+  opacity: 0.97;
+  filter: drop-shadow(0 0.5px 0 rgb(91 58 17 / 6%));
 }
 
-/* サブタイトル */
+/* ========================================
+   サブタイトル
+======================================== */
 
 .home-intro__eyebrow {
+  width: 100%;
   margin: 0 0 18px;
 
   color: #345875;
@@ -108,48 +126,63 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   line-height: 1.9;
+
+  text-align: center;
 }
 
-/* キャッチコピー */
+/* ========================================
+   キャッチコピー
+======================================== */
 
 .home-intro__headline {
-  margin: 0 0 26px;
+  width: 100%;
+  margin: 24px 0 17px;
 
   color: #173e5d;
 
-  font-size: clamp(40px, 3.8vw, 48px);
+  font-size: clamp(36px, 2.25vw, 45px);
   font-weight: 600;
-  letter-spacing: 0.045em;
-  line-height: 1.6;
+  letter-spacing: 0.12em;
+  line-height: 1.7;
+
+  text-align: center;
 
   text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
   mix-blend-mode: multiply;
 }
 
-/* 紹介文 */
+/* ========================================
+   紹介文
+======================================== */
 
 .home-intro__description {
-  margin: 0;
+  width: 100%;
+  margin: 25;
 
   color: #345875;
 
-  font-size: clamp(15px, 1.25vw, 18px);
+  font-size: clamp(15px, 1.05vw, 17px);
   font-weight: 500;
   line-height: 2.2;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.045em;
+
+  text-align: center;
 
   text-shadow: 0 0.5px 0 rgb(255 255 255 / 18%);
   mix-blend-mode: multiply;
 }
 
-/* コーギくん */
+/* ========================================
+   コーギくん
+======================================== */
 
 .home-intro__mascot {
   position: absolute;
   z-index: 0;
 
-  right: clamp(24px, 5vw, 72px);
-  bottom: clamp(28px, 5vh, 52px);
+  left: 28%;
+  right: auto;
+  bottom: 153px;
 
   display: block;
 
@@ -158,7 +191,9 @@
   height: auto;
 
   object-fit: contain;
-  object-position: bottom right;
+  object-position: bottom center;
+
+  transform: translateX(-50%);
   pointer-events: none;
 }
 
@@ -208,11 +243,10 @@
   display: block;
   width: 100%;
 
-  /* 見出しと質問欄の間隔を広げる */
-  margin: 0 0 28px;
+  margin: 0 10 28px;
 
   color: #173e5d;
-  font-size: clamp(22px, 2vw, 25px);
+  font-size: clamp(22px, 2vw, 30px);
   font-weight: 700;
   letter-spacing: 0.035em;
   line-height: 5;
@@ -221,10 +255,10 @@
 }
 
 /* ========================================
-   本の装飾になじむ質問入力欄
+   質問入力欄
+   本の紙面になじむデザイン
 ======================================== */
 
-/* 本の紙面に直接書き込むような質問欄 */
 .home-question__input {
   display: block;
   width: 100%;
@@ -235,11 +269,9 @@
   margin: 0;
   padding: 28px 30px;
 
-  /* 紙面になじむ控えめな枠 */
   border: 3px solid rgb(166 119 63 / 85%);
   border-radius: 2px;
 
-  /* 白い箱に見せず、本の紙色を活かす */
   background: rgb(255 248 232 / 18%);
 
   color: #173e5d;
@@ -248,7 +280,6 @@
   line-height: 2.2;
   letter-spacing: 0.035em;
 
-  /* 浮き上がる影をなくす */
   box-shadow: none;
 
   resize: vertical;
@@ -260,6 +291,7 @@
 }
 
 /* 入力中 */
+
 .home-question__input:focus {
   outline: none;
   border-color: rgb(52 88 117 / 60%);
@@ -279,7 +311,6 @@
   width: 100%;
   min-width: 0;
 
-  /* 質問欄とボタンの間隔を広げる */
   margin-top: 45px;
 }
 
@@ -356,6 +387,10 @@
     padding: 120px 28px 120px;
   }
 
+  .home-intro__content {
+    max-width: 100%;
+  }
+
   .home-logo {
     width: clamp(160px, 19vw, 220px);
   }
@@ -366,6 +401,13 @@
 
   .home-intro__description {
     font-size: 15px;
+  }
+
+  .home-intro__mascot {
+    left: 50%;
+    right: auto;
+    bottom: 35px;
+    width: min(35%, 150px);
   }
 
   .home-question {
@@ -438,7 +480,8 @@
 
   .home-logo {
     width: 170px;
-    margin-bottom: 26px;
+    max-width: 70%;
+    margin: 0 auto 26px;
   }
 
   .home-intro__eyebrow {
@@ -447,7 +490,8 @@
 
   .home-intro__headline {
     font-size: clamp(30px, 7.5vw, 40px);
-    margin-bottom: 18px;
+    margin: 12px 0 18px;
+    letter-spacing: 0.08em;
   }
 
   .home-intro__description {
@@ -456,11 +500,14 @@
   }
 
   .home-intro__mascot {
+    left: auto;
     right: 16px;
     bottom: 20px;
 
     width: min(42%, 170px);
     max-width: none;
+
+    transform: none;
   }
 
   /* 右ページ */

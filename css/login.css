@@ -156,11 +156,16 @@
   margin: 24px 0 0;
   color: #173e5d;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
-  font-size: clamp(36px, 2.25vw, 45px);
-  font-weight: 600;
-  line-height: 1.7;
-  letter-spacing: 0.12em;
+  font-size: clamp(40px, 3.8vw, 48px);
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0.045em;
   text-align: center;
+
+  /* 文字の線を太くする */
+  -webkit-text-stroke: 0.8px currentColor;
+  paint-order: stroke fill;
+
   text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
   mix-blend-mode: multiply;
 }
@@ -177,20 +182,27 @@
   width: min(100%, 260px);
   margin: 12px 0 17px;
   color: #c58b32;
+  
 }
 
 .login-page .login-intro__description {
   margin: 0;
   color: #345875;
   font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-  font-size: clamp(15px, 1.05vw, 17px);
+  font-size: 17px;
   font-weight: 500;
-  line-height: 2;
-  letter-spacing: 0.045em;
+  line-height: 2.2;
+  letter-spacing: 0.025em;
   text-align: center;
   text-shadow: 0 0.5px 0 rgb(255 255 255 / 18%);
   mix-blend-mode: multiply;
-  opacity: 0.94;
+
+    /* 文字の線を太くする */
+  -webkit-text-stroke: 0.6px currentColor;
+  paint-order: stroke fill;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
+  mix-blend-mode: multiply;
 }
 
 /* ---------------------------------------------------------
@@ -266,6 +278,13 @@
   line-height: 1.9;
   letter-spacing: 0.08em;
   text-align: center;
+
+    /* 文字の線を太くする */
+  -webkit-text-stroke: 0.5px currentColor;
+  paint-order: stroke fill;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
+  mix-blend-mode: multiply;
 }
 
 /* ---------------------------------------------------------
@@ -285,6 +304,8 @@
   transform-origin: center center;
   padding: clamp(150px, 9.5vh, 142px) clamp(28px, 4.2vw, 70px) 65px;
   color: var(--lumi-navy);
+
+  
 }
 
 /* ---------------------------------------------------------
@@ -307,26 +328,36 @@
   letter-spacing: 0.12em;
   line-height: 1.7;
   mix-blend-mode: multiply;
+
+  
 }
 
 .login-page .login-panel__title {
   margin: 0;
   color: #173e76;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
-  font-size: clamp(36px, 2.6vw, 45px);
-  font-weight: 600;
+  font-size: clamp(40px, 3.2vw, 48px);
+  font-weight: 700;
   line-height: 1.5;
-  letter-spacing: 0.22em;
-  text-indent: 0.22em;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
   mix-blend-mode: multiply;
   opacity: 0.98;
-  text-shadow: 0 0.4px 0 rgb(90 62 28 / 8%);
+
+    /* 文字の線を太くする */
+  -webkit-text-stroke: 0.8px currentColor;
+  paint-order: stroke fill;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
+  mix-blend-mode: multiply;
 }
 
 .login-page .login-panel__ornament {
   width: min(100%, 280px);
   margin: 14px auto 16px;
   gap: 11px;
+
+  
 }
 
 .login-page .login-panel__ornament i {
@@ -344,6 +375,13 @@
   line-height: 1.9;
   letter-spacing: 0.045em;
   mix-blend-mode: multiply;
+
+    /* 文字の線を太くする */
+  -webkit-text-stroke: 0.8xp currentColor;
+  paint-order: stroke fill;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
+  mix-blend-mode: multiply;
 }
 
 /* ---------------------------------------------------------
@@ -356,8 +394,11 @@
   margin: 25px auto 0;
   padding: 0;
   font-family:
-    "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+
 }
+
+
 
 .login-page .login-form__field {
   margin: 0 0 16px;
@@ -373,6 +414,7 @@
   letter-spacing: 0.04em;
   mix-blend-mode: multiply;
   opacity: 0.96;
+  
 }
 
 /* 入力欄 */
@@ -436,6 +478,8 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
+
+  
 }
 
 .login-page .login-form__input::placeholder {
@@ -497,6 +541,13 @@
   line-height: 1.8;
   letter-spacing: 0.025em;
   cursor: pointer;
+
+    /* 文字の線を太くする */
+  -webkit-text-stroke: 0.4px currentColor;
+  paint-order: stroke fill;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
+  mix-blend-mode: multiply;
 }
 
 .login-page .login-form__remember input {
@@ -636,6 +687,8 @@
   flex-shrink: 0;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
+
+  
 }
 
 .login-page .login-form__forgot,
@@ -709,6 +762,13 @@
     background-color 0.2s ease,
     border-color 0.2s ease,
     transform 0.2s ease;
+
+      /* 文字の線を太くする */
+  -webkit-text-stroke: 0.4px currentColor;
+  paint-order: stroke fill;
+
+  text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
+  mix-blend-mode: multiply;
 }
 
 .login-page .login-form__guest:hover {
