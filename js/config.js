@@ -31,6 +31,6 @@ export const LUMIA_CONFIG = {
   // ==================================================
 
   api: {
-    baseUrl: "",
+    baseUrl: "https://8qx20mp02h.execute-api.ap-northeast-1.amazonaws.com/develop"
   },
 };
