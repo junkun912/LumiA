@@ -74,12 +74,13 @@ function getApiBaseUrl() {
       throw new Error("HTTPS接続が必要です。");
     }
 
-    return url.href.endsWith("/") ? url.href : `${url.href}/`;
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
+    // クエリやフラグメントを含むベースURLは許可しない
+    if (url.search || url.hash) {
+      throw new Error("不正なURLです。");
     }
 
+    return url.href.endsWith("/") ? url.href : `${url.href}/`;
+  } catch (error) {
     throw new ApiError("API GatewayのURL設定が正しくありません。");
   }
 }
@@ -120,10 +121,29 @@ export async function apiRequest(
     throw new ApiError("APIのパス指定が正しくありません。");
   }
 
-  const endpoint = new URL(path.replace(/^\/+/, ""), baseUrl);
+  // 先頭のスラッシュを除去
+  const normalizedPath = path.trim().replace(/^\/+/, "");
 
-  if (endpoint.origin !== new URL(baseUrl).origin) {
+  // API GatewayのベースURLを基準にURLを生成
+  const endpoint = new URL(normalizedPath, baseUrl);
+
+  const baseUrlObject = new URL(baseUrl);
+
+  // 接続先のオリジンを検証
+  if (endpoint.origin !== baseUrlObject.origin) {
     throw new ApiError("許可されていないAPI接続先です。");
+  }
+
+  // API Gatewayのステージパスから外れていないか検証
+  const basePath = baseUrlObject.pathname.replace(/\/+$/, "");
+  const endpointPath = endpoint.pathname;
+
+  if (
+    basePath &&
+    endpointPath !== basePath &&
+    !endpointPath.startsWith(`${basePath}/`)
+  ) {
+    throw new ApiError("許可されていないAPIパスです。");
   }
 
   // --------------------------------------------------
@@ -142,6 +162,10 @@ export async function apiRequest(
   // リクエストヘッダー
   // --------------------------------------------------
 
+  if (!headers || typeof headers !== "object" || Array.isArray(headers)) {
+    throw new ApiError("リクエストヘッダーの指定が正しくありません。");
+  }
+
   const requestHeaders = {
     Accept: "application/json",
     ...headers,
@@ -152,7 +176,17 @@ export async function apiRequest(
   // --------------------------------------------------
 
   if (authRequired) {
-    const accessToken = await getAccessToken();
+    let accessToken;
+
+    try {
+      accessToken = await getAccessToken();
+    } catch (error) {
+      throw new ApiError("認証情報を取得できませんでした。");
+    }
+
+    if (!accessToken) {
+      throw new ApiError("ログインが必要です。", 401);
+    }
 
     requestHeaders.Authorization = `Bearer ${accessToken}`;
   }
@@ -169,7 +203,11 @@ export async function apiRequest(
     } else {
       requestHeaders["Content-Type"] = "application/json";
 
-      requestBody = JSON.stringify(body);
+      try {
+        requestBody = JSON.stringify(body);
+      } catch (error) {
+        throw new ApiError("送信データをJSONに変換できませんでした。");
+      }
     }
   }
 
@@ -207,7 +245,7 @@ export async function apiRequest(
       } else {
         responseData = await response.text();
       }
-    } catch {
+    } catch (error) {
       throw new ApiError(
         "サーバーからの応答を正しく読み取れませんでした。",
         response.status,

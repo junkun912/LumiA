@@ -17,6 +17,7 @@ LumiAホーム画面のJavaScript管理。
 "use strict";
 
 import { initializeCorgi, setCorgiState } from "./corgi.js";
+import { initializeQuestionForm } from "./question.js";
 
 // ==================================================
 // キャラクター一覧
@@ -108,6 +109,7 @@ function createCorgiTestPanel() {
 // ==================================================
 
 document.addEventListener("DOMContentLoaded", () => {
+  initializeQuestionForm();
   const corgiElement = document.querySelector(".home-intro__mascot");
 
   if (!corgiElement) {
