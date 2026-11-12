@@ -116,7 +116,9 @@ export async function apiRequest(
   if (
     typeof path !== "string" ||
     !path.trim() ||
-    /^[a-z][a-z\d+.-]*:/i.test(path)
+    /^[a-z][a-z\d+.-]*:/i.test(path.trim()) ||
+    path.includes("?") ||
+    path.includes("#")
   ) {
     throw new ApiError("APIのパス指定が正しくありません。");
   }
@@ -126,7 +128,6 @@ export async function apiRequest(
 
   // API GatewayのベースURLを基準にURLを生成
   const endpoint = new URL(normalizedPath, baseUrl);
-
   const baseUrlObject = new URL(baseUrl);
 
   // 接続先のオリジンを検証
@@ -295,4 +296,30 @@ export async function apiPost(path, body, options = {}) {
     method: "POST",
     body,
   });
+}
+
+// ==================================================
+// ゲスト向け質問送信
+// ==================================================
+
+/**
+ * ゲストユーザーの質問をAI回答APIへ送信する。
+ *
+ * @param {string} question 質問内容
+ * @returns {Promise<object>} AI回答データ
+ */
+export async function sendGuestQuestion(question) {
+  if (typeof question !== "string" || !question.trim()) {
+    throw new ApiError("質問内容を入力してください。");
+  }
+
+  return apiPost(
+    "guest/questions",
+    {
+      question: question.trim(),
+    },
+    {
+      authRequired: false,
+    },
+  );
 }

@@ -8,15 +8,16 @@
 --------------------------------------------------------- */
 
 .login-page {
-  --lumi-navy: #12396f;
-  --lumi-blue: #1768b5;
-  --lumi-light-blue: #42a6dc;
-  --lumi-gold: #d99a37;
-  --lumi-gold-light: #e9bd70;
-  --lumi-paper: #fff8e9;
-  --lumi-paper-dark: #f4e5c9;
-  --lumi-text: #24446b;
-  --lumi-muted: #7e8da0;
+  /* common.css の共通カラーを参照 */
+  --lumi-navy: var(--lumia-navy);
+  --lumi-blue: var(--lumia-blue);
+  --lumi-light-blue: var(--lumia-light-blue);
+  --lumi-gold: var(--lumia-gold);
+  --lumi-gold-light: var(--lumia-gold);
+  --lumi-paper: var(--lumia-ivory);
+  --lumi-paper-dark: var(--lumia-ivory);
+  --lumi-text: var(--lumia-text);
+  --lumi-muted: var(--lumia-text-muted);
 
   margin: 0;
   min-width: 320px;
@@ -25,7 +26,7 @@
   font-family:
     "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "Yu Gothic", serif;
   overflow-x: hidden;
-  background: #f7ead1;
+  background: var(--lumia-ivory);
 }
 
 .login-page *,
@@ -154,7 +155,7 @@
 
 .login-page .login-intro__message {
   margin: 24px 0 0;
-  color: #173e5d;
+  color: var(--lumia-navy);
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
   font-size: clamp(40px, 3.8vw, 48px);
   font-weight: 800;
@@ -181,13 +182,13 @@
   gap: 12px;
   width: min(100%, 260px);
   margin: 12px 0 17px;
-  color: #c58b32;
-  
+  color: var(--lumia-gold);
+
 }
 
 .login-page .login-intro__description {
   margin: 0;
-  color: #345875;
+  color: var(--lumia-text);
   font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   font-size: 17px;
   font-weight: 500;
@@ -247,7 +248,7 @@
   min-height: 78px;
   top: -25px;
   padding: 10px 12px;
-  color: #244879;
+  color: var(--lumia-text);
   background: rgb(255 248 231 / 42%);
   border: 1px solid rgb(190 139 65 / 48%);
   border-radius: 48% 45% 46% 43% / 43% 48% 42% 47%;
@@ -305,7 +306,7 @@
   padding: clamp(150px, 9.5vh, 142px) clamp(28px, 4.2vw, 70px) 65px;
   color: var(--lumi-navy);
 
-  
+
 }
 
 /* ---------------------------------------------------------
@@ -321,7 +322,7 @@
 
 .login-page .login-panel__eyebrow {
   margin: 0 0 10px;
-  color: #786044;
+  color: var(--lumia-text-heading);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 15px;
   font-weight: 600;
@@ -329,12 +330,12 @@
   line-height: 1.7;
   mix-blend-mode: multiply;
 
-  
+
 }
 
 .login-page .login-panel__title {
   margin: 0;
-  color: #173e76;
+  color: var(--lumia-navy);
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
   font-size: clamp(40px, 3.2vw, 48px);
   font-weight: 700;
@@ -357,7 +358,7 @@
   margin: 14px auto 16px;
   gap: 11px;
 
-  
+
 }
 
 .login-page .login-panel__ornament i {
@@ -367,7 +368,7 @@
 
 .login-page .login-panel__description {
   margin: 0;
-  color: #426b96;
+  color: var(--lumia-text);
   font-family:
     "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
   font-size: 16px;
@@ -407,14 +408,14 @@
 .login-page .login-form__label {
   display: block;
   margin: 0 0 7px;
-  color: #294d78;
+  color: var(--lumia-text);
   font-size: 17px;
   font-weight: 700;
   line-height: 1.6;
   letter-spacing: 0.04em;
   mix-blend-mode: multiply;
   opacity: 0.96;
-  
+
 }
 
 /* 入力欄 */
@@ -448,7 +449,7 @@
   flex: 0 0 46px;
   width: 46px;
   height: 100%;
-  color: #28588b;
+  color: var(--lumia-navy);
 }
 
 .login-page .login-form__input-icon svg {
@@ -469,7 +470,7 @@
   min-height: 49px;
   margin: 0;
   padding: 10px 13px 10px 0;
-  color: #173e70;
+  color: var(--lumia-navy);
   background: transparent;
   border: 0;
   outline: none;
@@ -479,11 +480,11 @@
   font-weight: 500;
   line-height: 1.6;
 
-  
+
 }
 
 .login-page .login-form__input::placeholder {
-  color: #929ba5;
+  color: var(--lumia-text-muted);
   opacity: 1;
 }
 
@@ -501,7 +502,7 @@
   min-height: 49px;
   margin: 0;
   padding: 0;
-  color: #28588b;
+  color: var(--lumia-navy);
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -511,7 +512,7 @@
 }
 
 .login-page .login-form__password-toggle:hover {
-  color: #173e70;
+  color: var(--lumia-navy);
   background: rgb(40 105 170 / 5%);
 }
 
@@ -535,7 +536,7 @@
   gap: 9px;
   width: fit-content;
   margin: 2px 0 17px;
-  color: #315581;
+  color: var(--lumia-text);
   font-size: 14px;
   font-weight: 500;
   line-height: 1.8;
@@ -566,7 +567,7 @@
   width: 20px;
   height: 20px;
   background: rgb(255 251 241 / 90%);
-  border: 1px solid #c99a4e;
+  border: 1px solid var(--lumia-gold);
   border-radius: 5px;
   transition:
     background-color 0.2s ease,
@@ -609,8 +610,8 @@
   min-height: 55px;
   margin: 0;
   padding: 12px 48px;
-  color: #fffaf0;
-  background: linear-gradient(105deg, #153f76 0%, #1768a8 100%);
+  color: var(--lumia-text-light);
+  background: linear-gradient(105deg, var(--lumia-navy) 0%, var(--lumia-blue) 100%);
   border: 1px solid rgb(217 160 74 / 65%);
   border-radius: 7px;
   box-shadow: 0 1px 3px rgb(78 61 34 / 9%);
@@ -672,7 +673,7 @@
   max-width: 100%;
   margin: 16px auto 0;
   padding: 2px 4px;
-  color: #315c8d;
+  color: var(--lumia-text);
   font-size: 15.5px;
   font-weight: 600;
   line-height: 1.9;
@@ -688,7 +689,7 @@
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 
-  
+
 }
 
 .login-page .login-form__forgot,
@@ -703,7 +704,7 @@
 }
 
 .login-page .login-form__forgot:hover {
-  color: #0b70b5;
+  color: var(--lumia-blue);
   border-bottom-color: currentColor;
   text-decoration: none;
   transform: none;
@@ -712,7 +713,7 @@
 .login-page .login-form__forgot span {
   display: inline-block;
   flex: 0 0 auto;
-  color: #c18a36;
+  color: var(--lumia-gold);
   font-size: 18px;
   line-height: 1;
   text-decoration: none;
@@ -748,7 +749,7 @@
   min-height: 52px;
   margin: 0;
   padding: 11px 15px;
-  color: #345982;
+  color: var(--lumia-text);
   background: rgb(255 250 239 / 22%);
   border: 1px solid rgb(190 139 65 / 48%);
   border-radius: 4px;
@@ -779,13 +780,13 @@
 
 .login-page .login-form__guest-star {
   flex: 0 0 auto;
-  color: #d79a31;
+  color: var(--lumia-gold);
   font-size: 16px;
 }
 
 .login-page .login-form__guest-arrow {
   flex: 0 0 auto;
-  color: #b17a28;
+  color: var(--lumia-gold);
   font-size: 21px;
   line-height: 1;
 }
@@ -1005,7 +1006,7 @@
     min-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    background: #f7ead4;
+    background: var(--lumia-ivory);
   }
 
   .login-page .login-screen {
@@ -1134,7 +1135,7 @@
   .login-page .login-form__input-wrap {
     min-height: 47px;
     background: rgb(255 250 240 / 82%);
-    border: 1px solid #d8c39b;
+    border: 1px solid var(--lumia-border-gold);
     border-radius: 6px;
     box-shadow: none;
   }
@@ -1157,7 +1158,7 @@
     flex-basis: 20px;
     width: 20px;
     height: 20px;
-    background: #fffdf7;
+    background: var(--lumia-text-light);
   }
 
   .login-page .login-form__submit {

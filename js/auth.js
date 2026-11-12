@@ -32,14 +32,14 @@ AWS Amplify Auth v6
 
 "use strict";
 
-import { Amplify } from "https://esm.sh/aws-amplify@6";
+import { Amplify } from "aws-amplify";
 
 import {
   signIn,
   signOut,
   getCurrentUser,
   fetchAuthSession,
-} from "https://esm.sh/aws-amplify@6/auth";
+} from "aws-amplify/auth";
 
 import { LUMIA_CONFIG } from "./config.js";
 
@@ -53,7 +53,7 @@ let isInitialized = false;
  * Cognitoとの接続を初期化する。
  * 初期化は一度だけ実行する。
  */
-function initializeAuth() {
+export function initializeAuth() {
   if (isInitialized) {
     return;
   }
@@ -83,22 +83,22 @@ function initializeAuth() {
 /**
  * Cognitoでログインする。
  *
- * @param {string} email 学校メールアドレス
+ * @param {string} username ユーザー名またはメールアドレス
  * @param {string} password パスワード
  * @returns {Promise<object>} 認証結果
  */
-export async function login(email, password) {
+export async function login(username, password) {
   initializeAuth();
 
-  const normalizedEmail = String(email || "").trim();
+  const normalizedUsername = String(username || "").trim();
 
-  if (!normalizedEmail || !password) {
-    throw new Error("メールアドレスとパスワードを入力してください。");
+  if (!normalizedUsername || !password) {
+    throw new Error("ユーザー名とパスワードを入力してください。");
   }
 
   try {
     const result = await signIn({
-      username: normalizedEmail,
+      username: normalizedUsername,
       password,
     });
 
@@ -115,6 +115,7 @@ export async function login(email, password) {
     return {
       success: true,
       user,
+      nextStep: result.nextStep,
     };
   } catch (error) {
     console.error("LumiA: Cognitoログインエラー", error);
@@ -200,13 +201,19 @@ export async function getUserInfo() {
 export async function getAccessToken() {
   initializeAuth();
 
-  const session = await fetchAuthSession();
+  try {
+    const session = await fetchAuthSession();
 
-  const accessToken = session.tokens?.accessToken;
+    const accessToken = session.tokens?.accessToken;
 
-  if (!accessToken) {
-    throw new Error("有効なアクセストークンを取得できませんでした。");
+    if (!accessToken) {
+      throw new Error("有効なアクセストークンを取得できませんでした。");
+    }
+
+    return accessToken.toString();
+  } catch (error) {
+    console.error("LumiA: アクセストークン取得エラー", error);
+
+    throw error;
   }
-
-  return accessToken.toString();
 }

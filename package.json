@@ -1,0 +1,26 @@
+
+{
+  "name": "lumia",
+  "version": "1.0.0",
+  "description": "津高技専用AI学校アシスタント",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/junkun912/LumiA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^8.3.8"
+  },
+  "dependencies": {
+    "aws-amplify": "^6.22.2"
+  }
+}

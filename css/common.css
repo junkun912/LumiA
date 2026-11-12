@@ -13,6 +13,12 @@
    ・アクセシビリティ対応
    ・共通アニメーション
 
+   【デザインコンセプト】
+   Antique Storybook × Learning
+
+   温かみのある絵本の世界観と、
+   落ち着いた学習空間を表現する。
+
    ※各ページ固有のデザインは個別CSSで管理する。
 ================================================== */
 
@@ -21,36 +27,89 @@
 ================================================== */
 
 :root {
-  /* ブランドカラー */
-  --lumia-navy: #173f5f;
+  /* ----------------------------------------------
+     ブランドカラー
+  ---------------------------------------------- */
+
+  /* LumiAの基本ネイビー */
+  --lumia-navy: #174875;
+
+  /* 補助ブルー */
   --lumia-blue: #2c6388;
+
+  /* 淡いブルー */
   --lumia-light-blue: #dcecf3;
 
-  /* アクセントカラー */
-  --lumia-orange: #e99a43;
-  --lumia-gold: #d9a441;
+  /* ----------------------------------------------
+     アクセントカラー
+  ---------------------------------------------- */
 
-  /* 背景カラー */
-  --lumia-ivory: #f6e9cf;
+  /* コーギくんのオレンジ */
+  --lumia-orange: #e99a43;
+
+  /* アンティークゴールド */
+  --lumia-gold: #b88743;
+
+  /* ----------------------------------------------
+     背景カラー
+  ---------------------------------------------- */
+
+  /* ペーパーアイボリー */
+  --lumia-ivory: #f5e6c9;
+
+  /* ホワイト */
   --lumia-white: #ffffff;
+
+  /* 淡いミント */
   --lumia-mint: #e4f0e7;
 
-  /* 文字カラー */
-  --lumia-text: #263b4b;
-  --lumia-text-muted: #687987;
+  /* ----------------------------------------------
+     文字カラー
+  ---------------------------------------------- */
 
-  /* 境界線 */
+  /* 基本文字：インクブラウン */
+  --lumia-text: #514537;
+
+  /* 補助文字：セピアグレー */
+  --lumia-text-muted: #94836d;
+
+  /* 見出し：アンティークブラウン */
+  --lumia-text-heading: #88704f;
+
+  /* 白文字 */
+  --lumia-text-light: #ffffff;
+
+  /* ----------------------------------------------
+     境界線・装飾
+  ---------------------------------------------- */
+
+  /* 基本境界線 */
   --lumia-border: #d9c5a6;
 
-  /* 共通角丸 */
+  /* ゴールド系境界線 */
+  --lumia-border-gold: rgba(184, 135, 67, 0.35);
+
+  /* 控えめな装飾線 */
+  --lumia-border-soft: rgba(136, 112, 79, 0.24);
+
+  /* ----------------------------------------------
+     共通角丸
+  ---------------------------------------------- */
+
   --lumia-radius-small: 6px;
   --lumia-radius-medium: 12px;
   --lumia-radius-large: 20px;
 
-  /* 共通影 */
-  --lumia-shadow: 0 4px 16px rgb(48 55 65 / 10%);
+  /* ----------------------------------------------
+     共通影
+  ---------------------------------------------- */
 
-  /* アニメーション */
+  --lumia-shadow: 0 4px 16px rgb(81 69 55 / 10%);
+
+  /* ----------------------------------------------
+     アニメーション
+  ---------------------------------------------- */
+
   --lumia-transition-fast: 150ms ease;
   --lumia-transition-normal: 200ms ease;
 }
@@ -82,6 +141,7 @@ body {
     "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 
   line-height: 1.7;
+
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -97,6 +157,7 @@ h4,
 h5,
 h6 {
   margin-top: 0;
+
   color: inherit;
   font-weight: 700;
 }
@@ -147,7 +208,7 @@ a {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--lumia-blue);
+  outline: 2px solid var(--lumia-navy);
   outline-offset: 4px;
 }
 
@@ -165,7 +226,7 @@ button:disabled {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--lumia-blue);
+  outline: 2px solid var(--lumia-navy);
   outline-offset: 4px;
 }
 
@@ -181,14 +242,14 @@ select {
 
 input::placeholder,
 textarea::placeholder {
-  color: #89939a;
+  color: var(--lumia-text-muted);
   opacity: 1;
 }
 
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--lumia-blue);
+  outline: 2px solid var(--lumia-navy);
   outline-offset: 2px;
 }
 

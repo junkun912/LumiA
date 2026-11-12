@@ -12,7 +12,7 @@ LumiAからの回答を表示するHTMLファイル。
 ・LumiAの回答を表示する
 ・回答の参考資料を表示する
 ・追加質問を入力する
-・別の質問や質問履歴へ移動する
+・質問履歴へ移動する
 
 【関連ファイル】
 ・css/common.css
@@ -68,7 +68,7 @@ LumiAは推測で回答しない。
           <img src="../assets/images/icons/logo_compact.png" alt="LumiA" />
         </a>
 
-        <!-- ホームボタン：しおり -->
+        <!-- ホームボタン -->
         <button
           class="answer-header__home"
           type="button"
@@ -129,8 +129,8 @@ LumiAは推測で回答しない。
 
               <!-- 左ページ下部 -->
               <div class="answer-book__left-footer">
-                <!-- 質問操作エリア -->
-                <section class="answer-question-area" aria-label="次の質問">
+                <!-- 追加質問エリア -->
+                <section class="answer-question-area" aria-label="追加質問">
                   <p
                     class="answer-question-area__heading"
                     id="question-mode-label"
@@ -159,17 +159,8 @@ LumiAは推測で回答しない。
                     </button>
                   </form>
 
-                  <!-- 質問モード切り替え -->
+                  <!-- 質問履歴 -->
                   <div class="answer-actions">
-                    <button
-                      type="button"
-                      class="answer-actions__button"
-                      id="new-question-button"
-                    >
-                      <span aria-hidden="true">＋</span>
-                      別のことを質問する
-                    </button>
-
                     <button
                       type="button"
                       class="answer-actions__button"
@@ -187,15 +178,20 @@ LumiAは推測で回答しない。
             <div class="answer-book__binding" aria-hidden="true"></div>
 
             <!-- ==================================
-     右ページ：LumiAの回答
-================================== -->
+                 右ページ：LumiAの回答
+            ================================== -->
             <article class="answer-book__page answer-book__page--right">
               <div class="answer-book__page-content">
                 <!-- 回答見出し -->
                 <p class="answer-book__eyebrow">LumiAからの答え</p>
 
                 <!-- 回答本文 -->
-                <div class="answer-body" id="answer-body" aria-live="polite">
+                <div
+                  class="answer-body"
+                  id="answer-body"
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
                   <p class="answer-body__placeholder">
                     ここにLumiAからの回答が表示されます。
                   </p>
@@ -217,10 +213,10 @@ LumiAは推測で回答しない。
                 </section>
               </div>
 
-              <!-- 右ページのコーギくん -->
+              <!-- 回答状態に応じて画像を切り替えるコーギくん -->
               <img
                 class="answer-book__mascot"
-                src="../assets/images/characters/corgi_explaining.png"
+                src="../assets/images/characters/corgi_reading.png"
                 alt=""
                 aria-hidden="true"
               />

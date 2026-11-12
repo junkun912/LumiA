@@ -13,23 +13,33 @@ LumiAの回答画面に関するJavaScriptファイル。
 ・追加質問処理
 ・回答生成中の状態管理
 ・回答エラー処理
+・コーギくんの状態切り替え
 
 【関連ファイル】
 ・pages/answer.html
 ・js/question.js
 ・js/api.js
+・js/corgi.js
 ==================================================
 */
 
 "use strict";
 
 import { initializeCorgi, setCorgiState } from "./corgi.js";
+import { sendGuestQuestion } from "./api.js";
 
 // ==================================================
 // 設定
 // ==================================================
 
 const STORAGE_KEY = "lumia_current_question";
+
+// 回答画面の状態
+const ANSWER_STATE = {
+  LOADING: "loading",
+  SUCCESS: "success",
+  ERROR: "error",
+};
 
 // ==================================================
 // DOM要素
@@ -43,11 +53,16 @@ const elements = {
 
   questionForm: document.querySelector("#answer-question-form"),
   questionInput: document.querySelector("#answer-question-input"),
+  questionModeLabel: document.querySelector("#question-mode-label"),
 
-  newQuestionButton: document.querySelector("#new-question-button"),
+  submitButton: document.querySelector(
+    "#answer-question-form button[type='submit']",
+  ),
+
+  homeButton: document.querySelector("#home-button"),
   historyButton: document.querySelector("#history-button"),
 
-  corgi: document.querySelector(".answer-mascot"),
+  corgi: document.querySelector(".answer-book__mascot"),
 };
 
 // ==================================================
@@ -76,7 +91,10 @@ function initializeAnswerPage() {
   }
 
   // コーギくん初期化
-  initializeCorgi(elements.corgi, "explaining");
+  initializeCorgi(elements.corgi, "reading");
+
+  // イベント設定
+  setupEventListeners();
 
   // 質問内容を取得
   const question = getStoredQuestion();
@@ -86,11 +104,11 @@ function initializeAnswerPage() {
     return;
   }
 
-  // 質問内容を画面に表示
+  // 質問内容を表示
   displayQuestion(question);
 
-  // イベント設定
-  setupEventListeners();
+  // 最初の質問に対する回答生成を開始
+  generateAnswer(question);
 }
 
 // ==================================================
@@ -129,9 +147,9 @@ function showEmptyQuestionMessage() {
 
   elements.answerBody.textContent = "ホーム画面から質問を入力してください。";
 
-  setCorgiState("welcome");
-
   elements.questionForm.hidden = true;
+
+  setAnswerState(ANSWER_STATE.ERROR);
 }
 
 // ==================================================
@@ -142,9 +160,9 @@ function setupEventListeners() {
   // 追加質問フォーム
   elements.questionForm.addEventListener("submit", handleAdditionalQuestion);
 
-  // 新しい質問
-  if (elements.newQuestionButton) {
-    elements.newQuestionButton.addEventListener("click", () => {
+  // ホームへ戻る
+  if (elements.homeButton) {
+    elements.homeButton.addEventListener("click", () => {
       window.location.href = "./home.html";
     });
   }
@@ -168,6 +186,13 @@ async function handleAdditionalQuestion(event) {
     return;
   }
 
+  // 質問内容を更新
+  displayQuestion(question);
+
+  // 入力欄を空にする
+  elements.questionInput.value = "";
+
+  // 回答生成
   await generateAnswer(question);
 }
 
@@ -182,39 +207,112 @@ async function generateAnswer(question) {
 
   isGenerating = true;
 
+  // 調べ中の状態へ切り替え
   setLoadingState();
 
   try {
-    /*
-     * AWS APIとの接続処理は、
-     * AWSチームからAPI仕様を受け取った後に実装します。
-     */
+    // 前の回答・参考資料をクリア
+    clearPreviousAnswer();
 
+    // APIから回答を取得
     const result = await requestAnswer(question);
 
+    // 回答内容を表示
     displayAnswer(result);
 
-    setCorgiState("explaining");
+    // 回答完了の状態へ切り替え
+    setAnswerState(ANSWER_STATE.SUCCESS);
   } catch (error) {
     console.error("LumiA: 回答の取得に失敗しました。", error);
 
+    // エラー状態へ切り替え
     showAnswerError(error);
   } finally {
     isGenerating = false;
-    elements.questionInput.disabled = false;
+
+    // 入力欄を再び有効にする
+    setQuestionFormDisabled(false);
   }
 }
 
 // ==================================================
-// 回答生成中の表示
+// 回答状態の切り替え
+// ==================================================
+
+function setAnswerState(state) {
+  document.body.dataset.answerState = state;
+
+  switch (state) {
+    case ANSWER_STATE.LOADING:
+      setCorgiState("reading");
+
+      if (elements.questionModeLabel) {
+        elements.questionModeLabel.textContent =
+          "学校の資料を確認しています...";
+      }
+      break;
+
+    case ANSWER_STATE.SUCCESS:
+      setCorgiState("explaining");
+
+      if (elements.questionModeLabel) {
+        elements.questionModeLabel.textContent = "ほかの質問はありますか？";
+      }
+      break;
+
+    case ANSWER_STATE.ERROR:
+      setCorgiState("apology");
+
+      if (elements.questionModeLabel) {
+        elements.questionModeLabel.textContent =
+          "もう一度質問することができます。";
+      }
+      break;
+
+    default:
+      console.error("LumiA: 不明な回答状態です。", state);
+  }
+}
+
+// ==================================================
+// 調べ中の表示
 // ==================================================
 
 function setLoadingState() {
-  elements.questionInput.disabled = true;
+  setAnswerState(ANSWER_STATE.LOADING);
 
-  elements.answerBody.textContent = "回答を準備しています。";
+  elements.answerBody.textContent =
+    "学校の資料を確認し、回答を準備しています。";
 
-  setCorgiState("thinking");
+  setQuestionFormDisabled(true);
+}
+
+// ==================================================
+// 質問フォームの有効・無効
+// ==================================================
+
+function setQuestionFormDisabled(disabled) {
+  elements.questionInput.disabled = disabled;
+
+  if (elements.submitButton) {
+    elements.submitButton.disabled = disabled;
+  }
+}
+
+// ==================================================
+// 前の回答・参考資料をクリア
+// ==================================================
+
+function clearPreviousAnswer() {
+  elements.answerBody.replaceChildren();
+
+  if (elements.referencesList) {
+    elements.referencesList.replaceChildren();
+  }
+
+  if (elements.references) {
+    elements.references.hidden = true;
+  }
 }
 
 // ==================================================
@@ -222,19 +320,10 @@ function setLoadingState() {
 // ==================================================
 
 async function requestAnswer(question) {
-  /*
-   * TODO：
-   * AWSチームから以下の仕様を受け取った後に実装
-   *
-   * ・APIエンドポイント
-   * ・送信するJSONデータ
-   * ・回答データの形式
-   * ・参照資料データの形式
-   */
+  // ゲスト向け質問APIへ送信
+  const result = await sendGuestQuestion(question);
 
-  setCorgiState("reading");
-
-  throw new Error("API接続の設定がまだ完了していません。");
+  return result;
 }
 
 // ==================================================
@@ -242,38 +331,65 @@ async function requestAnswer(question) {
 // ==================================================
 
 function displayAnswer(result) {
-  if (!result || typeof result.answer !== "string") {
+  if (!result || typeof result.answer !== "string" || !result.answer.trim()) {
     throw new Error("回答データの形式が正しくありません。");
   }
 
+  // AI回答を表示
   elements.answerBody.textContent = result.answer;
 
-  displayReferences(result.references || []);
+  // 参照資料を表示
+  displayReferences(result.citations || []);
 }
 
 // ==================================================
 // 参照情報の表示
 // ==================================================
 
-function displayReferences(references) {
+function displayReferences(citations) {
   if (!elements.references || !elements.referencesList) {
     return;
   }
 
   elements.referencesList.replaceChildren();
 
-  if (!Array.isArray(references) || references.length === 0) {
+  if (!Array.isArray(citations) || citations.length === 0) {
     elements.references.hidden = true;
     return;
   }
 
-  references.forEach((reference) => {
+  citations.forEach((citation) => {
     const item = document.createElement("li");
 
-    const title =
-      typeof reference.title === "string" ? reference.title : "参照資料";
+    // S3 URIから資料名を取得
+    let title = "参照資料";
 
-    item.textContent = title;
+    if (citation && typeof citation.sourceUri === "string") {
+      const fileName = citation.sourceUri.split("/").pop();
+
+      if (fileName) {
+        try {
+          title = decodeURIComponent(fileName);
+        } catch (error) {
+          title = fileName;
+        }
+      }
+    }
+
+    // 資料名
+    const titleElement = document.createElement("strong");
+    titleElement.textContent = title;
+
+    item.appendChild(titleElement);
+
+    // 参照箇所の抜粋
+    if (typeof citation.excerpt === "string" && citation.excerpt.trim()) {
+      const excerptElement = document.createElement("p");
+
+      excerptElement.textContent = citation.excerpt;
+
+      item.appendChild(excerptElement);
+    }
 
     elements.referencesList.appendChild(item);
   });
@@ -289,10 +405,11 @@ function showAnswerError(error) {
   elements.answerBody.textContent =
     "申し訳ありません。回答を取得できませんでした。時間をおいて、もう一度お試しください。";
 
-  setCorgiState("apology");
-
-  if (error.message === "API接続の設定がまだ完了していません。") {
-    elements.answerBody.textContent =
-      "現在、AI回答機能の接続準備を進めています。";
+  // 参考資料を非表示
+  if (elements.references) {
+    elements.references.hidden = true;
   }
+
+  // エラー状態へ切り替え
+  setAnswerState(ANSWER_STATE.ERROR);
 }
