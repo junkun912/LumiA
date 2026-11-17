@@ -207,12 +207,12 @@ async function generateAnswer(question) {
 
   isGenerating = true;
 
-  // 調べ中の状態へ切り替え
-  setLoadingState();
-
   try {
     // 前の回答・参考資料をクリア
     clearPreviousAnswer();
+
+    // 調べ中の状態へ切り替え
+    setLoadingState();
 
     // APIから回答を取得
     const result = await requestAnswer(question);
@@ -359,35 +359,35 @@ function displayReferences(citations) {
   }
 
   citations.forEach((citation) => {
+    if (!citation || typeof citation !== "object") {
+      return;
+    }
+
     const item = document.createElement("li");
 
     // S3 URIから資料名を取得
     let title = "参照資料";
 
-    if (citation && typeof citation.sourceUri === "string") {
+    if (typeof citation.sourceUri === "string") {
       const fileName = citation.sourceUri.split("/").pop();
 
       if (fileName) {
         try {
           title = decodeURIComponent(fileName);
-        } catch (error) {
+        } catch {
           title = fileName;
         }
       }
     }
 
-    // 資料名
     const titleElement = document.createElement("strong");
     titleElement.textContent = title;
-
     item.appendChild(titleElement);
 
     // 参照箇所の抜粋
     if (typeof citation.excerpt === "string" && citation.excerpt.trim()) {
       const excerptElement = document.createElement("p");
-
       excerptElement.textContent = citation.excerpt;
-
       item.appendChild(excerptElement);
     }
 

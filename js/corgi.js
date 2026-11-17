@@ -47,6 +47,9 @@ const CORGI_IMAGE_PATH = new URL(
   import.meta.url,
 );
 
+// 画像の参照先を確認
+console.log("LumiA: コーギくん画像の参照先：", CORGI_IMAGE_PATH.href);
+
 // ==================================================
 // キャラクターの代替テキスト
 // ==================================================
@@ -138,7 +141,11 @@ class CorgiManager {
       this.transitionTimer = null;
     }
 
-    const imageUrl = new URL(imageName, CORGI_IMAGE_PATH);
+    const imageUrl = new URL(
+      `../assets/images/characters/${imageName}`,
+      import.meta.url,
+    );
+    console.log("LumiA: 切り替え画像URL：", imageUrl.href);
 
     // 画像を先読み
     const preloadImage = new Image();

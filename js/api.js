@@ -118,7 +118,8 @@ export async function apiRequest(
     !path.trim() ||
     /^[a-z][a-z\d+.-]*:/i.test(path.trim()) ||
     path.includes("?") ||
-    path.includes("#")
+    path.includes("#") ||
+    path.includes("\\")
   ) {
     throw new ApiError("APIのパス指定が正しくありません。");
   }
