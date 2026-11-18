@@ -1,0 +1,1834 @@
+/* ==================================================
+
+   LumiA
+   ファイル名：about.css
+
+   【ファイル概要】
+   LumiA紹介ページのデザインを管理するCSS。
+
+   【デザインコンセプト】
+   Antique Storybook × Learning
+
+   【主な役割】
+   ・紹介ページ全体のレイアウト
+   ・絵本のような世界観の表現
+   ・各セクションのデザイン
+   ・RAGの仕組みの図解
+   ・レスポンシブ対応
+
+================================================== */
+
+/* ==================================================
+   1. 基本設定
+================================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+.about-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #f5e6c9;
+}
+
+.about-page *,
+.about-page *::before,
+.about-page *::after {
+  box-sizing: border-box;
+}
+
+.about-page a {
+  color: inherit;
+}
+
+.about-page button {
+  font: inherit;
+}
+
+.about-page img {
+  max-width: 100%;
+}
+
+/* ==================================================
+   2. カラーパレット
+================================================== */
+
+.about-page {
+  --about-navy: #174875;
+  --about-blue: #2c6388;
+  --about-light-blue: #dcecf3;
+
+  --about-orange: #e99a43;
+  --about-gold: #b88743;
+
+  --about-ivory: #f5e6c9;
+  --about-paper: #fffaf0;
+  --about-white: #ffffff;
+  --about-mint: #e4f0e7;
+
+  --about-text: var(--lumia-text);
+  --about-muted: #94836d;
+  --about-heading: var(--lumia-text);
+
+  --about-border: #d9c5a6;
+
+  --about-shadow: 0 5px 20px rgb(81 69 55 / 8%);
+
+  --about-radius-small: 6px;
+  --about-radius-medium: 12px;
+  --about-radius-large: 20px;
+
+  --about-transition: 0.2s ease;
+}
+
+/* ==================================================
+   3. 画面全体
+================================================== */
+
+.about-screen {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.about-screen__background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background:
+    radial-gradient(circle at 15% 12%, rgb(255 255 255 / 42%), transparent 32%),
+    radial-gradient(circle at 85% 75%, rgb(228 240 231 / 40%), transparent 35%),
+    linear-gradient(135deg, #f8edda 0%, #f5e6c9 48%, #f7ecd9 100%);
+}
+
+/* ==================================================
+   4. ヘッダー
+================================================== */
+
+/* ヘッダー */
+
+.about-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 84px;
+  padding: 12px 7%;
+
+  background: rgb(255 250 240 / 92%);
+  border-bottom: 1px solid rgb(184 135 67 / 20%);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ロゴ */
+
+.about-header__logo {
+  display: inline-flex;
+  align-items: center;
+
+  width: 155px;
+  flex-shrink: 0;
+}
+
+.about-header__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ナビゲーション */
+
+.about-header__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+}
+
+.about-header__link {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 10px 0;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  text-decoration: none;
+
+  transition: color var(--about-transition);
+}
+
+.about-header__link:hover {
+  color: var(--about-blue);
+}
+
+.about-header__link--active {
+  color: var(--about-navy);
+}
+
+.about-header__link--active::after {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  left: 0;
+
+  height: 2px;
+
+  background: var(--about-gold);
+  border-radius: 2px;
+
+  content: "";
+}
+
+/* ホームボタン */
+
+.about-header__home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 42px;
+  padding: 8px 15px;
+
+  color: var(--about-navy);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+
+  background: rgb(255 255 255 / 65%);
+  border: 1px solid rgb(184 135 67 / 35%);
+  border-radius: 30px;
+
+  text-decoration: none;
+
+  transition:
+    background var(--about-transition),
+    transform var(--about-transition);
+}
+
+.about-header__home svg {
+  width: 17px;
+  height: 17px;
+}
+
+.about-header__home:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* モバイルメニュー */
+
+.about-header__menu-button {
+  display: none;
+}
+
+/* ==================================================
+   5. モバイルナビゲーション
+================================================== */
+
+.about-mobile-navigation {
+  display: none;
+}
+
+/* ==================================================
+   6. メインコンテンツ
+================================================== */
+
+.about-main {
+  width: min(1120px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+/* ==================================================
+   7. ファーストビュー
+================================================== */
+
+.about-hero {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+
+  min-height: 560px;
+  padding: 85px 8% 90px;
+
+  border-bottom: 1px solid rgb(184 135 67 / 25%);
+}
+
+.about-hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+/* 英字ラベル */
+
+.about-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 0 0 18px;
+
+  color: var(--about-gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.about-hero__eyebrow::before {
+  display: block;
+
+  width: 28px;
+  height: 1px;
+
+  background: var(--about-gold);
+  content: "";
+}
+
+/* タイトル */
+
+.about-hero__title {
+  margin: 0 0 34px;
+
+  color: var(--about-navy);
+  font-family: inherit;
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+}
+
+/* キャッチコピー */
+
+.about-hero__catchcopy {
+  margin: 0 0 22px;
+
+  color: var(--lumia-text);
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+}
+
+/* 説明文 */
+
+.about-hero__description {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 15px;
+  line-height: 2.1;
+  letter-spacing: 0.035em;
+}
+
+/* スクロール案内 */
+
+.about-hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-top: 40px;
+
+  color: var(--about-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+
+  text-decoration: none;
+}
+
+.about-hero__scroll-line {
+  position: relative;
+
+  display: block;
+
+  width: 42px;
+  height: 1px;
+
+  background: var(--about-gold);
+}
+
+/* マスコット */
+
+.about-hero__mascot {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 330px;
+}
+
+.about-hero__mascot img {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  width: min(290px, 100%);
+  max-height: 340px;
+
+  object-fit: contain;
+  filter: drop-shadow(0 12px 12px rgb(81 69 55 / 9%));
+
+  animation: about-mascot-float 4s ease-in-out infinite;
+}
+
+.about-hero__mascot-caption {
+  position: relative;
+  z-index: 3;
+
+  margin: 12px 0 0;
+  padding: 9px 18px;
+
+  color: var(--lumia-text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  background: rgb(255 250 240 / 85%);
+  border: 1px solid rgb(184 135 67 / 25%);
+  border-radius: 30px;
+}
+
+/* マスコットの浮遊アニメーション */
+
+@keyframes about-mascot-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 飾り */
+
+.about-hero__mascot-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.about-hero__sparkle {
+  position: absolute;
+  color: var(--about-gold);
+}
+
+.about-hero__sparkle--one {
+  top: 20%;
+  left: 8%;
+  font-size: 24px;
+}
+
+.about-hero__sparkle--two {
+  top: 35%;
+  right: 5%;
+  color: var(--about-orange);
+  font-size: 30px;
+}
+
+.about-hero__sparkle--three {
+  bottom: 18%;
+  left: 15%;
+  font-size: 17px;
+}
+
+/* 下部の装飾 */
+
+.about-hero__bottom-decoration {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  transform: translateX(-50%);
+}
+
+.about-hero__bottom-decoration span {
+  display: block;
+
+  width: 5px;
+  height: 5px;
+
+  background: var(--about-gold);
+  border-radius: 50%;
+}
+
+.about-hero__bottom-decoration span:nth-child(2) {
+  width: 20px;
+  border-radius: 5px;
+}
+
+/* ==================================================
+   8. 共通セクション
+================================================== */
+
+.about-section {
+  padding: 95px 7%;
+
+  border-bottom: 1px solid rgb(184 135 67 / 22%);
+}
+
+.about-section__heading {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.about-section__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+  margin-bottom: 16px;
+
+  color: var(--about-white);
+  font-family: Georgia, serif;
+  font-size: 13px;
+
+  background: var(--about-navy);
+  border-radius: 50%;
+}
+
+.about-section__eyebrow {
+  margin: 0 0 12px;
+
+  color: var(--about-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.about-section__heading h2 {
+  margin: 0;
+
+  color: var(--about-navy);
+  font-size: clamp(25px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.about-section__lead {
+  margin: 15px 0 0;
+
+  color: var(--about-muted);
+  font-size: 14px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+/* ==================================================
+   9. LumiAとは
+================================================== */
+
+.about-introduction__body {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 55px;
+
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+/* 本のイラスト */
+
+.about-introduction__illustration {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 230px;
+}
+
+.about-introduction__book {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 210px;
+  height: 145px;
+
+  filter: drop-shadow(0 9px 8px rgb(81 69 55 / 12%));
+}
+
+.about-introduction__book-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+
+  width: 50%;
+  height: 100%;
+  padding: 20px 15px;
+
+  background: #fffaf0;
+  border: 1px solid #d9c5a6;
+}
+
+.about-introduction__book-page:first-child {
+  border-radius: 8px 2px 2px 8px;
+  transform: perspective(300px) rotateY(8deg);
+}
+
+.about-introduction__book-page:last-child {
+  border-radius: 2px 8px 8px 2px;
+  transform: perspective(300px) rotateY(-8deg);
+}
+
+.about-introduction__book-page span {
+  display: block;
+
+  width: 85%;
+  height: 3px;
+
+  background: #d9c5a6;
+  border-radius: 4px;
+}
+
+.about-introduction__book-page span:nth-child(2) {
+  width: 70%;
+}
+
+.about-introduction__book-page span:nth-child(3) {
+  width: 90%;
+}
+
+.about-introduction__book-page span:nth-child(4) {
+  width: 55%;
+}
+
+.about-introduction__illustration-star {
+  position: absolute;
+  top: 20px;
+  right: 14%;
+
+  color: var(--about-orange);
+  font-size: 38px;
+}
+
+/* 説明文 */
+
+.about-introduction__text p {
+  margin: 0 0 19px;
+
+  color: var(--lumia-text);
+  font-size: 14px;
+  line-height: 2.15;
+  letter-spacing: 0.025em;
+}
+
+.about-introduction__text p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==================================================
+   10. LumiAが目指すこと
+================================================== */
+
+.about-purpose {
+  background: rgb(255 250 240 / 28%);
+}
+
+.about-purpose__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.about-purpose__card {
+  min-height: 250px;
+  padding: 30px 23px;
+
+  text-align: center;
+
+  background: rgb(255 250 240 / 80%);
+  border: 1px solid rgb(184 135 67 / 24%);
+  border-radius: var(--about-radius-medium);
+
+  box-shadow: var(--about-shadow);
+
+  transition:
+    transform var(--about-transition),
+    box-shadow var(--about-transition);
+}
+
+.about-purpose__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgb(81 69 55 / 11%);
+}
+
+.about-purpose__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 20px;
+
+  color: var(--about-navy);
+
+  background: var(--about-light-blue);
+  border-radius: 50%;
+}
+
+.about-purpose__icon svg {
+  width: 37px;
+  height: 37px;
+}
+
+.about-purpose__card h3 {
+  margin: 0 0 13px;
+
+  color: var(--about-navy);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.about-purpose__card p {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* ==================================================
+   11. LumiAの特徴
+================================================== */
+
+.about-features__list {
+  max-width: 790px;
+  margin: 0 auto;
+}
+
+.about-features__item {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 55px 1fr auto;
+  align-items: center;
+  gap: 22px;
+
+  min-height: 120px;
+  padding: 25px 30px;
+
+  border-bottom: 1px solid rgb(184 135 67 / 27%);
+}
+
+.about-features__item:first-child {
+  border-top: 1px solid rgb(184 135 67 / 27%);
+}
+
+.about-features__item-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 43px;
+  height: 43px;
+
+  color: var(--about-gold);
+  font-family: Georgia, serif;
+  font-size: 17px;
+
+  background: rgb(255 250 240 / 80%);
+  border: 1px solid rgb(184 135 67 / 40%);
+  border-radius: 50%;
+}
+
+.about-features__item-content h3 {
+  margin: 0 0 8px;
+
+  color: var(--about-navy);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.about-features__item-content p {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.about-features__item-mark {
+  color: rgb(184 135 67 / 55%);
+  font-family: Georgia, serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* ==================================================
+   12. LumiAの仕組み
+================================================== */
+
+.about-technology {
+  background: linear-gradient(
+    180deg,
+    rgb(220 236 243 / 25%),
+    rgb(255 250 240 / 20%)
+  );
+}
+
+.about-technology__intro {
+  max-width: 720px;
+  margin: 0 auto 48px;
+  padding: 28px 35px;
+
+  background: rgb(255 250 240 / 88%);
+  border: 1px solid rgb(184 135 67 / 27%);
+  border-radius: var(--about-radius-medium);
+}
+
+.about-technology__intro-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+}
+
+.about-technology__intro-label span:first-child {
+  color: var(--about-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+}
+
+.about-technology__intro-label span:last-child {
+  padding: 5px 12px;
+
+  color: var(--about-navy);
+  font-family: Georgia, serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+
+  background: var(--about-light-blue);
+  border-radius: 20px;
+}
+
+.about-technology__intro h3 {
+  margin: 0 0 15px;
+
+  color: var(--about-navy);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.about-technology__intro p {
+  margin: 0 0 12px;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+  line-height: 2;
+}
+
+.about-technology__intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==================================================
+   13. RAGフロー
+================================================== */
+
+.about-flow {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) 25px
+    minmax(0, 1fr) 25px
+    minmax(0, 1fr) 25px
+    minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+}
+
+.about-flow__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+  min-height: 230px;
+  padding: 20px 13px;
+
+  text-align: center;
+
+  background: rgb(255 250 240 / 88%);
+  border: 1px solid rgb(184 135 67 / 25%);
+  border-radius: var(--about-radius-medium);
+
+  box-shadow: 0 3px 12px rgb(81 69 55 / 5%);
+}
+
+.about-flow__step-number {
+  margin-bottom: 17px;
+
+  color: var(--about-gold);
+  font-family: Georgia, serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.about-flow__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+  margin-bottom: 15px;
+
+  color: var(--about-navy);
+  background: var(--about-light-blue);
+  border-radius: 50%;
+}
+
+.about-flow__icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.about-flow__icon--search {
+  background: #e4f0e7;
+}
+
+.about-flow__icon--ai {
+  background: #f8e8d4;
+}
+
+.about-flow__icon--answer {
+  background: #e8e6f1;
+}
+
+.about-flow__step h4 {
+  margin: 0 0 10px;
+
+  color: var(--about-navy);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.about-flow__step p {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.about-flow__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--about-gold);
+  font-size: 21px;
+  font-weight: 400;
+}
+
+/* ==================================================
+   14. 技術補足
+================================================== */
+
+.about-technology__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+
+  max-width: 720px;
+  margin: 30px auto 0;
+  padding: 20px 24px;
+
+  background: rgb(228 240 231 / 70%);
+  border: 1px solid rgb(117 154 126 / 25%);
+  border-radius: var(--about-radius-medium);
+}
+
+.about-technology__note-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 32px;
+
+  width: 32px;
+  height: 32px;
+
+  color: #527b60;
+}
+
+.about-technology__note-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.about-technology__note h4 {
+  margin: 0 0 7px;
+
+  color: #41634c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.about-technology__note p {
+  margin: 0;
+
+  color: #5e705f;
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+/* ==================================================
+   15. 利用上の注意
+================================================== */
+
+.about-notice__list {
+  max-width: 790px;
+  margin: 0 auto;
+}
+
+.about-notice__item {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: flex-start;
+  gap: 20px;
+
+  padding: 23px 25px;
+
+  border-bottom: 1px solid rgb(184 135 67 / 23%);
+}
+
+.about-notice__item:first-child {
+  border-top: 1px solid rgb(184 135 67 / 23%);
+}
+
+.about-notice__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+
+  color: var(--about-gold);
+  font-family: Georgia, serif;
+  font-size: 13px;
+
+  background: #fffaf0;
+  border: 1px solid rgb(184 135 67 / 40%);
+  border-radius: 50%;
+}
+
+.about-notice__item h3 {
+  margin: 0 0 8px;
+
+  color: var(--about-navy);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.about-notice__item p {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.about-notice__message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+
+  margin-top: 35px;
+  padding: 22px;
+
+  text-align: center;
+
+  background: rgb(255 250 240 / 72%);
+  border: 1px solid rgb(184 135 67 / 25%);
+  border-radius: var(--about-radius-medium);
+}
+
+.about-notice__message-mark {
+  color: var(--about-orange);
+  font-size: 22px;
+}
+
+.about-notice__message p {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.9;
+}
+
+/* ==================================================
+   16. 最後の案内
+================================================== */
+
+.about-ending {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 390px;
+  padding: 65px 30px;
+
+  overflow: hidden;
+  text-align: center;
+
+  background: linear-gradient(
+    135deg,
+    rgb(220 236 243 / 80%),
+    rgb(255 250 240 / 90%)
+  );
+
+  border: 1px solid rgb(184 135 67 / 20%);
+  border-radius: var(--about-radius-large);
+
+  margin: 70px 0;
+}
+
+.about-ending__content {
+  position: relative;
+  z-index: 2;
+}
+
+.about-ending__eyebrow {
+  margin: 0 0 20px;
+
+  color: var(--about-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.about-ending h2 {
+  margin: 0;
+
+  color: var(--about-navy);
+  font-size: clamp(25px, 3.5vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+}
+
+.about-ending__content > p:not(.about-ending__eyebrow) {
+  margin: 18px 0 25px;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+}
+
+/* 質問ボタン */
+
+.about-page a.about-ending__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  min-width: 190px;
+  min-height: 52px;
+  padding: 13px 23px;
+
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+
+  background: linear-gradient(135deg, #174875, #2c6388);
+  border: 1px solid rgb(23 72 117 / 20%);
+  border-radius: 30px;
+
+  text-decoration: none;
+
+  box-shadow: 0 4px 12px rgb(23 72 117 / 15%);
+
+  transition:
+    transform var(--about-transition),
+    box-shadow var(--about-transition);
+}
+
+.about-ending__button svg {
+  width: 18px;
+  height: 18px;
+
+  color: #ffffff;
+}
+
+.about-ending__button:hover {
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 7px 17px rgb(23 72 117 / 20%);
+}
+
+/* コーギくん */
+
+.about-ending__mascot {
+  position: absolute;
+  right: 4%;
+  bottom: 10px;
+
+  width: 150px;
+  max-height: 190px;
+
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* 飾り */
+
+.about-ending__decoration {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+}
+
+.about-ending__decoration span {
+  position: absolute;
+  color: var(--about-gold);
+}
+
+.about-ending__decoration span:nth-child(1) {
+  top: 20%;
+  left: 12%;
+  font-size: 25px;
+}
+
+.about-ending__decoration span:nth-child(2) {
+  top: 35%;
+  right: 18%;
+  color: var(--about-orange);
+  font-size: 34px;
+}
+
+.about-ending__decoration span:nth-child(3) {
+  bottom: 17%;
+  left: 24%;
+  font-size: 17px;
+}
+
+/* ==================================================
+   17. フッター
+================================================== */
+
+.about-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  min-height: 100px;
+  padding: 25px 7%;
+
+  background: rgb(255 250 240 / 65%);
+  border-top: 1px solid rgb(184 135 67 / 22%);
+}
+
+.about-footer__logo {
+  display: inline-flex;
+  align-items: center;
+
+  width: 110px;
+}
+
+.about-footer__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.about-footer__copy {
+  margin: 0;
+
+  color: var(--about-muted);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.about-footer__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--about-navy);
+  font-size: 11px;
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.about-footer__back:hover {
+  color: var(--about-gold);
+}
+
+/* ==================================================
+   18. スクロール表示アニメーション
+================================================== */
+
+.about-js-ready .about-section,
+.about-js-ready .about-hero__content,
+.about-js-ready .about-hero__mascot,
+.about-js-ready .about-ending__content {
+  opacity: 0;
+  transform: translateY(18px);
+
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s ease;
+}
+
+.about-js-ready .about-section.is-visible,
+.about-js-ready .about-hero__content.is-visible,
+.about-js-ready .about-hero__mascot.is-visible,
+.about-js-ready .about-ending__content.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==================================================
+   19. タブレット
+================================================== */
+
+@media (max-width: 900px) {
+  .about-header {
+    padding-right: 4%;
+    padding-left: 4%;
+  }
+
+  .about-header__navigation {
+    gap: 20px;
+  }
+
+  .about-header__logo {
+    width: 125px;
+  }
+
+  .about-header__home {
+    padding: 8px 11px;
+  }
+
+  .about-main {
+    width: min(100% - 40px, 850px);
+  }
+
+  .about-hero {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .about-flow {
+    grid-template-columns:
+      minmax(0, 1fr) 18px
+      minmax(0, 1fr) 18px
+      minmax(0, 1fr) 18px
+      minmax(0, 1fr);
+    gap: 5px;
+  }
+
+  .about-flow__step {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .about-flow__step h4 {
+    font-size: 12px;
+  }
+
+  .about-flow__step p {
+    font-size: 10px;
+  }
+
+  .about-ending__mascot {
+    width: 115px;
+  }
+}
+
+/* ==================================================
+   20. スマートフォン
+================================================== */
+
+@media (max-width: 700px) {
+  /* ヘッダー */
+
+  .about-header {
+    min-height: 68px;
+    padding: 10px 5%;
+  }
+
+  .about-header__logo {
+    width: 120px;
+  }
+
+  .about-header__navigation,
+  .about-header__home {
+    display: none;
+  }
+
+  .about-header__menu-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+
+    background: rgb(255 255 255 / 70%);
+    border: 1px solid rgb(184 135 67 / 35%);
+    border-radius: 50%;
+
+    cursor: pointer;
+  }
+
+  .about-header__menu-button span {
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    background: var(--about-navy);
+    border-radius: 3px;
+
+    transition:
+      transform var(--about-transition),
+      opacity var(--about-transition);
+  }
+
+  .about-header__menu-button[aria-expanded="true"] span:first-child {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .about-header__menu-button[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .about-header__menu-button[aria-expanded="true"] span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* モバイルメニュー */
+
+  .about-mobile-navigation:not([hidden]) {
+    position: fixed;
+    top: 68px;
+    right: 0;
+    left: 0;
+    z-index: 99;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    padding: 12px 5% 20px;
+
+    background: rgb(255 250 240 / 97%);
+    border-bottom: 1px solid rgb(184 135 67 / 25%);
+    box-shadow: 0 8px 15px rgb(81 69 55 / 7%);
+  }
+
+  .about-mobile-navigation a {
+    display: block;
+
+    padding: 15px 8px;
+
+    color: var(--lumia-text);
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+    border-bottom: 1px solid rgb(184 135 67 / 15%);
+  }
+
+  .about-mobile-navigation a:last-child {
+    border-bottom: none;
+  }
+
+  .about-mobile-navigation a[aria-current="page"] {
+    color: var(--about-navy);
+  }
+
+  /* メイン */
+
+  .about-main {
+    width: calc(100% - 28px);
+  }
+
+  /* ファーストビュー */
+
+  .about-hero {
+    grid-template-columns: 1fr;
+
+    min-height: auto;
+    padding: 60px 7% 65px;
+    text-align: center;
+  }
+
+  .about-hero__eyebrow {
+    justify-content: center;
+  }
+
+  .about-hero__title {
+    margin-bottom: 22px;
+    font-size: 34px;
+  }
+
+  .about-hero__catchcopy {
+    font-size: 27px;
+  }
+
+  .about-hero__description {
+    font-size: 13px;
+  }
+
+  .about-hero__scroll {
+    margin-top: 27px;
+  }
+
+  .about-hero__mascot {
+    min-height: 245px;
+    margin-top: 15px;
+  }
+
+  .about-hero__mascot img {
+    width: 220px;
+    max-height: 245px;
+  }
+
+  /* セクション */
+
+  .about-section {
+    padding: 68px 5%;
+  }
+
+  .about-section__heading {
+    margin-bottom: 35px;
+  }
+
+  .about-section__heading h2 {
+    font-size: 25px;
+  }
+
+  .about-section__lead {
+    font-size: 12px;
+  }
+
+  /* LumiAとは */
+
+  .about-introduction__body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .about-introduction__illustration {
+    min-height: 180px;
+  }
+
+  .about-introduction__book {
+    width: 180px;
+    height: 125px;
+  }
+
+  .about-introduction__text p {
+    font-size: 13px;
+  }
+
+  /* 目指すこと */
+
+  .about-purpose__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .about-purpose__card {
+    min-height: auto;
+    padding: 25px 20px;
+  }
+
+  .about-purpose__icon {
+    width: 55px;
+    height: 55px;
+  }
+
+  .about-purpose__icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* 特徴 */
+
+  .about-features__item {
+    grid-template-columns: 40px 1fr;
+    gap: 13px;
+
+    padding: 20px 5px;
+  }
+
+  .about-features__item-number {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .about-features__item-content h3 {
+    font-size: 14px;
+  }
+
+  .about-features__item-content p {
+    font-size: 12px;
+  }
+
+  .about-features__item-mark {
+    display: none;
+  }
+
+  /* 技術説明 */
+
+  .about-technology__intro {
+    padding: 22px 20px;
+  }
+
+  .about-technology__intro h3 {
+    font-size: 17px;
+  }
+
+  .about-technology__intro p {
+    font-size: 12px;
+  }
+
+  /* RAGフロー */
+
+  .about-flow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .about-flow__step {
+    display: grid;
+    grid-template-columns: 45px 55px 1fr;
+    align-items: center;
+    column-gap: 13px;
+
+    min-height: auto;
+    padding: 16px;
+    text-align: left;
+  }
+
+  .about-flow__step-number {
+    grid-column: 1 / -1;
+    margin-bottom: 10px;
+  }
+
+  .about-flow__icon {
+    grid-row: 2 / 4;
+
+    width: 48px;
+    height: 48px;
+    margin: 0;
+  }
+
+  .about-flow__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .about-flow__step h4 {
+    align-self: end;
+    margin: 0 0 5px;
+    font-size: 13px;
+  }
+
+  .about-flow__step p {
+    grid-column: 3;
+    align-self: start;
+
+    font-size: 11px;
+  }
+
+  .about-flow__arrow {
+    transform: rotate(90deg);
+    font-size: 19px;
+  }
+
+  .about-technology__note {
+    padding: 17px;
+  }
+
+  /* 注意事項 */
+
+  .about-notice__item {
+    grid-template-columns: 35px 1fr;
+    gap: 12px;
+    padding: 20px 3px;
+  }
+
+  .about-notice__number {
+    width: 31px;
+    height: 31px;
+    font-size: 12px;
+  }
+
+  .about-notice__item h3 {
+    font-size: 13px;
+  }
+
+  .about-notice__item p {
+    font-size: 12px;
+  }
+
+  .about-notice__message {
+    padding: 18px 12px;
+  }
+
+  .about-notice__message p {
+    font-size: 11px;
+  }
+
+  /* 最後の案内 */
+
+  .about-ending {
+    min-height: 360px;
+    margin: 45px 0;
+    padding: 55px 18px;
+  }
+
+  .about-ending h2 {
+    font-size: 25px;
+  }
+
+  .about-ending__mascot {
+    right: -5px;
+    bottom: 0;
+    width: 95px;
+    opacity: 0.8;
+  }
+
+  /* フッター */
+
+  .about-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+
+    padding: 25px 15px;
+    text-align: center;
+  }
+
+  .about-footer__logo {
+    width: 100px;
+  }
+
+  .about-footer__copy {
+    width: 100%;
+    order: 3;
+    font-size: 9px;
+  }
+
+  .about-footer__back {
+    font-size: 10px;
+  }
+}
+
+/* ==================================================
+   21. 小型スマートフォン
+================================================== */
+
+@media (max-width: 380px) {
+  .about-hero__title {
+    font-size: 29px;
+  }
+
+  .about-hero__catchcopy {
+    font-size: 23px;
+  }
+
+  .about-section__heading h2 {
+    font-size: 22px;
+  }
+
+  .about-flow__step {
+    column-gap: 9px;
+  }
+
+  .about-ending h2 {
+    font-size: 22px;
+  }
+}
+
+/* ==================================================
+   22. 動きを減らす設定
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .about-hero__mascot {
+    animation: none;
+  }
+
+  .about-js-ready .about-section,
+  .about-js-ready .about-hero__content,
+  .about-js-ready .about-hero__mascot,
+  .about-js-ready .about-ending__content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .about-page *,
+  .about-page *::before,
+  .about-page *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

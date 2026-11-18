@@ -7,16 +7,25 @@ LumiA
 ・パスワードの表示切り替え
 ・ログインフォームの入力確認
 ・Amazon Cognito認証との連携
-・ページめくり演出
+・ページ遷移
 ・ゲスト利用時の画面遷移
+・共通エラーハンドラーとの連携
 
 【関連ファイル】
 ・js/auth.js
+・js/common.js
+・js/error-handler.js
 ・pages/login.html
 ・pages/home.html
+・pages/error.html
 
 【重要】
-認証成功を確認する前にログイン演出を開始しない。
+・認証成功を確認する前にログイン遷移を開始しない
+・ログイン失敗時に入力内容を消去しない
+・内部エラー情報を画面に表示しない
+・重大なエラーは共通エラーページへ遷移する
+・入力や通信に関するエラーは画面内に表示する
+
 ==================================================
 */
 
@@ -25,10 +34,16 @@ LumiA
 import { login } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // ==================================================
+  // 1. DOM要素取得
+  // ==================================================
+
   const loginForm = document.getElementById("login-form");
   const passwordInput = document.getElementById("password");
   const passwordToggle = document.getElementById("toggle-password");
   const loginMessage = document.getElementById("login-status");
+  const loginErrorContainer = document.getElementById("login-error-container");
+
   const guestLink = document.querySelector(".login-form__guest");
   const loginScreen = document.querySelector(".login-screen");
 
@@ -36,40 +51,70 @@ document.addEventListener("DOMContentLoaded", () => {
     '.login-form__submit[type="submit"]',
   );
 
+  // 必須要素の確認
   if (!loginScreen) {
-    console.error("LumiA: ログイン画面が見つかりません。");
+    console.error("LumiA: ログイン画面を初期化できません。");
+
+    if (window.LumiAError?.redirect) {
+      window.LumiAError.redirect("system");
+    } else {
+      window.location.href = "./error.html";
+    }
+
     return;
   }
 
   // ==================================================
-  // 状態管理
+  // 2. 状態管理
   // ==================================================
 
   let isTransitioning = false;
   let isAuthenticating = false;
 
   // ==================================================
-  // ページめくり演出
+  // 3. 画面遷移
   // ==================================================
 
   /**
-   * ページめくり演出後に指定先へ移動する。
-   * Cognito認証成功後、またはゲスト利用時に使用する。
+   * 指定されたページへ遷移する。
+   *
+   * ページめくりアニメーションの終了を待たず、
+   * 通常のページ遷移を実行する。
+   *
+   * ゲスト利用とログイン成功時に使用する。
    */
-
   function startPageTurn(destination) {
     if (isTransitioning || !destination) {
       return;
     }
 
-    const pageSheet = loginScreen.querySelector(".page-turn__sheet");
+    isTransitioning = true;
 
-    // アニメーション要素がない場合は通常遷移
-    if (!pageSheet) {
-      window.location.href = destination;
-      return;
+    // 二重操作を防止
+    if (loginButton) {
+      loginButton.disabled = true;
     }
 
+    if (guestLink) {
+      guestLink.setAttribute("aria-disabled", "true");
+      guestLink.style.pointerEvents = "none";
+    }
+
+    // 指定されたページへ直接遷移
+    window.location.assign(destination);
+  }
+
+  // 認証処理などから呼び出せるように公開
+  window.LumiAStartPageTurn = startPageTurn;
+
+  // ==================================================
+  // 4. 共通エラーハンドラー連携
+  // ==================================================
+
+  /**
+   * 重大なエラーを共通エラーページへ遷移させる。
+   */
+  function redirectToError(type) {
     isTransitioning = true;
 
     if (loginButton) {
@@ -78,49 +123,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (guestLink) {
       guestLink.setAttribute("aria-disabled", "true");
+      guestLink.style.pointerEvents = "none";
     }
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (reducedMotion) {
-      window.location.href = destination;
+    if (window.LumiAError?.redirect) {
+      window.LumiAError.redirect(type);
       return;
     }
 
-    // アニメーション状態をリセット
-    loginScreen.classList.remove("is-page-turning");
-
-    // CSSの再計算
-    void pageSheet.offsetWidth;
-
-    const handleAnimationEnd = (event) => {
-      if (
-        event.target !== pageSheet ||
-        event.animationName !== "lumi-page-turn"
-      ) {
-        return;
-      }
-
-      pageSheet.removeEventListener("animationend", handleAnimationEnd);
-
-      window.location.href = destination;
-    };
-
-    pageSheet.addEventListener("animationend", handleAnimationEnd);
-
-    loginScreen.classList.add("is-page-turning");
+    // 共通ハンドラーが利用できない場合
+    window.location.href = "./error.html";
   }
 
   // ==================================================
-  // 認証処理から呼び出せるように公開
-  // ==================================================
-
-  window.LumiAStartPageTurn = startPageTurn;
-
-  // ==================================================
-  // パスワード表示・非表示
+  // 5. パスワード表示・非表示
   // ==================================================
 
   if (passwordInput && passwordToggle) {
@@ -139,15 +155,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==================================================
-  // エラーメッセージ
+  // 6. ログインエラー処理
   // ==================================================
 
   /**
-   * Cognitoのエラーを画面表示用メッセージに変換する。
+   * Cognitoや通信エラーを安全なメッセージに変換する。
+   *
+   * AWSやCognitoの内部情報は画面に表示しない。
    */
-
   function getLoginErrorMessage(error) {
     const errorName = error?.name || "";
+    const errorCode = error?.code || "";
 
     switch (errorName) {
       case "NotAuthorizedException":
@@ -169,24 +187,73 @@ document.addEventListener("DOMContentLoaded", () => {
         return "通信に失敗しました。ネットワークを確認してください。";
 
       default:
-        return "ログインに失敗しました。入力内容と接続状況を確認してください。";
+        break;
+    }
+
+    // 共通認証エラーコードへの対応
+    if (errorCode === "NETWORK") {
+      return "通信に失敗しました。ネットワークを確認してください。";
+    }
+
+    if (errorCode === "AUTH_REQUIRED") {
+      return "ログインが必要です。入力内容を確認してください。";
+    }
+
+    return "ログインに失敗しました。入力内容と接続状況を確認してください。";
+  }
+
+  /**
+   * ログインエラーを画面内に表示する。
+   *
+   * 共通ハンドラーが利用できる場合はshowInlineを使用する。
+   */
+  function showLoginError(message) {
+    if (loginErrorContainer && window.LumiAError?.showInline) {
+      if (window.LumiAError?.clearInline) {
+        window.LumiAError.clearInline(loginErrorContainer);
+      }
+
+      window.LumiAError.showInline(loginErrorContainer, message);
+
+      return;
+    }
+
+    // 共通ハンドラーが利用できない場合の代替表示
+    if (loginMessage) {
+      loginMessage.textContent = message;
+      loginMessage.classList.remove("is-success");
+    }
+  }
+
+  /**
+   * 既存のエラー表示を削除する。
+   */
+  function clearLoginError() {
+    if (loginErrorContainer && window.LumiAError?.clearInline) {
+      window.LumiAError.clearInline(loginErrorContainer);
+    }
+
+    if (loginMessage) {
+      loginMessage.textContent = "";
+      loginMessage.classList.remove("is-success");
     }
   }
 
   // ==================================================
-  // ログインフォーム
+  // 7. ログインフォーム
   // ==================================================
 
   if (loginForm && loginMessage) {
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
+      // 処理中の重複送信を防止
       if (isTransitioning || isAuthenticating) {
         return;
       }
 
-      loginMessage.textContent = "";
-      loginMessage.classList.remove("is-success");
+      // 前回のエラー表示を削除
+      clearLoginError();
 
       const formData = new FormData(loginForm);
 
@@ -194,20 +261,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const password = String(formData.get("password") || "");
 
+      // ----------------------------------------------
       // 入力確認
+      // ----------------------------------------------
+
       if (!email || !password) {
         loginMessage.textContent =
           "メールアドレスとパスワードを入力してください。";
+
         return;
       }
 
+      // ----------------------------------------------
       // メールアドレス形式の確認
+      // ----------------------------------------------
+
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       if (!emailPattern.test(email)) {
         loginMessage.textContent = "正しいメールアドレスを入力してください。";
+
         return;
       }
+
+      // ----------------------------------------------
+      // 認証開始
+      // ----------------------------------------------
 
       isAuthenticating = true;
 
@@ -218,22 +297,22 @@ document.addEventListener("DOMContentLoaded", () => {
       loginMessage.textContent = "ログインしています。";
 
       try {
-        // ----------------------------------------------
+        // --------------------------------------------
         // Amazon Cognito認証
-        // ----------------------------------------------
+        // --------------------------------------------
 
         const result = await login(email, password);
 
-        // ----------------------------------------------
+        // --------------------------------------------
         // 追加認証が必要な場合
-        // ----------------------------------------------
+        // --------------------------------------------
 
-        if (!result.success) {
-          const step = result.nextStep?.signInStep;
+        if (!result?.success) {
+          const step = result?.nextStep?.signInStep;
 
           if (step === "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED") {
             loginMessage.textContent =
-              "初回ログインのため、パスワード変更が必要です。";
+              "初回ログインのため、パスワード変更が必要です。管理者にお問い合わせください。";
           } else {
             loginMessage.textContent =
               "追加の認証手続きが必要です。管理者にお問い合わせください。";
@@ -242,23 +321,63 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // ----------------------------------------------
+        // --------------------------------------------
         // 認証成功
-        // ----------------------------------------------
+        // --------------------------------------------
 
         loginMessage.textContent = "ログインしました。";
+
         loginMessage.classList.add("is-success");
 
-        // 認証成功後にだけページめくりを開始
+        // 認証成功後にホーム画面へ遷移
         startPageTurn("../index.html");
       } catch (error) {
-        console.error("LumiA: ログイン処理に失敗しました。", error);
+        // 内部エラー情報は画面に表示しない
+        console.error(
+          "LumiA: ログイン処理に失敗しました。",
+          error?.name || "AuthenticationError",
+        );
 
-        loginMessage.textContent = getLoginErrorMessage(error);
+        const errorCode = error?.code || "";
+
+        // --------------------------------------------
+        // Cognito設定エラー
+        // --------------------------------------------
+
+        if (errorCode === "AUTH_CONFIG_ERROR") {
+          redirectToError("system");
+          return;
+        }
+
+        // --------------------------------------------
+        // 認証セッションの重大なエラー
+        // --------------------------------------------
+
+        if (errorCode === "AUTH_SESSION_FAILED") {
+          redirectToError("auth");
+          return;
+        }
+
+        // --------------------------------------------
+        // その他の認証処理エラー
+        // --------------------------------------------
+
+        if (errorCode === "AUTH_OPERATION_FAILED") {
+          redirectToError("system");
+          return;
+        }
+
+        // --------------------------------------------
+        // 通信エラー・認証情報の不一致など
+        // --------------------------------------------
+
+        const message = getLoginErrorMessage(error);
+
+        showLoginError(message);
       } finally {
         isAuthenticating = false;
 
-        // ページ遷移中はボタンを無効のままにする
+        // ページ遷移中でなければボタンを再度有効化
         if (loginButton && !isTransitioning) {
           loginButton.disabled = false;
         }
@@ -266,16 +385,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   } else {
     console.error(
-      "LumiA: ログインフォームまたはメッセージ欄が見つかりません。",
+      "LumiA: ログインフォームまたはメッセージ欄を初期化できません。",
     );
   }
 
   // ==================================================
-  // ゲスト利用
+  // 8. ゲスト利用
   // ==================================================
 
   if (guestLink) {
     guestLink.addEventListener("click", (event) => {
+      // 処理中の重複操作を防止
       if (isTransitioning || isAuthenticating) {
         event.preventDefault();
         return;
@@ -285,12 +405,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!destination) {
         event.preventDefault();
+
+        console.error("LumiA: ゲスト利用の遷移先が設定されていません。");
+
         return;
       }
 
+      // HTML標準のリンク遷移を止める
       event.preventDefault();
 
-      // ゲスト用ホーム画面へページめくり演出で移動
+      // ゲスト用ホーム画面へ直接遷移
       startPageTurn(destination);
     });
   }

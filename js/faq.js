@@ -12,26 +12,34 @@ FAQ画面の質問検索・選択に関するJavaScript。
 ・質問選択
 ・質問内容の保存
 ・回答画面への遷移
+・共通エラーハンドラーとの連携
 
 【関連ファイル】
 ・pages/faq.html
 ・pages/answer.html
 ・js/question.js
 ・js/answer.js
+・js/error-handler.js
+
+【エラー処理方針】
+・質問内容の保存に失敗した場合は画面内に表示する。
+・画面の初期化に失敗した場合は共通エラー画面へ遷移する。
+・内部エラー情報を画面に表示しない。
+
 ==================================================
 */
 
 "use strict";
 
 // ==================================================
-// 設定
+// 1. 設定
 // ==================================================
 
 const STORAGE_KEY = "lumia_current_question";
 const ANSWER_PAGE_URL = "./answer.html";
 
 // ==================================================
-// DOM要素
+// 2. DOM要素
 // ==================================================
 
 const elements = {
@@ -39,21 +47,32 @@ const elements = {
   faqItems: document.querySelectorAll(".faq-item"),
   categories: document.querySelectorAll(".faq-category"),
   emptyMessage: document.querySelector("#faq-empty"),
+  errorContainer: document.querySelector("#faq-error-container"),
 };
 
 // ==================================================
-// 初期化
+// 3. 状態管理
+// ==================================================
+
+let isNavigating = false;
+
+// ==================================================
+// 4. 初期化
 // ==================================================
 
 document.addEventListener("DOMContentLoaded", initializeFaqPage);
 
 function initializeFaqPage() {
+  // 必要なHTML要素を確認
   if (
     !elements.searchInput ||
-    !elements.faqItems.length ||
-    !elements.emptyMessage
+    elements.faqItems.length === 0 ||
+    !elements.emptyMessage ||
+    !elements.errorContainer
   ) {
-    console.error("LumiA: FAQ画面に必要なHTML要素が見つかりません。");
+    console.error("LumiA: FAQ画面に必要なHTML要素を初期化できません。");
+
+    redirectToError("system");
     return;
   }
 
@@ -61,7 +80,76 @@ function initializeFaqPage() {
 }
 
 // ==================================================
-// イベント設定
+// 5. 共通エラー画面への遷移
+// ==================================================
+
+function redirectToError(type) {
+  if (window.LumiAError?.redirect) {
+    window.LumiAError.redirect(type);
+    return;
+  }
+
+  // 共通エラーハンドラーが利用できない場合
+  window.location.href = "./error.html";
+}
+
+// ==================================================
+// 6. インラインエラー表示
+// ==================================================
+
+/**
+ * FAQ画面内にエラーを表示する。
+ *
+ * 共通エラーハンドラーを優先して利用する。
+ */
+function showFaqError(message) {
+  if (!elements.errorContainer) {
+    return;
+  }
+
+  if (window.LumiAError?.clearInline && window.LumiAError?.showInline) {
+    window.LumiAError.clearInline(elements.errorContainer);
+
+    window.LumiAError.showInline(elements.errorContainer, message);
+
+    return;
+  }
+
+  // 共通エラーハンドラーが利用できない場合
+  const errorElement = document.createElement("div");
+
+  errorElement.className = "lumia-inline-error";
+  errorElement.setAttribute("role", "alert");
+  errorElement.setAttribute("aria-live", "assertive");
+
+  const messageElement = document.createElement("p");
+
+  messageElement.className = "lumia-inline-error__message";
+  messageElement.textContent = message;
+
+  errorElement.appendChild(messageElement);
+
+  elements.errorContainer.replaceChildren(errorElement);
+}
+
+/**
+ * 表示中のエラーを削除する。
+ */
+function clearFaqError() {
+  if (!elements.errorContainer) {
+    return;
+  }
+
+  if (window.LumiAError?.clearInline) {
+    window.LumiAError.clearInline(elements.errorContainer);
+    return;
+  }
+
+  elements.errorContainer.replaceChildren();
+}
+
+// ==================================================
+// 7. イベント設定
 // ==================================================
 
 function setupEventListeners() {
@@ -75,7 +163,7 @@ function setupEventListeners() {
 }
 
 // ==================================================
-// 質問検索
+// 8. 質問検索
 // ==================================================
 
 function handleSearch() {
@@ -107,33 +195,60 @@ function handleSearch() {
 }
 
 // ==================================================
-// 質問選択
+// 9. 質問選択
 // ==================================================
 
 function handleQuestionSelect(event) {
-  const button = event.currentTarget;
+  event.preventDefault();
 
-  const question = button.dataset.question;
-
-  if (!question || !question.trim()) {
-    console.error("LumiA: 選択された質問が正しくありません。");
+  // 二重操作を防止
+  if (isNavigating) {
     return;
   }
 
-  // 二重操作を防止
+  const button = event.currentTarget;
+  const question = button.dataset.question;
+
+  clearFaqError();
+
+  // ----------------------------------------------
+  // 質問内容の確認
+  // ----------------------------------------------
+
+  if (typeof question !== "string" || !question.trim()) {
+    showFaqError(
+      "質問内容を取得できませんでした。別の質問を選択してください。",
+    );
+
+    return;
+  }
+
+  // ----------------------------------------------
+  // 画面遷移の準備
+  // ----------------------------------------------
+
+  isNavigating = true;
   button.disabled = true;
 
   try {
     // 質問内容を保存
     sessionStorage.setItem(STORAGE_KEY, question.trim());
 
-    // 回答画面へ移動
+    // 保存成功後に回答画面へ移動
     window.location.href = ANSWER_PAGE_URL;
   } catch (error) {
-    console.error("LumiA: 質問内容を保存できませんでした。", error);
+    console.error(
+      "LumiA: 質問内容を保存できませんでした。",
+      error?.name || "StorageError",
+    );
 
+    // 遷移状態を解除
+    isNavigating = false;
     button.disabled = false;
 
-    alert("質問を送信できませんでした。もう一度お試しください。");
+    // 画面内にエラーを表示
+    showFaqError(
+      "質問を保存できませんでした。ブラウザの設定やストレージの状態を確認して、もう一度お試しください。",
+    );
   }
 }

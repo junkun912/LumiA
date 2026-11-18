@@ -11,12 +11,17 @@
 
     <title>ログイン | LumiA</title>
 
+    <!-- ==================================================
+     Favicon
+  ================================================== -->
+
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
       href="../assets/images/icons/favicon_master.png"
     />
+
     <link
       rel="icon"
       type="image/png"
@@ -24,11 +29,27 @@
       href="../assets/images/icons/favicon_master.png"
     />
 
+    <!-- ==================================================
+     CSS
+  ================================================== -->
+
+    <!-- 共通CSS -->
     <link rel="stylesheet" href="../css/common.css" />
 
-    <link rel="stylesheet" href="../css/common.css" />
+    <!-- ログイン画面専用CSS -->
     <link rel="stylesheet" href="../css/login.css" />
 
+    <!-- ==================================================
+     JavaScript
+  ================================================== -->
+
+    <!-- 共通JavaScript -->
+    <script src="../js/common.js" defer></script>
+
+    <!-- 共通エラーハンドラー -->
+    <script src="../js/error-handler.js" defer></script>
+
+    <!-- ログイン画面専用JavaScript -->
     <script type="module" src="../js/login.js"></script>
   </head>
 
@@ -225,6 +246,9 @@
               role="status"
               aria-live="polite"
             ></p>
+
+            <!-- 共通エラーハンドラー用 -->
+            <div id="login-error-container"></div>
 
             <!-- パスワード再設定 -->
             <a class="login-form__forgot" href="./forgot-password.html">

@@ -1,18 +1,25 @@
-/*
+/* ==================================================
 
-==================================================
+   LumiA
 
-LumiA
+   ファイル名：answer.css
 
-ファイル名：answer.css
+   【ファイル概要】
+   回答画面のデザインを管理するCSSファイル。
 
-回答画面 CSS
+   【主な役割】
+   ・回答画面の基本レイアウト
+   ・ロゴとホームボタンの配置
+   ・質問・回答エリアのデザイン
+   ・追加質問フォームのデザイン
+   ・参考資料の表示
+   ・コーギくんの配置
 
-STEP 1：基本画面・左上ロゴ
+================================================== */
 
-==================================================
-
-*/
+/* ==================================================
+   1. 基本設定
+================================================== */
 
 * {
   box-sizing: border-box;
@@ -30,7 +37,10 @@ body {
   overflow-x: hidden;
 }
 
-/* 画面全体 */
+/* ==================================================
+   2. 画面全体
+================================================== */
+
 .answer-screen {
   position: relative;
   min-height: 100vh;
@@ -38,6 +48,7 @@ body {
 }
 
 /* 背景 */
+
 .answer-screen__background {
   position: fixed;
   inset: 0;
@@ -49,7 +60,10 @@ body {
   background-repeat: no-repeat;
 }
 
-/* ヘッダー */
+/* ==================================================
+   3. ヘッダー
+================================================== */
+
 .answer-header {
   position: absolute;
   top: 145px;
@@ -65,6 +79,7 @@ body {
 }
 
 /* 左上ロゴ */
+
 .answer-header__logo {
   position: relative;
   left: 300px;
@@ -88,6 +103,7 @@ body {
 }
 
 /* 右上ホームボタン：布製のしおり */
+
 .answer-header__home {
   position: relative;
   right: 25px;
@@ -139,6 +155,7 @@ body {
 }
 
 /* ホームアイコン */
+
 .answer-header__home svg {
   width: 35px;
   height: 37px;
@@ -151,10 +168,11 @@ body {
 }
 
 /* ==================================================
-   回答画面コンテンツ
+   4. 回答画面コンテンツ
 ================================================== */
 
-/* 回答エリアを表示 */
+/* 回答エリア */
+
 .answer-content {
   display: block;
   position: relative;
@@ -165,6 +183,7 @@ body {
 }
 
 /* 本の見開き全体 */
+
 .answer-book {
   position: relative;
 
@@ -176,6 +195,7 @@ body {
 }
 
 /* 見開きページ */
+
 .answer-book__spread {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -186,6 +206,7 @@ body {
 }
 
 /* 左右ページ */
+
 .answer-book__page {
   position: relative;
   min-width: 0;
@@ -193,6 +214,7 @@ body {
 }
 
 /* 左ページ */
+
 .answer-book__page--left {
   display: flex;
   flex-direction: column;
@@ -204,11 +226,13 @@ body {
 }
 
 /* 右ページ */
+
 .answer-book__page--right {
   padding-left: 45px;
 }
 
 /* ページ内コンテンツ */
+
 .answer-book__page-content {
   position: relative;
   z-index: 2;
@@ -218,24 +242,26 @@ body {
 }
 
 /* ==================================================
-   左ページ：質問表示
+   5. 左ページ：質問表示
 ================================================== */
 
-/* 「あなたの問い」 */
+/* あなたの質問 */
+
 .answer-book__page--left .answer-book__eyebrow {
   margin: 0 0 30px;
 
-  color: #88704f;
+  color: #174875;
   font-size: 22px;
   font-weight: 500;
   letter-spacing: 0.08em;
 }
 
 /* 質問文 */
+
 .answer-question {
   margin: 0;
 
-  color: #514537;
+  color: var(--lumia-text);
   font-size: 30px;
   font-weight: 700;
   line-height: 1.7;
@@ -245,6 +271,7 @@ body {
 }
 
 /* 本の中央の綴じ目 */
+
 .answer-book__binding {
   position: absolute;
   top: 0;
@@ -254,16 +281,16 @@ body {
   pointer-events: none;
 }
 
-/* コーギくんは次の工程で配置 */
+/* コーギくんの旧クラス */
+
 .answer-mascot {
   display: none;
 }
 
 /* ==================================================
-   左ページ下部：ページ操作・質問エリア
+   6. 左ページ下部：ページ操作
 ================================================== */
 
-/* ページ操作 */
 .answer-book__navigation {
   display: flex;
   align-items: center;
@@ -274,16 +301,17 @@ body {
   margin-top: auto;
   padding: 12px 0;
 
-  color: #88704f;
+  color: var(--lumia-text);
   font-size: 14px;
   letter-spacing: 0.04em;
 }
 
 /* ページ操作ボタン */
+
 .answer-book__navigation button {
   padding: 7px 13px;
 
-  color: #88704f;
+  color: var(--lumia-text);
   font-family: inherit;
   font-size: 13px;
 
@@ -305,10 +333,11 @@ body {
 }
 
 /* ==================================================
-   左ページ下部：本になじむ質問エリア
+   7. 左ページ下部：質問エリア
 ================================================== */
 
 /* 質問操作エリア */
+
 .answer-question-area {
   position: relative;
   top: -65px;
@@ -323,16 +352,18 @@ body {
 }
 
 /* 質問案内 */
+
 .answer-question-area__heading {
   margin: 0 0 13px;
 
-  color: #88704f;
+  color: #174875;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.07em;
 }
 
 /* 追加質問フォーム */
+
 .answer-input-form {
   display: flex;
   align-items: stretch;
@@ -340,13 +371,14 @@ body {
 }
 
 /* 入力欄 */
+
 .answer-input-form__input {
   flex: 1;
   min-width: 0;
   min-height: 70px;
   padding: 13px 16px;
 
-  color: #514537;
+  color: var(--lumia-text);
   font-family: inherit;
   font-size: 14px;
   line-height: 1.7;
@@ -377,6 +409,7 @@ body {
 }
 
 /* 送信ボタン */
+
 .answer-input-form__submit {
   min-width: 76px;
   padding: 10px 14px;
@@ -408,7 +441,10 @@ body {
   transform: translateY(-1px);
 }
 
-/* 下部アクション */
+/* ==================================================
+   8. 下部アクション
+================================================== */
+
 .answer-actions {
   display: flex;
   flex-wrap: wrap;
@@ -417,38 +453,78 @@ body {
   margin-top: 12px;
 }
 
-/* 紙面に印刷された案内のようなボタン */
+/* これまでの質問ボタン */
+
 .answer-actions__button {
-  padding: 9px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 
-  color: #88704f;
+  min-height: 52px;
+  padding: 12px 16px;
+
+  color: var(--lumia-text);
+
   font-family: inherit;
-  font-size: 13px;
-  letter-spacing: 0.03em;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.035em;
 
-  background: rgba(255, 250, 237, 0.3);
-  border: 1px solid rgba(153, 112, 54, 0.34);
-  border-radius: 4px;
+  background: rgb(255 250 239 / 48%);
 
-  box-shadow: 0 1px 2px rgba(112, 79, 37, 0.04);
+  border: 1px solid rgb(184 135 67 / 38%);
+  border-radius: 5px;
+
+  box-shadow: 0 2px 5px rgb(81 69 55 / 4%);
 
   cursor: pointer;
 
   transition:
-    background 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.answer-actions__button:hover {
-  background: rgba(255, 250, 237, 0.65);
-  border-color: rgba(153, 112, 54, 0.55);
+    background var(--lumia-transition-normal),
+    border-color var(--lumia-transition-normal),
+    color var(--lumia-transition-normal),
+    transform var(--lumia-transition-normal);
 }
 
 /* ==================================================
-   右ページ：回答表示
+   質問履歴アイコン：しおり＋時計
+================================================== */
+
+.answer-actions__icon {
+  display: block;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+}
+
+/* ==================================================
+   質問履歴ボタン：ホバー・フォーカス
+================================================== */
+
+/* ホバー時 */
+
+.answer-actions__button:hover {
+  border-color: var(--lumia-gold);
+  background: rgb(255 255 255 / 78%);
+  color: var(--lumia-navy);
+
+  transform: translateY(-2px);
+}
+
+/* キーボード操作 */
+
+.answer-actions__button:focus-visible {
+  outline: 2px solid var(--lumia-navy);
+  outline-offset: 4px;
+}
+
+/* ==================================================
+   9. 右ページ：回答表示
 ================================================== */
 
 /* 右ページ全体 */
+
 .answer-book__page--right {
   padding: 5px 70px 45px 85px;
 }
@@ -458,14 +534,15 @@ body {
 }
 
 /* ==================================================
-   右ページ：タイポグラフィ・ブックカラー
+   10. 右ページ：タイポグラフィ
 ================================================== */
 
 /* LumiAからの答え：見出し */
+
 .answer-book__page--right .answer-book__eyebrow {
   margin: 0 0 30px;
 
-  color: #88704f;
+  color: #174875;
   font-size: 22px;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -473,10 +550,11 @@ body {
 }
 
 /* 通常の回答本文 */
+
 .answer-book__page--right .answer-body p {
   margin: 0 0 20px;
 
-  color: #514537;
+  color: var(--lumia-text);
   font-size: 22px;
   font-weight: 400;
   line-height: 1.9;
@@ -484,8 +562,9 @@ body {
 }
 
 /* 回答がないときの案内文 */
+
 .answer-book__page--right .answer-body p.answer-body__placeholder {
-  color: #514537;
+  color: var(--lumia-text);
   font-size: 26px;
   font-weight: 600;
   line-height: 1.8;
@@ -495,6 +574,7 @@ body {
 }
 
 /* 補足・参考資料 */
+
 .answer-book__page--right .answer-references,
 .answer-book__page--right .answer-references__list {
   color: #94836d;
@@ -505,6 +585,7 @@ body {
 }
 
 /* 参考資料の見出し */
+
 .answer-book__page--right .answer-references__title {
   color: #88704f;
   font-size: 16px;
@@ -514,6 +595,7 @@ body {
 }
 
 /* 参考資料一覧 */
+
 .answer-references__list {
   margin: 0;
   padding-left: 22px;
@@ -524,6 +606,7 @@ body {
 }
 
 /* 回答本文の表示幅を広げる */
+
 .answer-book__page--right .answer-body {
   width: 100%;
   max-width: none;
@@ -532,6 +615,7 @@ body {
 }
 
 /* 回答文の不要な折り返しを防ぐ */
+
 .answer-book__page--right .answer-body p {
   max-width: none;
   overflow-wrap: normal;
@@ -539,7 +623,7 @@ body {
 }
 
 /* ==================================================
-   右ページ：コーギくん
+   11. 右ページ：コーギくん
 ================================================== */
 
 .answer-book__page--right {
@@ -559,7 +643,10 @@ body {
   user-select: none;
 }
 
-/* スマートフォン */
+/* ==================================================
+   12. スマートフォン
+================================================== */
+
 @media (max-width: 700px) {
   .answer-header {
     top: 18px;

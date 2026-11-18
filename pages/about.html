@@ -8,18 +8,722 @@ LumiAの目的・仕組み・特徴を説明するHTMLファイル。
 
 【主な役割】
 ・LumiAとは何かを説明する
-・LumiAの目的を説明する
+・LumiAが目指すことを紹介する
 ・学校情報を利用したAIであることを説明する
-・RAGの仕組みを簡単に説明する
+・RAGの仕組みを分かりやすく紹介する
 ・利用時の注意事項を表示する
 
 【関連ファイル】
 ・css/common.css
+・css/about.css
 ・js/common.js
+・js/about.js
 
-【注意】
-LumiAは「何でも答えるAI」ではなく、
+【コンセプト】
 「三重県立津高等技術学校を知っているAI」
-をコンセプトとする。
+
 ==================================================
 -->
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="LumiAの目的や特徴、学校資料を活用した回答の仕組みをご紹介します。"
+    />
+    <meta name="theme-color" content="#f6e9cf" />
+
+    <title>LumiAについて | LumiA</title>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/images/icons/favicon_master.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/about.css" />
+
+    
+<!-- JavaScript -->
+<script src="../js/common.js" defer></script>
+<script src="../js/error-handler.js" defer></script>
+<script src="../js/about.js" defer></script>
+
+  </head>
+
+  <body class="about-page">
+    <main class="about-screen">
+      <!-- 背景 -->
+      <div class="about-screen__background" aria-hidden="true"></div>
+
+      <!-- =========================================
+           ヘッダー
+      ========================================== -->
+      <header class="about-header">
+        <!-- LumiAロゴ -->
+        <a
+          class="about-header__logo"
+          href="./home.html"
+          aria-label="LumiA ホームへ戻る"
+        >
+          <img src="../assets/images/icons/logo_compact.png" alt="LumiA" />
+        </a>
+
+        <!-- ナビゲーション -->
+        <nav class="about-header__navigation" aria-label="メインナビゲーション">
+          <a href="./home.html" class="about-header__link"> ホーム </a>
+
+          <a
+            href="./about.html"
+            class="about-header__link about-header__link--active"
+            aria-current="page"
+          >
+            LumiAについて
+          </a>
+
+          <a href="./faq.html" class="about-header__link"> よくある質問 </a>
+        </nav>
+
+        <!-- モバイルメニューボタン -->
+        <button
+          class="about-header__menu-button"
+          type="button"
+          id="about-menu-button"
+          aria-label="メニューを開く"
+          aria-expanded="false"
+          aria-controls="about-mobile-navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </header>
+
+      <!-- =========================================
+           モバイルナビゲーション
+      ========================================== -->
+      <nav
+        class="about-mobile-navigation"
+        id="about-mobile-navigation"
+        aria-label="モバイルナビゲーション"
+        hidden
+      >
+        <a href="./home.html">ホーム</a>
+        <a href="./about.html" aria-current="page">LumiAについて</a>
+        <a href="./faq.html">よくある質問</a>
+      </nav>
+
+      <!-- =========================================
+           メインコンテンツ
+      ========================================== -->
+      <div class="about-main">
+        <!-- =======================================
+             01. ファーストビュー
+        ======================================== -->
+        <section class="about-hero" aria-labelledby="about-hero-title">
+          <div class="about-hero__content">
+            <p class="about-hero__eyebrow">ABOUT LumiA</p>
+
+            <h1 class="about-hero__title" id="about-hero-title">
+              LumiAについて
+            </h1>
+
+            <p class="about-hero__catchcopy">
+              知りたいが、<br />
+              学びに変わる。
+            </p>
+
+            <p class="about-hero__description">
+              学校のこと、授業のこと、資格のこと。<br />
+              日々の「知りたい」に寄り添う、<br />
+              津高技専のためのAIアシスタントです。
+            </p>
+
+            <a href="#about-introduction" class="about-hero__scroll">
+              <span>SCROLL TO EXPLORE</span>
+              <span class="about-hero__scroll-line" aria-hidden="true"></span>
+            </a>
+          </div>
+
+          <!-- コーギくん -->
+          <div class="about-hero__mascot">
+            <div class="about-hero__mascot-decoration" aria-hidden="true">
+              <span class="about-hero__sparkle about-hero__sparkle--one"
+                >✦</span
+              >
+              <span class="about-hero__sparkle about-hero__sparkle--two"
+                >✧</span
+              >
+              <span class="about-hero__sparkle about-hero__sparkle--three"
+                >✦</span
+              >
+            </div>
+
+            <img
+              src="../assets/images/characters/corgi_welcome.png"
+              alt="LumiAの案内役、コーギくん"
+              loading="eager"
+            />
+
+            <p class="about-hero__mascot-caption">
+              いっしょに学びを見つけよう！
+            </p>
+          </div>
+
+          <!-- 下部装飾 -->
+          <div class="about-hero__bottom-decoration" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </section>
+
+        <!-- =======================================
+             02. LumiAとは
+        ======================================== -->
+        <section
+          class="about-section about-introduction"
+          id="about-introduction"
+          aria-labelledby="about-introduction-title"
+        >
+          <div class="about-section__heading">
+            <span class="about-section__number">01</span>
+            <p class="about-section__eyebrow">WHAT IS LumiA?</p>
+
+            <h2 id="about-introduction-title">LumiAとは？</h2>
+
+            <p class="about-section__lead">
+              学校をもっと身近にする、学びのパートナー。
+            </p>
+          </div>
+
+          <div class="about-introduction__body">
+            <div class="about-introduction__illustration">
+              <div class="about-introduction__book" aria-hidden="true">
+                <div class="about-introduction__book-page">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+                <div class="about-introduction__book-page">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+
+              <span class="about-introduction__illustration-star">✦</span>
+            </div>
+
+            <div class="about-introduction__text">
+              <p>
+                LumiAは、三重県立津高等技術学校の学生や指導員が、
+                学校に関する情報を気軽に調べられるように開発された
+                AI学校アシスタントです。
+              </p>
+
+              <p>
+                授業内容や資格、学校生活など、学校に関する疑問を入力すると、
+                学校資料をもとに回答を生成します。
+              </p>
+
+              <p>
+                必要な情報を探す手間を減らし、
+                学びたいときに、知りたいことへたどり着ける。
+                そんな環境を目指しています。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- =======================================
+             03. LumiAが目指すこと
+        ======================================== -->
+        <section
+          class="about-section about-purpose"
+          aria-labelledby="about-purpose-title"
+        >
+          <div class="about-section__heading">
+            <span class="about-section__number">02</span>
+            <p class="about-section__eyebrow">OUR PURPOSE</p>
+
+            <h2 id="about-purpose-title">LumiAが目指すこと</h2>
+
+            <p class="about-section__lead">
+              一人ひとりの「知りたい」を、学びのきっかけに。
+            </p>
+          </div>
+
+          <div class="about-purpose__grid">
+            <!-- カード1 -->
+            <article class="about-purpose__card">
+              <div class="about-purpose__icon">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <circle
+                    cx="21"
+                    cy="21"
+                    r="11"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M29 29L39 39"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M17 21H25M21 17V25"
+                    stroke="#B88743"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+
+              <h3>情報を探しやすく</h3>
+
+              <p>
+                必要な学校情報を、質問するだけで
+                手軽に確認できる環境をつくります。
+              </p>
+            </article>
+
+            <!-- カード2 -->
+            <article class="about-purpose__card">
+              <div class="about-purpose__icon">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path
+                    d="M24 5L28 17L40 21L28 25L24 37L20 25L8 21L20 17Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M37 33L39 38L44 40L39 42L37 47L35 42L30 40L35 38Z"
+                    fill="#E99A43"
+                  />
+                </svg>
+              </div>
+
+              <h3>学びをサポート</h3>
+
+              <p>
+                授業や資格についての疑問を解消し、 自主的な学習を後押しします。
+              </p>
+            </article>
+
+            <!-- カード3 -->
+            <article class="about-purpose__card">
+              <div class="about-purpose__icon">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path
+                    d="M24 5L39 11V22C39 32 32.5 39 24 43C15.5 39 9 32 9 22V11L24 5Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M17 24L22 29L32 18"
+                    stroke="#B88743"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+
+              <h3>根拠のある回答へ</h3>
+
+              <p>学校資料を活用し、 情報の根拠を大切にした回答を目指します。</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- =======================================
+             04. LumiAの特徴
+        ======================================== -->
+        <section
+          class="about-section about-features"
+          aria-labelledby="about-features-title"
+        >
+          <div class="about-section__heading">
+            <span class="about-section__number">03</span>
+            <p class="about-section__eyebrow">OUR FEATURES</p>
+
+            <h2 id="about-features-title">LumiAの特徴</h2>
+
+            <p class="about-section__lead">
+              津高技専の情報に寄り添う、3つの特徴。
+            </p>
+          </div>
+
+          <div class="about-features__list">
+            <article class="about-features__item">
+              <span class="about-features__item-number">01</span>
+
+              <div class="about-features__item-content">
+                <h3>学校資料をもとに回答</h3>
+                <p>
+                  学校に関する資料を検索し、
+                  質問に関連する情報をもとに回答を生成します。
+                </p>
+              </div>
+
+              <span class="about-features__item-mark" aria-hidden="true">
+                BOOK
+              </span>
+            </article>
+
+            <article class="about-features__item">
+              <span class="about-features__item-number">02</span>
+
+              <div class="about-features__item-content">
+                <h3>自然な言葉で質問できる</h3>
+                <p>
+                  専門的な検索キーワードを考えなくても、
+                  普段使う言葉で質問できます。
+                </p>
+              </div>
+
+              <span class="about-features__item-mark" aria-hidden="true">
+                TALK
+              </span>
+            </article>
+
+            <article class="about-features__item">
+              <span class="about-features__item-number">03</span>
+
+              <div class="about-features__item-content">
+                <h3>参考資料を確認できる</h3>
+                <p>
+                  回答に参考資料が提示された場合は、
+                  その情報をたどって内容を確認できます。
+                </p>
+              </div>
+
+              <span class="about-features__item-mark" aria-hidden="true">
+                SOURCE
+              </span>
+            </article>
+          </div>
+        </section>
+
+        <!-- =======================================
+             05. LumiAの仕組み・RAG
+        ======================================== -->
+        <section
+          class="about-section about-technology"
+          aria-labelledby="about-technology-title"
+        >
+          <div class="about-section__heading">
+            <span class="about-section__number">04</span>
+            <p class="about-section__eyebrow">HOW LumiA WORKS</p>
+
+            <h2 id="about-technology-title">LumiAの仕組み</h2>
+
+            <p class="about-section__lead">
+              学校資料を探し、その情報をもとに回答をつくります。
+            </p>
+          </div>
+
+          <!-- RAG説明 -->
+          <div class="about-technology__intro">
+            <div class="about-technology__intro-label">
+              <span>TECHNOLOGY</span>
+              <span>RAG</span>
+            </div>
+
+            <h3>RAG（検索拡張生成）とは？</h3>
+
+            <p>
+              AIが回答を生成する前に、関連する資料を検索し、
+              その内容を参考にして回答する仕組みです。
+            </p>
+
+            <p>
+              LumiAでは、学校に関する資料を検索してから
+              AIが回答を生成することで、学校情報に沿った回答を目指しています。
+            </p>
+          </div>
+
+          <!-- 処理フロー -->
+          <div class="about-flow" aria-label="LumiAの回答生成の流れ">
+            <!-- STEP 1 -->
+            <article class="about-flow__step">
+              <span class="about-flow__step-number">STEP 01</span>
+
+              <div class="about-flow__icon about-flow__icon--question">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path
+                    d="M7 10H41V34H22L12 41V34H7V10Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M17 19H31M17 25H27"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+
+              <h4>質問を入力</h4>
+
+              <p>学生が知りたいことを LumiAに入力します。</p>
+            </article>
+
+            <div class="about-flow__arrow" aria-hidden="true">→</div>
+
+            <!-- STEP 2 -->
+            <article class="about-flow__step">
+              <span class="about-flow__step-number">STEP 02</span>
+
+              <div class="about-flow__icon about-flow__icon--search">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path
+                    d="M21 8C13.8 8 8 13.8 8 21C8 28.2 13.8 34 21 34C28.2 34 34 28.2 34 21C34 13.8 28.2 8 21 8Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M31 31L41 41"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+
+              <h4>関連資料を検索</h4>
+
+              <p>質問に関連する学校資料を Knowledge Basesで検索します。</p>
+            </article>
+
+            <div class="about-flow__arrow" aria-hidden="true">→</div>
+
+            <!-- STEP 3 -->
+            <article class="about-flow__step">
+              <span class="about-flow__step-number">STEP 03</span>
+
+              <div class="about-flow__icon about-flow__icon--ai">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path
+                    d="M24 5L28 17L40 21L28 25L24 37L20 25L8 21L20 17Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M37 33L39 38L44 40L39 42L37 47L35 42L30 40L35 38Z"
+                    fill="#E99A43"
+                  />
+                </svg>
+              </div>
+
+              <h4>AIが回答を生成</h4>
+
+              <p>検索した情報を参考に、Amazon Bedrockが回答を生成します。</p>
+            </article>
+
+            <div class="about-flow__arrow" aria-hidden="true">→</div>
+
+            <!-- STEP 4 -->
+            <article class="about-flow__step">
+              <span class="about-flow__step-number">STEP 04</span>
+
+              <div class="about-flow__icon about-flow__icon--answer">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path
+                    d="M8 7H29L40 18V41H8V7Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M29 7V18H40"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15 25H33M15 31H33M15 36H27"
+                    stroke="#B88743"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+
+              <h4>回答を表示</h4>
+
+              <p>質問への回答と、参考資料を画面に表示します。</p>
+            </article>
+          </div>
+
+          <!-- AWS構成の補足 -->
+          <div class="about-technology__note">
+            <div class="about-technology__note-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="9"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                />
+                <path
+                  d="M12 11V16M12 8V8.1"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+
+            <div>
+              <h4>学校資料はどこから来るの？</h4>
+
+              <p>
+                学校資料はAmazon S3に保存され、 Amazon Bedrock Knowledge
+                Basesを通じて検索に利用されます。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- =======================================
+             06. 利用上の注意
+        ======================================== -->
+        <section
+          class="about-section about-notice"
+          aria-labelledby="about-notice-title"
+        >
+          <div class="about-section__heading">
+            <span class="about-section__number">05</span>
+            <p class="about-section__eyebrow">PLEASE NOTE</p>
+
+            <h2 id="about-notice-title">利用するときの注意</h2>
+
+            <p class="about-section__lead">
+              安心して利用するために、確認しておきましょう。
+            </p>
+          </div>
+
+          <div class="about-notice__list">
+            <article class="about-notice__item">
+              <span class="about-notice__number">01</span>
+
+              <div>
+                <h3>個人情報を入力しない</h3>
+                <p>
+                  氏名・住所・電話番号・個人を特定できる情報などは
+                  入力しないでください。
+                </p>
+              </div>
+            </article>
+
+            <article class="about-notice__item">
+              <span class="about-notice__number">02</span>
+
+              <div>
+                <h3>回答内容を確認する</h3>
+                <p>
+                  AIの回答は常に正しいとは限りません。
+                  大切な情報は、学校の公式資料や指導員にも確認してください。
+                </p>
+              </div>
+            </article>
+
+            <article class="about-notice__item">
+              <span class="about-notice__number">03</span>
+
+              <div>
+                <h3>回答できない場合もある</h3>
+                <p>
+                  学校資料に情報が見つからない場合や、
+                  根拠が十分でない場合は、適切に回答できないことがあります。
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="about-notice__message">
+            <span class="about-notice__message-mark" aria-hidden="true">
+              ✦
+            </span>
+
+            <p>
+              LumiAは、学びを支えるためのアシスタントです。<br />
+              最後は自分でも確かめながら活用してください。
+            </p>
+          </div>
+        </section>
+
+        <!-- =======================================
+             07. 最後の案内
+        ======================================== -->
+        <section class="about-ending">
+          <div class="about-ending__decoration" aria-hidden="true">
+            <span>✦</span>
+            <span>✧</span>
+            <span>✦</span>
+          </div>
+
+          <div class="about-ending__content">
+            <p class="about-ending__eyebrow">YOUR LEARNING PARTNER</p>
+
+            <h2>
+              さあ、知りたいことを<br />
+              見つけにいこう。
+            </h2>
+
+            <p>あなたの学びのそばに、LumiA。</p>
+
+            <a href="./home.html" class="about-ending__button">
+              <span>質問してみる</span>
+
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M5 12H19M12 5L19 12L12 19"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <img
+            class="about-ending__mascot"
+            src="../assets/images/characters/corgi_cheer.png"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
+        </section>
+      </div>
+
+
+
+       
+
+        
+      </footer>
+    </main>
+  </body>
+</html>

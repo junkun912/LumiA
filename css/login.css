@@ -183,7 +183,6 @@
   width: min(100%, 260px);
   margin: 12px 0 17px;
   color: var(--lumia-gold);
-
 }
 
 .login-page .login-intro__description {
@@ -198,7 +197,7 @@
   text-shadow: 0 0.5px 0 rgb(255 255 255 / 18%);
   mix-blend-mode: multiply;
 
-    /* 文字の線を太くする */
+  /* 文字の線を太くする */
   -webkit-text-stroke: 0.6px currentColor;
   paint-order: stroke fill;
 
@@ -280,7 +279,7 @@
   letter-spacing: 0.08em;
   text-align: center;
 
-    /* 文字の線を太くする */
+  /* 文字の線を太くする */
   -webkit-text-stroke: 0.5px currentColor;
   paint-order: stroke fill;
 
@@ -305,8 +304,6 @@
   transform-origin: center center;
   padding: clamp(150px, 9.5vh, 142px) clamp(28px, 4.2vw, 70px) 65px;
   color: var(--lumi-navy);
-
-
 }
 
 /* ---------------------------------------------------------
@@ -329,8 +326,6 @@
   letter-spacing: 0.12em;
   line-height: 1.7;
   mix-blend-mode: multiply;
-
-
 }
 
 .login-page .login-panel__title {
@@ -345,7 +340,7 @@
   mix-blend-mode: multiply;
   opacity: 0.98;
 
-    /* 文字の線を太くする */
+  /* 文字の線を太くする */
   -webkit-text-stroke: 0.8px currentColor;
   paint-order: stroke fill;
 
@@ -357,8 +352,6 @@
   width: min(100%, 280px);
   margin: 14px auto 16px;
   gap: 11px;
-
-
 }
 
 .login-page .login-panel__ornament i {
@@ -377,8 +370,8 @@
   letter-spacing: 0.045em;
   mix-blend-mode: multiply;
 
-    /* 文字の線を太くする */
-  -webkit-text-stroke: 0.8xp currentColor;
+  /* 文字の線を太くする */
+  -webkit-text-stroke: 0.8px currentColor;
   paint-order: stroke fill;
 
   text-shadow: 0 0.5px 0 rgb(255 255 255 / 22%);
@@ -395,11 +388,8 @@
   margin: 25px auto 0;
   padding: 0;
   font-family:
-  "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-
+    "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
 }
-
-
 
 .login-page .login-form__field {
   margin: 0 0 16px;
@@ -415,7 +405,6 @@
   letter-spacing: 0.04em;
   mix-blend-mode: multiply;
   opacity: 0.96;
-
 }
 
 /* 入力欄 */
@@ -479,8 +468,6 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
-
-
 }
 
 .login-page .login-form__input::placeholder {
@@ -543,7 +530,7 @@
   letter-spacing: 0.025em;
   cursor: pointer;
 
-    /* 文字の線を太くする */
+  /* 文字の線を太くする */
   -webkit-text-stroke: 0.4px currentColor;
   paint-order: stroke fill;
 
@@ -611,7 +598,11 @@
   margin: 0;
   padding: 12px 48px;
   color: var(--lumia-text-light);
-  background: linear-gradient(105deg, var(--lumia-navy) 0%, var(--lumia-blue) 100%);
+  background: linear-gradient(
+    105deg,
+    var(--lumia-navy) 0%,
+    var(--lumia-blue) 100%
+  );
   border: 1px solid rgb(217 160 74 / 65%);
   border-radius: 7px;
   box-shadow: 0 1px 3px rgb(78 61 34 / 9%);
@@ -646,6 +637,16 @@
   stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+/* ログイン処理中のボタン */
+
+.login-page .login-form__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+  box-shadow: none;
 }
 
 /* ---------------------------------------------------------
@@ -688,8 +689,6 @@
   flex-shrink: 0;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-
-
 }
 
 .login-page .login-form__forgot,
@@ -764,7 +763,7 @@
     border-color 0.2s ease,
     transform 0.2s ease;
 
-      /* 文字の線を太くする */
+  /* 文字の線を太くする */
   -webkit-text-stroke: 0.4px currentColor;
   paint-order: stroke fill;
 
