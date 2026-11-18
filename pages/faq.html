@@ -22,3 +22,236 @@ FAQの質問を固定回答するのではなく、
 選択した質問をLumiAの質問処理へつなげる。
 ==================================================
 -->
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="津高技専用AI学校アシスタント LumiA よくある質問"
+    />
+    <meta name="theme-color" content="#f6e9cf" />
+
+    <title>よくある質問 | LumiA</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/images/icons/favicon_master.png"
+    />
+
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/faq.css" />
+
+    <script type="module" src="../js/faq.js"></script>
+  </head>
+
+  <body class="faq-page">
+    <main class="faq-screen">
+      <div class="faq-screen__background" aria-hidden="true"></div>
+
+      <div class="faq-book">
+        <!-- ヘッダー -->
+        <header class="faq-header">
+          <a class="faq-header__logo" href="./home.html">
+            <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
+          </a>
+
+          <a class="faq-header__home" href="./home.html">
+            <span aria-hidden="true">←</span>
+            ホームへ戻る
+          </a>
+        </header>
+
+        <!-- タイトル -->
+        <section class="faq-intro">
+          <p class="faq-intro__eyebrow">FREQUENTLY ASKED QUESTIONS</p>
+
+          <h1 class="faq-intro__title">よくある質問</h1>
+
+          <p class="faq-intro__description">
+            知りたいことを選んで、LumiAに聞いてみよう。
+          </p>
+        </section>
+
+        <!-- 質問検索 -->
+        <section class="faq-search" aria-label="質問を探す">
+          <label class="faq-search__label" for="faq-search-input">
+            質問を検索する
+          </label>
+
+          <div class="faq-search__field">
+            <span aria-hidden="true">⌕</span>
+
+            <input
+              id="faq-search-input"
+              type="search"
+              placeholder="知りたいことを入力..."
+            />
+          </div>
+        </section>
+
+        <!-- FAQ一覧 -->
+        <section class="faq-content" aria-label="質問一覧">
+          <div class="faq-category">
+            <h2 class="faq-category__title">
+              <span class="faq-category__icon">📖</span>
+              学校生活
+            </h2>
+
+            <div class="faq-list" data-category="school">
+              <button
+                class="faq-item"
+                type="button"
+                data-question="学校の年間行事について教えてください。"
+              >
+                <span>学校の年間行事について知りたい</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+
+              <button
+                class="faq-item"
+                type="button"
+                data-question="授業時間や休み時間について教えてください。"
+              >
+                <span>授業時間や休み時間について知りたい</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+
+              <button
+                class="faq-item"
+                type="button"
+                data-question="学校生活で必要なものについて教えてください。"
+              >
+                <span>学校生活で必要なものは？</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="faq-category">
+            <h2 class="faq-category__title">
+              <span class="faq-category__icon">✎</span>
+              授業・学習
+            </h2>
+
+            <div class="faq-list" data-category="learning">
+              <button
+                class="faq-item"
+                type="button"
+                data-question="授業ではどのようなことを学びますか？"
+              >
+                <span>授業ではどんなことを学ぶ？</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+
+              <button
+                class="faq-item"
+                type="button"
+                data-question="実習ではどのようなことをしますか？"
+              >
+                <span>実習ではどんなことをする？</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+
+              <button
+                class="faq-item"
+                type="button"
+                data-question="授業についていくための勉強方法を教えてください。"
+              >
+                <span>おすすめの勉強方法は？</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="faq-category">
+            <h2 class="faq-category__title">
+              <span class="faq-category__icon">✧</span>
+              資格・就職
+            </h2>
+
+            <div class="faq-list" data-category="career">
+              <button
+                class="faq-item"
+                type="button"
+                data-question="取得を目指せる資格について教えてください。"
+              >
+                <span>取得を目指せる資格は？</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+
+              <button
+                class="faq-item"
+                type="button"
+                data-question="就職活動はどのように進めますか？"
+              >
+                <span>就職活動はどう進める？</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+
+              <button
+                class="faq-item"
+                type="button"
+                data-question="卒業後の進路について教えてください。"
+              >
+                <span>卒業後の進路について知りたい</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="faq-category">
+            <h2 class="faq-category__title">
+              <span class="faq-category__icon">⌂</span>
+              施設・設備
+            </h2>
+
+            <div class="faq-list" data-category="facility">
+              <button
+                class="faq-item"
+                type="button"
+                data-question="学校の施設や設備について教えてください。"
+              >
+                <span>学校の施設や設備について知りたい</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+
+              <button
+                class="faq-item"
+                type="button"
+                data-question="パソコンや実習機器について教えてください。"
+              >
+                <span>パソコンや実習機器について知りたい</span>
+                <span class="faq-item__arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 検索結果なし -->
+          <p class="faq-empty" id="faq-empty" hidden>
+            該当する質問が見つかりませんでした。
+          </p>
+        </section>
+
+        <!-- コーギくん -->
+        <footer class="faq-footer">
+          <img
+            class="faq-footer__mascot"
+            src="../assets/images/characters/corgi_idea.png"
+            alt=""
+          />
+
+          <p>
+            知りたいことが見つからないときは、
+            ホーム画面から自由に質問してみてね。
+          </p>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>
