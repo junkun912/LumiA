@@ -1,116 +1,70 @@
-/* ==================================================
-   LumiA
-   ファイル名：common.css
+/*
+==================================================
+LumiA
+ファイル名：common.css
 
-   【ファイル概要】
-   LumiA全体で使用する共通スタイルを管理する。
+【ファイル概要】
+LumiA全体で使用する共通スタイルを管理する。
 
-   【主な役割】
-   ・共通デザイン設定
-   ・基本スタイルのリセット
-   ・文字と画像の基本設定
-   ・フォーム要素の基本設定
-   ・アクセシビリティ対応
-   ・共通アニメーション
-   ・共通インラインエラー表示
+【主な役割】
+・共通デザイン設定
+・基本スタイルのリセット
+・文字と画像の基本設定
+・日本語の改行・折り返し補正
+・フォーム要素の基本設定
+・アクセシビリティ対応
+・共通アニメーション
+・共通インラインエラー表示
 
-   【デザインコンセプト】
-   Antique Storybook × Learning
+【デザインコンセプト】
+Antique Storybook × Learning
 
-   温かみのある絵本の世界観と、
-   落ち着いた学習空間を表現する。
+温かみのある絵本の世界観と、
+落ち着いた学習空間を表現する。
 
-   ※各ページ固有のデザインは個別CSSで管理する。
-================================================== */
+※各ページ固有のデザインは個別CSSで管理する。
+==================================================
+*/
 
 /* ==================================================
    1. デザイントークン
 ================================================== */
 
 :root {
-  /* ----------------------------------------------
-     ブランドカラー
-  ---------------------------------------------- */
-
-  /* LumiAの基本ネイビー */
+  /* ブランドカラー */
   --lumia-navy: #174875;
-
-  /* 補助ブルー */
   --lumia-blue: #2c6388;
-
-  /* 淡いブルー */
   --lumia-light-blue: #dcecf3;
 
-  /* ----------------------------------------------
-     アクセントカラー
-  ---------------------------------------------- */
-
-  /* コーギくんのオレンジ */
+  /* アクセントカラー */
   --lumia-orange: #e99a43;
-
-  /* アンティークゴールド */
   --lumia-gold: #b88743;
 
-  /* ----------------------------------------------
-     背景カラー
-  ---------------------------------------------- */
-
-  /* ペーパーアイボリー */
+  /* 背景カラー */
   --lumia-ivory: #f5e6c9;
-
-  /* ホワイト */
   --lumia-white: #ffffff;
-
-  /* 淡いミント */
   --lumia-mint: #e4f0e7;
 
-  /* ----------------------------------------------
-     文字カラー
-  ---------------------------------------------- */
-
-  /* 基本文字：インクブラウン */
+  /* 文字カラー */
   --lumia-text: #514537;
-
-  /* 補助文字：セピアグレー */
   --lumia-text-muted: #94836d;
-
-  /* 見出し：アンティークブラウン */
   --lumia-text-heading: #88704f;
-
-  /* 白文字 */
   --lumia-text-light: #ffffff;
 
-  /* ----------------------------------------------
-     境界線・装飾
-  ---------------------------------------------- */
-
-  /* 基本境界線 */
+  /* 境界線・装飾 */
   --lumia-border: #d9c5a6;
-
-  /* ゴールド系境界線 */
   --lumia-border-gold: rgba(184, 135, 67, 0.35);
-
-  /* 控えめな装飾線 */
   --lumia-border-soft: rgba(136, 112, 79, 0.24);
 
-  /* ----------------------------------------------
-     共通角丸
-  ---------------------------------------------- */
-
+  /* 共通角丸 */
   --lumia-radius-small: 6px;
   --lumia-radius-medium: 12px;
   --lumia-radius-large: 20px;
 
-  /* ----------------------------------------------
-     共通影
-  ---------------------------------------------- */
-
+  /* 共通影 */
   --lumia-shadow: 0 4px 16px rgb(81 69 55 / 10%);
 
-  /* ----------------------------------------------
-     アニメーション
-  ---------------------------------------------- */
-
+  /* アニメーション */
   --lumia-transition-fast: 150ms ease;
   --lumia-transition-normal: 200ms ease;
 }
@@ -141,7 +95,11 @@ body {
   font-family:
     "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 
+  font-size: 16px;
   line-height: 1.7;
+
+  word-break: normal;
+  line-break: strict;
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -150,6 +108,8 @@ body {
 /* ==================================================
    3. 見出し・文章
 ================================================== */
+
+/* 見出し */
 
 h1,
 h2,
@@ -161,15 +121,40 @@ h6 {
 
   color: inherit;
   font-weight: 700;
+
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
 }
+
+/* 段落 */
 
 p {
   margin-top: 0;
+
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
 }
+
+/* リスト */
+
+li,
+dd,
+dt {
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+/* 補足文字 */
 
 small {
   font-size: 0.875em;
+  line-height: inherit;
 }
+
+/* 強調文字 */
 
 strong {
   font-weight: 700;
@@ -192,15 +177,22 @@ img {
   height: auto;
 }
 
+/* ==================================================
+   5. フォーム要素
+================================================== */
+
 button,
 input,
 textarea,
 select {
   font: inherit;
+  word-break: normal;
+  line-break: auto;
+  overflow-wrap: normal;
 }
 
 /* ==================================================
-   5. リンク
+   6. リンク
 ================================================== */
 
 a {
@@ -214,7 +206,7 @@ a:focus-visible {
 }
 
 /* ==================================================
-   6. ボタン
+   7. ボタン
 ================================================== */
 
 button {
@@ -232,7 +224,7 @@ button:focus-visible {
 }
 
 /* ==================================================
-   7. 入力フォーム
+   8. 入力フォーム
 ================================================== */
 
 input,
@@ -255,10 +247,66 @@ select:focus-visible {
 }
 
 /* ==================================================
-   8. 共通アクセシビリティ
+   9. 共通の改行・折り返し補正
+================================================== */
+
+/*
+  日本語の文章に共通適用する設定。
+
+  word-break: normal
+  → 不必要な文字分割を抑える。
+
+  line-break: strict
+  → 日本語の句読点・括弧などの禁則処理。
+
+  overflow-wrap: break-word
+  → 長い英数字などのはみ出しを防ぐ。
+*/
+
+:where(p, li, dd, dt, blockquote, figcaption, h1, h2, h3, h4, h5, h6) {
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+/* URL・長い英数字 */
+
+:where(a, code, .text-break) {
+  overflow-wrap: anywhere;
+}
+
+/* ==================================================
+   10. 意味のつながる語句の改行制御
+================================================== */
+
+/*
+  文章の意味がつながる語句を
+  途中で改行させたくない場合に使用する。
+
+  使用例：
+  <span class="lumia-no-break">ことが</span>
+
+  ※語句が長すぎる場合は、
+    表示幅に収まらなくなるため注意。
+*/
+
+.lumia-no-break {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* 短い見出しなどのバランス調整 */
+
+.lumia-text-balance {
+  text-wrap: balance;
+}
+
+/* ==================================================
+   11. 共通アクセシビリティ
 ================================================== */
 
 /* 視覚的に隠し、読み上げには残す */
+
 .visually-hidden {
   position: absolute;
 
@@ -276,7 +324,7 @@ select:focus-visible {
 }
 
 /* ==================================================
-   9. コーギくん共通アニメーション
+   12. コーギくん共通アニメーション
 ================================================== */
 
 .home-intro__mascot,
@@ -287,6 +335,7 @@ select:focus-visible {
 }
 
 /* キャラクター切り替え中 */
+
 .home-intro__mascot.is-changing,
 .login-mascot.is-changing,
 .corgi-character.is-changing {
@@ -294,10 +343,11 @@ select:focus-visible {
 }
 
 /* ==================================================
-   10. 共通インラインエラー
+   13. 共通インラインエラー
 ================================================== */
 
 /* エラー表示エリア */
+
 .lumia-inline-error {
   display: flex;
   flex-direction: column;
@@ -315,17 +365,65 @@ select:focus-visible {
 
   font-size: 0.9rem;
   line-height: 1.7;
+
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+/* エラータイトル */
+
+.lumia-inline-error__title {
+  margin: 0;
+
+  color: #925044;
+
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.6;
 }
 
 /* エラーメッセージ */
+
 .lumia-inline-error__message {
   margin: 0;
 
   color: #925044;
   font-weight: 500;
+
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+/* エラー補足説明 */
+
+.lumia-inline-error__description {
+  margin: 0;
+
+  color: #925044;
+
+  font-size: 0.875rem;
+  line-height: 1.7;
+
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
+
+/* 注意書き */
+
+.lumia-inline-error__note {
+  margin: 0;
+
+  color: #94836d;
+
+  font-size: 0.8rem;
+  line-height: 1.7;
 }
 
 /* 再試行ボタン */
+
 .lumia-inline-error__retry {
   align-self: flex-start;
 
@@ -344,31 +442,69 @@ select:focus-visible {
   cursor: pointer;
 
   transition:
-    background var(--lumia-transition-fast),
+    background-color var(--lumia-transition-fast),
     border-color var(--lumia-transition-fast),
     opacity var(--lumia-transition-fast);
 }
 
 /* マウス操作時 */
+
 .lumia-inline-error__retry:hover:not(:disabled) {
   background: #fce9e2;
   border-color: #c98f7f;
 }
 
 /* キーボード操作時 */
+
 .lumia-inline-error__retry:focus-visible {
   outline: 2px solid var(--lumia-navy);
   outline-offset: 3px;
 }
 
 /* 再試行中 */
+
 .lumia-inline-error__retry:disabled {
   cursor: not-allowed;
   opacity: 0.55;
 }
 
 /* ==================================================
-   11. 動きを抑える設定
+   14. 絵本風インラインエラー
+================================================== */
+
+.lumia-inline-error--storybook {
+  background: #f8f5ed;
+  border-color: var(--lumia-border-gold);
+
+  color: var(--lumia-text);
+
+  box-shadow: 0 3px 12px rgba(81, 69, 55, 0.05);
+}
+
+.lumia-inline-error--storybook .lumia-inline-error__message {
+  color: var(--lumia-navy);
+}
+
+.lumia-inline-error--storybook .lumia-inline-error__description {
+  color: var(--lumia-text);
+}
+
+.lumia-inline-error--storybook .lumia-inline-error__note {
+  color: var(--lumia-text-muted);
+}
+
+.lumia-inline-error--storybook .lumia-inline-error__retry {
+  color: var(--lumia-blue);
+  border-color: var(--lumia-border);
+}
+
+.lumia-inline-error--storybook .lumia-inline-error__retry:hover:not(:disabled) {
+  background: var(--lumia-light-blue);
+  border-color: var(--lumia-blue);
+}
+
+/* ==================================================
+   15. 動きを抑える設定
 ================================================== */
 
 @media (prefers-reduced-motion: reduce) {

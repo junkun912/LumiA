@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="津高技専用AI学校アシスタント LumiA 質問履歴"
+    />
+    <meta name="theme-color" content="#f5e6c9" />
+
+    <title>質問履歴 | LumiA</title>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/images/icons/favicon_master.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/history.css" />
+
+    <!-- 共通JavaScript -->
+    <script src="../js/common.js" defer></script>
+    <script src="../js/error-handler.js" defer></script>
+
+    <!-- 質問履歴画面専用JavaScript -->
+    <script type="module" src="../js/history.js"></script>
+  </head>
+
+  <body class="history-page">
+    <main class="history-screen">
+      <!-- =========================================
+           背景
+      ========================================== -->
+      <div class="history-screen__background" aria-hidden="true"></div>
+
+      <!-- =========================================
+           ヘッダー
+      ========================================== -->
+      <header class="history-header">
+        <a
+          class="history-header__logo"
+          href="./home.html"
+          aria-label="LumiA ホームへ戻る"
+        >
+          <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
+        </a>
+
+        <nav
+          class="history-header__navigation"
+          aria-label="メインナビゲーション"
+        >
+          <a href="./home.html" class="history-header__link"> ホーム </a>
+
+          <a href="./about.html" class="history-header__link">
+            LumiAについて
+          </a>
+
+          <a href="./faq.html" class="history-header__link"> よくある質問 </a>
+
+          <a
+            href="./history.html"
+            class="history-header__link history-header__link--active"
+            aria-current="page"
+          >
+            質問履歴
+          </a>
+        </nav>
+      </header>
+
+      <!-- =========================================
+           メインコンテンツ
+      ========================================== -->
+      <div class="history-main">
+        <!-- =======================================
+             タイトル
+        ======================================== -->
+        <section class="history-intro">
+          <div class="history-intro__label">
+            <span class="history-intro__label-line" aria-hidden="true"></span>
+
+            <p class="history-intro__eyebrow">YOUR LEARNING HISTORY</p>
+
+            <span class="history-intro__label-line" aria-hidden="true"></span>
+          </div>
+
+          <h1 class="history-intro__title">質問履歴</h1>
+
+          <p class="history-intro__description">
+            これまでの学びを、ここから振り返ろう。
+          </p>
+        </section>
+
+        <!-- =========================================
+             履歴検索
+        ========================================== -->
+        <section class="history-search" aria-label="質問履歴を検索">
+          <div class="history-search__heading">
+            <span class="history-search__eyebrow"> SEARCH </span>
+
+            <label class="history-search__label" for="history-search-input">
+              過去の質問を探す
+            </label>
+          </div>
+
+          <div class="history-search__field">
+            <svg
+              class="history-search__icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="10.8"
+                cy="10.8"
+                r="6.8"
+                stroke="currentColor"
+                stroke-width="1.7"
+              />
+
+              <path
+                d="M16 16L21 21"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+              />
+            </svg>
+
+            <input
+              id="history-search-input"
+              type="search"
+              placeholder="質問内容のキーワードを入力..."
+              autocomplete="off"
+              aria-label="質問内容を検索"
+              aria-controls="history-list"
+            />
+
+            <span class="history-search__hint" aria-hidden="true">
+              SEARCH
+            </span>
+          </div>
+        </section>
+
+        <!-- =========================================
+             履歴一覧
+        ========================================== -->
+        <section class="history-content" aria-label="質問履歴一覧">
+          <!-- 見出し -->
+          <div class="history-content__heading">
+            <div>
+              <p class="history-content__eyebrow">HISTORY LIST</p>
+
+              <h2 class="history-content__title">これまでの質問</h2>
+            </div>
+
+            <p
+              class="history-content__count"
+              id="history-count"
+              aria-live="polite"
+            >
+              履歴を読み込み中...
+            </p>
+          </div>
+
+          <!-- =====================================
+               絞り込み
+          ====================================== -->
+          <div
+            class="history-filter"
+            role="group"
+            aria-label="質問履歴の絞り込み"
+          >
+            <button
+              class="history-filter__button history-filter__button--active"
+              type="button"
+              data-filter="all"
+              aria-pressed="true"
+            >
+              すべて
+            </button>
+
+            <button
+              class="history-filter__button"
+              type="button"
+              data-filter="answered"
+              aria-pressed="false"
+            >
+              回答済み
+            </button>
+
+            <button
+              class="history-filter__button"
+              type="button"
+              data-filter="unanswered"
+              aria-pressed="false"
+            >
+              未回答
+            </button>
+          </div>
+
+          <!-- =====================================
+               質問履歴一覧
+          ====================================== -->
+          <div
+            class="history-list"
+            id="history-list"
+            aria-live="polite"
+            aria-busy="true"
+          ></div>
+
+          <!-- =====================================
+               すべて表示・5件に戻す
+          ====================================== -->
+          <div class="history-more" id="history-more" hidden>
+            <button
+              class="history-more__button"
+              id="history-more-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="history-list"
+            >
+              <span id="history-more-label"> すべて表示 </span>
+
+              <svg
+                class="history-more__icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 9L12 15L18 9"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- =====================================
+               履歴なし・検索結果なし
+          ====================================== -->
+          <div class="history-empty" id="history-empty" hidden>
+            <div class="history-empty__icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none">
+                <path
+                  d="M16 10H40L50 20V53H16V10Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+
+                <path
+                  d="M40 10V21H50"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+
+                <path
+                  d="M24 31H42M24 39H42M24 47H36"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+
+            <h3 class="history-empty__title" id="history-empty-title">
+              質問履歴はまだありません
+            </h3>
+
+            <p
+              class="history-empty__description"
+              id="history-empty-description"
+            >
+              LumiAに質問すると、ここに履歴が表示されます。
+            </p>
+
+            <a href="./home.html" class="history-empty__link">
+              <span>質問してみる</span>
+
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M5 12H19M12 5L19 12L12 19"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <!-- =====================================
+               エラー表示領域
+          ====================================== -->
+          <div id="history-error-container" aria-live="assertive"></div>
+        </section>
+
+        <!-- =========================================
+             履歴ページ案内・コーギくん
+        ========================================== -->
+        <section class="history-footer">
+          <div class="history-footer__mascot">
+            <img
+              src="../assets/images/characters/corgi_studying.png"
+              alt="勉強しているコーギくん"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="history-footer__message">
+            <p class="history-footer__eyebrow">EVERY QUESTION MATTERS</p>
+
+            <h2 class="history-footer__title">
+              学びの積み重ねを、<br />
+              次の一歩につなげよう。
+            </h2>
+
+            <p class="history-footer__description">
+              前に調べたことを振り返ったり、<br />
+              新しい疑問を見つけたり。<br />
+              自分のペースで学びを深めていこう。
+            </p>
+
+            <a href="./home.html" class="history-footer__link">
+              <span>新しく質問する</span>
+
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M5 12H19M12 5L19 12L12 19"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

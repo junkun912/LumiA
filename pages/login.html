@@ -9,11 +9,13 @@
       content="津高技専用AI学校アシスタント LumiA のログイン画面です。"
     />
 
+    <meta name="theme-color" content="#f8f5ed" />
+
     <title>ログイン | LumiA</title>
 
     <!-- ==================================================
-     Favicon
-  ================================================== -->
+         Favicon
+    ================================================== -->
 
     <link
       rel="icon"
@@ -30,8 +32,8 @@
     />
 
     <!-- ==================================================
-     CSS
-  ================================================== -->
+         CSS
+    ================================================== -->
 
     <!-- 共通CSS -->
     <link rel="stylesheet" href="../css/common.css" />
@@ -40,8 +42,8 @@
     <link rel="stylesheet" href="../css/login.css" />
 
     <!-- ==================================================
-     JavaScript
-  ================================================== -->
+         JavaScript
+    ================================================== -->
 
     <!-- 共通JavaScript -->
     <script src="../js/common.js" defer></script>
@@ -57,6 +59,7 @@
     <main class="login-screen">
       <!-- 背景画像 -->
       <div class="login-screen__background" aria-hidden="true"></div>
+
       <div class="login-screen__overlay" aria-hidden="true"></div>
 
       <!-- ページめくりアニメーション専用レイヤー -->
@@ -75,16 +78,20 @@
           <div class="page-turn__front">
             <div class="page-turn__front-image"></div>
           </div>
+
           <div class="page-turn__back"></div>
         </div>
       </div>
 
       <!-- 本の左右ページに合わせたコンテンツ -->
       <div class="login-book">
-        <!-- 左ページ：LumiAの紹介 -->
+        <!-- ==========================================
+             左ページ：LumiAの紹介
+        ========================================== -->
+
         <section class="login-intro" aria-label="LumiAの紹介">
           <div class="login-intro__content">
-            <!-- メインロゴ：リンク機能なし -->
+            <!-- メインロゴ -->
             <div class="login-intro__logo">
               <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
             </div>
@@ -126,7 +133,10 @@
           </div>
         </section>
 
-        <!-- 右ページ：ログイン -->
+        <!-- ==========================================
+             右ページ：ログイン
+        ========================================== -->
+
         <section class="login-panel" aria-labelledby="login-title">
           <header class="login-panel__header">
             <p class="login-panel__eyebrow">WELCOME TO LumiA</p>
@@ -144,12 +154,15 @@
             </p>
           </header>
 
-          <!-- ログインフォーム -->
+          <!-- ========================================
+               ログインフォーム
+          ======================================== -->
+
           <form class="login-form" id="login-form" novalidate>
-            <!-- ユーザー名 -->
+            <!-- メールアドレス -->
             <div class="login-form__field">
               <label class="login-form__label" for="username">
-                ユーザー名
+                メールアドレス
               </label>
 
               <div class="login-form__input-wrap">
@@ -162,11 +175,14 @@
 
                 <input
                   class="login-form__input"
-                  type="text"
+                  type="email"
                   id="username"
                   name="username"
-                  placeholder="ユーザー名を入力"
+                  placeholder="メールアドレスを入力"
                   autocomplete="username"
+                  inputmode="email"
+                  autocapitalize="none"
+                  spellcheck="false"
                   required
                 />
               </div>
@@ -182,6 +198,7 @@
                 <span class="login-form__input-icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none">
                     <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+
                     <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
                     <path d="M12 14v3"></path>
                   </svg>
@@ -197,6 +214,7 @@
                   required
                 />
 
+                <!-- パスワード表示切り替え -->
                 <button
                   class="login-form__password-toggle"
                   type="button"
@@ -213,21 +231,14 @@
                     <path
                       d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
                     ></path>
+
                     <circle cx="12" cy="12" r="3"></circle>
+
                     <path d="M3 3 21 21"></path>
                   </svg>
                 </button>
               </div>
             </div>
-
-            <!-- ログイン状態を保持 -->
-            <label class="login-form__remember">
-              <input type="checkbox" id="remember-me" name="remember" />
-
-              <span class="login-form__checkbox"></span>
-
-              <span>ログイン状態を保持する</span>
-            </label>
 
             <!-- ログインボタン -->
             <button class="login-form__submit" type="submit">
@@ -239,16 +250,17 @@
               </svg>
             </button>
 
-            <!-- ログイン結果・エラー表示 -->
+            <!-- ログイン状態・エラー表示 -->
             <p
               class="login-form__status"
               id="login-status"
               role="status"
               aria-live="polite"
+              aria-atomic="true"
             ></p>
 
             <!-- 共通エラーハンドラー用 -->
-            <div id="login-error-container"></div>
+            <div id="login-error-container" aria-live="polite"></div>
 
             <!-- パスワード再設定 -->
             <a class="login-form__forgot" href="./forgot-password.html">
@@ -265,9 +277,13 @@
 
             <!-- ゲスト利用 -->
             <a class="login-form__guest" href="./home.html">
-              <span class="login-form__guest-star" aria-hidden="true">✦</span>
-              <span>ログインせずにゲストとして利用する</span>
-              <span class="login-form__guest-arrow" aria-hidden="true">›</span>
+              <span class="login-form__guest-star" aria-hidden="true"> ✦ </span>
+
+              <span> ログインせずにゲストとして利用する </span>
+
+              <span class="login-form__guest-arrow" aria-hidden="true">
+                ›
+              </span>
             </a>
           </form>
         </section>

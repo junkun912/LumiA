@@ -29,6 +29,7 @@ LumiAらしい温かみと安心感のあるデザイン。
 
 .error-page {
   min-height: 100vh;
+  min-height: 100svh;
   margin: 0;
 
   color: var(--lumia-text);
@@ -74,6 +75,8 @@ LumiAらしい温かみと安心感のあるデザイン。
   justify-content: center;
 
   min-height: 100vh;
+  min-height: 100svh;
+
   padding: 48px 24px;
 }
 
@@ -88,11 +91,14 @@ LumiAらしい温かみと安心感のあるデザイン。
 ================================================== */
 
 .error-logo {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 22px;
+  width: fit-content;
+  margin: 0 auto 22px;
+
+  border-radius: 6px;
 }
 
 .error-logo__image {
@@ -103,6 +109,13 @@ LumiAらしい温かみと安心感のあるデザイン。
   height: auto;
 
   object-fit: contain;
+}
+
+/* ロゴのキーボードフォーカス */
+
+.error-logo:focus-visible {
+  outline: 2px solid var(--lumia-gold);
+  outline-offset: 5px;
 }
 
 /* ==================================================
@@ -207,6 +220,8 @@ LumiAらしい温かみと安心感のあるデザイン。
   font-weight: 700;
   line-height: 1.6;
   letter-spacing: 0.03em;
+
+  overflow-wrap: anywhere;
 }
 
 /* エラーの説明 */
@@ -218,6 +233,8 @@ LumiAらしい温かみと安心感のあるデザイン。
 
   font-size: 15px;
   line-height: 1.9;
+
+  overflow-wrap: anywhere;
 }
 
 /* 次の行動への案内 */
@@ -229,6 +246,8 @@ LumiAらしい温かみと安心感のあるデザイン。
 
   font-size: 13px;
   line-height: 1.8;
+
+  overflow-wrap: anywhere;
 }
 
 /* ==================================================
@@ -260,6 +279,7 @@ LumiAらしい温かみと安心感のあるデザイン。
   width: 100%;
   max-width: 280px;
   min-height: 54px;
+
   padding: 14px 48px 14px 24px;
 
   color: var(--lumia-white);
@@ -281,6 +301,8 @@ LumiAらしい温かみと安心感のあるデザイン。
     transform 0.2s ease;
 }
 
+/* ホバー */
+
 .error-actions__retry:hover:not(:disabled) {
   background: var(--lumia-navy);
   border-color: var(--lumia-navy);
@@ -290,9 +312,13 @@ LumiAらしい温かみと安心感のあるデザイン。
   transform: translateY(-2px);
 }
 
+/* クリック */
+
 .error-actions__retry:active:not(:disabled) {
   transform: translateY(0);
 }
+
+/* キーボードフォーカス */
 
 .error-actions__retry:focus-visible {
   outline: 3px solid var(--lumia-gold);
@@ -304,6 +330,7 @@ LumiAらしい温かみと安心感のあるデザイン。
 .error-actions__retry:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* ボタン内の矢印 */
@@ -342,10 +369,14 @@ LumiAらしい温かみと安心感のあるデザイン。
     background-color 0.2s ease;
 }
 
+/* ホバー */
+
 .error-actions__home:hover {
   color: var(--lumia-navy);
   background: rgba(220, 236, 243, 0.45);
 }
+
+/* キーボードフォーカス */
 
 .error-actions__home:focus-visible {
   outline: 2px solid var(--lumia-gold);
@@ -394,7 +425,6 @@ LumiAらしい温かみと安心感のあるデザイン。
 
 @media (max-width: 480px) {
   .error-main {
-    min-height: 100svh;
     padding: 28px 18px;
   }
 
@@ -467,7 +497,7 @@ LumiAらしい温かみと安心感のあるデザイン。
     transition: none;
   }
 
-  .error-actions__retry:hover {
+  .error-actions__retry:hover:not(:disabled) {
     transform: none;
   }
 }

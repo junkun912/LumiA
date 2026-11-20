@@ -53,6 +53,64 @@ FAQの質問を固定回答するのではなく、
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/faq.css" />
 
+    <!-- モバイル専用ナビゲーション -->
+    <style>
+      .faq-mobile-navigation {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .faq-mobile-navigation {
+          position: fixed;
+          z-index: 1000;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 4px;
+          padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+          border-top: 1px solid rgba(91, 78, 58, 0.14);
+          background: rgba(255, 251, 243, 0.96);
+          box-shadow: 0 -5px 20px rgba(75, 62, 42, 0.07);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+        }
+
+        .faq-mobile-navigation__link {
+          display: flex;
+          min-width: 0;
+          min-height: 42px;
+          align-items: center;
+          justify-content: center;
+          padding: 7px 3px;
+          border-radius: 10px;
+          color: #716b60;
+          font-size: clamp(10px, 2.7vw, 12px);
+          line-height: 1.35;
+          text-align: center;
+          text-decoration: none;
+          transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
+        }
+
+        .faq-mobile-navigation__link--active {
+          background: #f2e5ce;
+          color: #594a35;
+          font-weight: 700;
+        }
+
+        .faq-mobile-navigation__label {
+          overflow-wrap: anywhere;
+        }
+
+        .faq-screen {
+          padding-bottom: 76px;
+        }
+      }
+    </style>
+
     <!-- 共通JavaScript -->
     <script src="../js/common.js" defer></script>
     <script src="../js/error-handler.js" defer></script>
@@ -78,6 +136,7 @@ FAQの質問を固定回答するのではなく、
           <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
         </a>
 
+        <!-- PC版ナビゲーション -->
         <nav class="faq-header__navigation" aria-label="メインナビゲーション">
           <a href="./home.html" class="faq-header__link">ホーム</a>
 
@@ -89,6 +148,31 @@ FAQの質問を固定回答するのではなく、
             aria-current="page"
           >
             よくある質問
+          </a>
+
+          <a href="./history.html" class="faq-header__link"> 質問履歴 </a>
+        </nav>
+
+        <!-- モバイル専用ナビゲーション -->
+        <nav class="faq-mobile-navigation" aria-label="モバイルナビゲーション">
+          <a href="./home.html" class="faq-mobile-navigation__link">
+            <span class="faq-mobile-navigation__label">ホーム</span>
+          </a>
+
+          <a href="./about.html" class="faq-mobile-navigation__link">
+            <span class="faq-mobile-navigation__label">LumiAについて</span>
+          </a>
+
+          <a
+            href="./faq.html"
+            class="faq-mobile-navigation__link faq-mobile-navigation__link--active"
+            aria-current="page"
+          >
+            <span class="faq-mobile-navigation__label">よくある質問</span>
+          </a>
+
+          <a href="./history.html" class="faq-mobile-navigation__link">
+            <span class="faq-mobile-navigation__label">質問履歴</span>
           </a>
         </nav>
       </header>

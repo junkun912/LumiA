@@ -2,6 +2,7 @@
 ==================================================
 LumiA
 ファイル名：faq.js
+バージョン：2.4
 
 【ファイル概要】
 FAQ画面の質問検索・選択に関するJavaScript。
@@ -37,17 +38,18 @@ FAQ画面の質問検索・選択に関するJavaScript。
 
 const STORAGE_KEY = "lumia_current_question";
 const ANSWER_PAGE_URL = "./answer.html";
+const ERROR_PAGE_URL = "./error.html";
 
 // ==================================================
 // 2. DOM要素
 // ==================================================
 
 const elements = {
-  searchInput: document.querySelector("#faq-search-input"),
-  faqItems: document.querySelectorAll(".faq-item"),
-  categories: document.querySelectorAll(".faq-category"),
-  emptyMessage: document.querySelector("#faq-empty"),
-  errorContainer: document.querySelector("#faq-error-container"),
+  searchInput: null,
+  faqItems: [],
+  categories: [],
+  emptyMessage: null,
+  errorContainer: null,
 };
 
 // ==================================================
@@ -55,28 +57,74 @@ const elements = {
 // ==================================================
 
 let isNavigating = false;
+let isFaqPageInitialized = false;
 
 // ==================================================
 // 4. 初期化
 // ==================================================
 
-document.addEventListener("DOMContentLoaded", initializeFaqPage);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeFaqPage, {
+    once: true,
+  });
+} else {
+  initializeFaqPage();
+}
 
 function initializeFaqPage() {
-  // 必要なHTML要素を確認
-  if (
-    !elements.searchInput ||
-    elements.faqItems.length === 0 ||
-    !elements.emptyMessage ||
-    !elements.errorContainer
-  ) {
-    console.error("LumiA: FAQ画面に必要なHTML要素を初期化できません。");
-
-    redirectToError("system");
+  // 二重初期化を防止
+  if (isFaqPageInitialized) {
     return;
   }
 
-  setupEventListeners();
+  try {
+    // ----------------------------------------------
+    // DOM要素の取得
+    // ----------------------------------------------
+
+    elements.searchInput = document.querySelector("#faq-search-input");
+
+    elements.faqItems = Array.from(document.querySelectorAll(".faq-item"));
+
+    elements.categories = Array.from(
+      document.querySelectorAll(".faq-category"),
+    );
+
+    elements.emptyMessage = document.querySelector("#faq-empty");
+
+    elements.errorContainer = document.querySelector("#faq-error-container");
+
+    // ----------------------------------------------
+    // 必要なHTML要素を確認
+    // ----------------------------------------------
+
+    const hasRequiredElements =
+      elements.searchInput &&
+      elements.faqItems.length > 0 &&
+      elements.categories.length > 0 &&
+      elements.emptyMessage &&
+      elements.errorContainer;
+
+    if (!hasRequiredElements) {
+      throw new Error("FAQ_REQUIRED_ELEMENTS_MISSING");
+    }
+
+    // ----------------------------------------------
+    // イベント設定
+    // ----------------------------------------------
+
+    setupEventListeners();
+
+    // 初期化完了
+    isFaqPageInitialized = true;
+  } catch (error) {
+    console.error(
+      "LumiA: FAQ画面の初期化に失敗しました。",
+      error?.message || "InitializationError",
+    );
+
+    redirectToError("system");
+  }
 }
 
 // ==================================================
@@ -90,7 +138,7 @@ function redirectToError(type) {
   }
 
   // 共通エラーハンドラーが利用できない場合
-  window.location.href = "./error.html";
+  window.location.href = ERROR_PAGE_URL;
 }
 
 // ==================================================
@@ -171,6 +219,10 @@ function handleSearch() {
 
   let visibleCount = 0;
 
+  // ----------------------------------------------
+  // 質問一覧の検索
+  // ----------------------------------------------
+
   elements.faqItems.forEach((item) => {
     const question = item.textContent.trim().toLowerCase();
 
@@ -183,10 +235,16 @@ function handleSearch() {
     }
   });
 
-  // 質問が1件もない場合
+  // ----------------------------------------------
+  // 検索結果なしの表示
+  // ----------------------------------------------
+
   elements.emptyMessage.hidden = visibleCount !== 0;
 
+  // ----------------------------------------------
   // 質問がないカテゴリーを非表示
+  // ----------------------------------------------
+
   elements.categories.forEach((category) => {
     const visibleItems = category.querySelectorAll(".faq-item:not([hidden])");
 
@@ -201,12 +259,20 @@ function handleSearch() {
 function handleQuestionSelect(event) {
   event.preventDefault();
 
+  // ----------------------------------------------
   // 二重操作を防止
+  // ----------------------------------------------
+
   if (isNavigating) {
     return;
   }
 
   const button = event.currentTarget;
+
+  if (!(button instanceof HTMLButtonElement)) {
+    return;
+  }
+
   const question = button.dataset.question;
 
   clearFaqError();
@@ -231,10 +297,16 @@ function handleQuestionSelect(event) {
   button.disabled = true;
 
   try {
+    // --------------------------------------------
     // 質問内容を保存
+    // --------------------------------------------
+
     sessionStorage.setItem(STORAGE_KEY, question.trim());
 
+    // --------------------------------------------
     // 保存成功後に回答画面へ移動
+    // --------------------------------------------
+
     window.location.href = ANSWER_PAGE_URL;
   } catch (error) {
     console.error(

@@ -1,22 +1,22 @@
-/* ==================================================
+/*
+==================================================
+LumiA
+ファイル名：faq.css
+バージョン：2.4
 
-   LumiA
+FAQ画面専用スタイル
 
-   ファイル名：faq.css
+【デザインコンセプト】
+Storybook Library × Learning
 
-   FAQ画面専用スタイル
-
-   【デザインコンセプト】
-   Storybook Library × Learning
-
-   【デザイン方針】
-   ・about画面とのブランド統一
-   ・FAQならではの検索しやすさ
-   ・カテゴリーごとの視認性
-   ・落ち着いた図書室のような雰囲気
-   ・レスポンシブ対応
-
-================================================== */
+【デザイン方針】
+・about画面とのブランド統一
+・FAQならではの検索しやすさ
+・カテゴリーごとの視認性
+・落ち着いた図書室のような雰囲気
+・レスポンシブ対応
+==================================================
+*/
 
 /* ==================================================
    1. 基本設定
@@ -58,14 +58,14 @@
   --faq-light-blue: var(--lumia-light-blue);
 
   --faq-mint: var(--lumia-mint);
-  --faq-orange: var(--lumia-orange);
+  --faq-orange: var(--lumia-orange, #e99a43);
   --faq-gold: var(--lumia-gold);
 
   --faq-ivory: var(--lumia-ivory);
   --faq-paper: #fffaf0;
   --faq-white: var(--lumia-white);
 
-  --faq-border: var(--lumia-border);
+  --faq-border: var(--lumia-border, #d9c5a6);
 
   --faq-shadow: 0 5px 20px rgb(81 69 55 / 8%);
 
@@ -319,7 +319,7 @@
   transition:
     border-color var(--faq-transition),
     box-shadow var(--faq-transition),
-    background var(--faq-transition);
+    background-color var(--faq-transition);
 }
 
 .faq-search__field:focus-within {
@@ -535,7 +535,7 @@
   cursor: pointer;
 
   transition:
-    background var(--faq-transition),
+    background-color var(--faq-transition),
     border-color var(--faq-transition),
     transform var(--faq-transition),
     box-shadow var(--faq-transition);
@@ -1006,4 +1006,89 @@
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ==================================================
+   19. モバイル専用ナビゲーション
+================================================== */
+
+.faq-mobile-navigation {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .faq-mobile-navigation {
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+
+    padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+
+    border-top: 1px solid rgb(91 78 58 / 14%);
+    background: rgb(255 251 243 / 96%);
+    box-shadow: 0 -5px 20px rgb(75 62 42 / 7%);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .faq-mobile-navigation__link {
+    display: flex;
+    min-width: 0;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 3px;
+
+    border-radius: 10px;
+
+    color: #716b60;
+    font-size: clamp(10px, 2.7vw, 12px);
+    line-height: 1.35;
+    text-align: center;
+    text-decoration: none;
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .faq-mobile-navigation__link--active {
+    background: #f2e5ce;
+    color: #594a35;
+    font-weight: 700;
+  }
+
+  .faq-mobile-navigation__label {
+    overflow-wrap: anywhere;
+  }
+
+  .faq-screen {
+    padding-bottom: 76px;
+  }
+
+  /* スマートフォンではPC版ナビゲーションを非表示 */
+
+  .faq-header__navigation {
+    display: none;
+  }
+}
+
+/* ==================================================
+   20. キーボード操作時のフォーカス表示
+================================================== */
+
+.faq-page a:focus-visible,
+.faq-page button:focus-visible,
+.faq-page input:focus-visible {
+  outline: 3px solid rgb(44 99 136 / 28%);
+  outline-offset: 3px;
+  border-radius: 5px;
 }

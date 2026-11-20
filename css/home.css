@@ -1,9 +1,6 @@
 /* ==================================================
-
    LumiA Home
-
    ファイル名：home.css
-
    本の紙面になじむホーム画面
 
    【主な役割】
@@ -15,7 +12,6 @@
 
    デザインコンセプト：
    Antique Storybook × Learning
-
 ================================================== */
 
 /* ==================================================
@@ -279,7 +275,6 @@
 
   overflow-wrap: anywhere;
 }
-
 /* ==================================================
    12. 質問入力欄
 ================================================== */
@@ -299,7 +294,6 @@
   border-radius: 2px;
 
   background: rgb(255 248 232 / 18%);
-
   color: var(--lumia-text);
 
   font-family: inherit;
@@ -308,7 +302,6 @@
   letter-spacing: 0.035em;
 
   box-shadow: none;
-
   resize: none;
 }
 
@@ -321,11 +314,8 @@
 
 .home-question__input:focus {
   outline: none;
-
   border-color: rgb(23 72 117 / 60%);
-
   background: rgb(255 248 232 / 30%);
-
   box-shadow: 0 0 0 2px rgb(23 72 117 / 8%);
 }
 
@@ -365,7 +355,6 @@
   border-radius: 5px;
 
   background: rgb(255 250 239 / 48%);
-
   color: var(--lumia-text);
 
   font-size: 14px;
@@ -395,9 +384,7 @@
 
 .home-question__faq-arrow {
   margin-left: 2px;
-
   color: var(--lumia-text);
-
   font-size: 18px;
   line-height: 1;
 
@@ -408,11 +395,8 @@
 
 .home-question__faq-link:hover {
   border-color: var(--lumia-gold);
-
   background: rgb(255 255 255 / 78%);
-
   color: var(--lumia-navy);
-
   transform: translateY(-2px);
 }
 
@@ -478,11 +462,8 @@
 
 .home-question__submit:hover {
   border-color: #103b63;
-
   background: #103b63;
-
   box-shadow: 0 6px 14px rgb(23 72 117 / 20%);
-
   transform: translateY(-2px);
 }
 
@@ -542,7 +523,6 @@
     left: 50%;
     right: auto;
     bottom: 35px;
-
     width: min(35%, 150px);
   }
 
@@ -581,7 +561,6 @@
     font-size: 15px;
   }
 }
-
 /* ==================================================
    18. スマートフォン
 ================================================== */
@@ -784,5 +763,133 @@
     animation-iteration-count: 1 !important;
 
     transition-duration: 0.01ms !important;
+  }
+}
+/* ==================================================
+   LumiA 共通ナビゲーション
+   ホーム画面・回答画面
+================================================== */
+
+.lumia-nav {
+  position: absolute;
+  top: 30px;
+  right: clamp(24px, 5vw, 76px);
+  z-index: 30;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: clamp(10px, 1.5vw, 22px);
+
+  max-width: calc(100% - 48px);
+  padding: 10px 18px;
+
+  background: rgba(255, 250, 239, 0.78);
+  border: 1px solid rgba(184, 135, 67, 0.35);
+  border-radius: 4px;
+  box-shadow: 0 3px 12px rgba(81, 69, 55, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lumia-nav__link {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 30px;
+  padding: 4px 2px;
+
+  color: var(--lumia-text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.035em;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition:
+    color var(--lumia-transition-normal),
+    opacity var(--lumia-transition-normal);
+}
+
+.lumia-nav__link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  height: 1px;
+  background: var(--lumia-gold);
+
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--lumia-transition-normal);
+}
+
+.lumia-nav__link:hover {
+  color: var(--lumia-navy);
+}
+
+.lumia-nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+.lumia-nav__link:focus-visible {
+  outline: 2px solid var(--lumia-navy);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.lumia-nav__link--future {
+  opacity: 0.72;
+}
+
+/* スマートフォン：横スクロール可能なナビゲーション */
+
+@media (max-width: 700px) {
+  .lumia-nav {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    left: 12px;
+
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 18px;
+
+    width: auto;
+    max-width: none;
+    padding: 8px 12px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lumia-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lumia-nav__link {
+    flex: 0 0 auto;
+    font-size: 12px;
+  }
+}
+
+/* ==================================================
+   ナビゲーション表示時のスマートフォン調整
+================================================== */
+
+@media (max-width: 700px) {
+  .home-intro {
+    padding-top: 88px;
   }
 }

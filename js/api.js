@@ -1,6 +1,7 @@
 /*
 ==================================================
 LumiA
+
 ファイル名：api.js
 
 【ファイル概要】
@@ -13,6 +14,7 @@ LumiA WebアプリとAWS API Gatewayを接続する。
 ・ゲスト通信への対応
 ・API通信エラーの共通処理
 ・エラー種別の分類
+・通信タイムアウトの制御
 
 【関連ファイル】
 ・js/config.js
@@ -24,7 +26,6 @@ LumiA WebアプリとAWS API Gatewayを接続する。
 ・APIエンドポイントはconfig.jsで管理する。
 ・認証トークンをログに出力しない。
 ・最終的な認証・認可はサーバー側で行う。
-
 ==================================================
 */
 
@@ -44,8 +45,10 @@ import { getAccessToken, LumiaAuthError } from "./auth.js";
  * CONFIG              API設定エラー
  * AUTH_REQUIRED       認証が必要
  * AUTH_SESSION_FAILED 認証セッション取得失敗
+ * AUTH_OPERATION_FAILED 認証操作失敗
  * FORBIDDEN           アクセス拒否
  * NETWORK             通信エラー
+ * TIMEOUT             通信タイムアウト
  * DATA                データ形式エラー
  * SERVER              サーバーエラー
  * API_ERROR           その他のAPIエラー
@@ -81,7 +84,7 @@ export class ApiError extends Error {
 function getApiBaseUrl() {
   const baseUrl = LUMIA_CONFIG?.api?.baseUrl;
 
-  if (!baseUrl) {
+  if (typeof baseUrl !== "string" || !baseUrl.trim()) {
     throw new ApiError(
       "API Gatewayの接続先が設定されていません。",
       0,
@@ -95,6 +98,7 @@ function getApiBaseUrl() {
 
     // HTTPSまたはローカル環境のみ許可
     const isHttps = url.protocol === "https:";
+
     const isLocalhost =
       url.protocol === "http:" &&
       ["localhost", "127.0.0.1"].includes(url.hostname);
@@ -103,17 +107,19 @@ function getApiBaseUrl() {
       throw new Error("HTTPS接続が必要です。");
     }
 
+    // ユーザー情報を含むURLは許可しない
+    if (url.username || url.password) {
+      throw new Error("不正なURLです。");
+    }
+
     // クエリやフラグメントを含むベースURLは許可しない
     if (url.search || url.hash) {
       throw new Error("不正なURLです。");
     }
 
+    // URL末尾のスラッシュを統一
     return url.href.endsWith("/") ? url.href : `${url.href}/`;
   } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
     throw new ApiError(
       "API GatewayのURL設定が正しくありません。",
       0,
@@ -142,39 +148,83 @@ function createEndpoint(path, baseUrl) {
     /^[a-z][a-z\d+.-]*:/i.test(path.trim()) ||
     path.includes("?") ||
     path.includes("#") ||
-    path.includes("\\")
+    path.includes("\\") ||
+    path.startsWith("//")
   ) {
     throw new ApiError("APIのパス指定が正しくありません。", 0, null, "CONFIG");
   }
 
-  // 先頭のスラッシュを除去
+  // 前後の空白と先頭のスラッシュを除去
   const normalizedPath = path.trim().replace(/^\/+/, "");
 
   if (!normalizedPath) {
     throw new ApiError("APIのパス指定が正しくありません。", 0, null, "CONFIG");
   }
 
-  const endpoint = new URL(normalizedPath, baseUrl);
-  const baseUrlObject = new URL(baseUrl);
+  // パスの不正なセグメントを検証
+  const pathSegments = normalizedPath.split("/");
 
-  // 接続先のオリジンを検証
-  if (endpoint.origin !== baseUrlObject.origin) {
-    throw new ApiError("許可されていないAPI接続先です。", 0, null, "CONFIG");
+  const hasInvalidSegment = pathSegments.some((segment) => {
+    if (!segment) {
+      return true;
+    }
+
+    let decodedSegment;
+
+    try {
+      decodedSegment = decodeURIComponent(segment);
+    } catch {
+      return true;
+    }
+
+    return (
+      decodedSegment === "." ||
+      decodedSegment === ".." ||
+      decodedSegment.includes("/") ||
+      decodedSegment.includes("\\") ||
+      /[\u0000-\u001f\u007f]/.test(decodedSegment)
+    );
+  });
+
+  if (hasInvalidSegment) {
+    throw new ApiError("APIのパス指定が正しくありません。", 0, null, "CONFIG");
   }
 
-  // API Gatewayのステージパスから外れていないか検証
-  const basePath = baseUrlObject.pathname.replace(/\/+$/, "");
-  const endpointPath = endpoint.pathname;
+  try {
+    const endpoint = new URL(normalizedPath, baseUrl);
+    const baseUrlObject = new URL(baseUrl);
 
-  if (
-    basePath &&
-    endpointPath !== basePath &&
-    !endpointPath.startsWith(`${basePath}/`)
-  ) {
-    throw new ApiError("許可されていないAPIパスです。", 0, null, "CONFIG");
+    // 接続先のオリジンを検証
+    if (endpoint.origin !== baseUrlObject.origin) {
+      throw new Error("許可されていない接続先です。");
+    }
+
+    // API Gatewayのステージパスから外れていないか検証
+    const basePath = baseUrlObject.pathname.replace(/\/+$/, "");
+    const endpointPath = endpoint.pathname;
+
+    if (
+      basePath &&
+      endpointPath !== basePath &&
+      !endpointPath.startsWith(`${basePath}/`)
+    ) {
+      throw new Error("許可されていないAPIパスです。");
+    }
+
+    return endpoint;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+
+    throw new ApiError(
+      "APIの接続先を正しく生成できませんでした。",
+      0,
+      null,
+      "CONFIG",
+      error,
+    );
   }
-
-  return endpoint;
 }
 
 // ==================================================
@@ -191,6 +241,10 @@ function getHttpErrorCode(status) {
 
   if (status === 403) {
     return "FORBIDDEN";
+  }
+
+  if (status === 408) {
+    return "TIMEOUT";
   }
 
   if (status >= 500) {
@@ -220,6 +274,9 @@ function getHttpErrorMessage(status) {
 
     case 404:
       return "要求されたデータが見つかりませんでした。";
+
+    case 408:
+      return "通信がタイムアウトしました。もう一度お試しください。";
 
     case 409:
       return "データの状態が変更されています。";
@@ -255,15 +312,6 @@ function convertAuthError(error) {
           error,
         );
 
-      case "AUTH_SESSION_FAILED":
-        return new ApiError(
-          "認証情報を取得できませんでした。",
-          0,
-          null,
-          "AUTH_SESSION_FAILED",
-          error,
-        );
-
       case "AUTH_CONFIG_ERROR":
         return new ApiError(
           "認証システムの設定に問題があります。",
@@ -273,9 +321,19 @@ function convertAuthError(error) {
           error,
         );
 
-      default:
+      case "AUTH_OPERATION_FAILED":
         return new ApiError(
           "認証処理に失敗しました。",
+          0,
+          null,
+          "AUTH_OPERATION_FAILED",
+          error,
+        );
+
+      case "AUTH_SESSION_FAILED":
+      default:
+        return new ApiError(
+          "認証情報を取得できませんでした。",
           0,
           null,
           "AUTH_SESSION_FAILED",
@@ -294,7 +352,50 @@ function convertAuthError(error) {
 }
 
 // ==================================================
-// 6. 共通APIリクエスト
+// 6. レスポンスデータの取得
+// ==================================================
+
+/**
+ * APIレスポンスを読み取る。
+ *
+ * JSON形式の場合はJSONとして解析する。
+ * その他の形式は文字列として返す。
+ */
+async function readResponseData(response) {
+  if (response.status === 204) {
+    return null;
+  }
+
+  const responseText = await response.text();
+
+  if (!responseText) {
+    return null;
+  }
+
+  const contentType = response.headers.get("content-type") || "";
+
+  const isJson =
+    contentType.includes("application/json") || contentType.includes("+json");
+
+  if (!isJson) {
+    return responseText;
+  }
+
+  try {
+    return JSON.parse(responseText);
+  } catch (error) {
+    throw new ApiError(
+      "サーバーからの応答を正しく読み取れませんでした。",
+      response.status,
+      null,
+      "DATA",
+      error,
+    );
+  }
+}
+
+// ==================================================
+// 7. 共通APIリクエスト
 // ==================================================
 
 /**
@@ -309,11 +410,17 @@ function convertAuthError(error) {
  * body         送信データ
  * headers      追加ヘッダー
  * authRequired 認証が必要かどうか
+ * timeoutMs    タイムアウト時間（ミリ秒）
  */
-
 export async function apiRequest(
   path,
-  { method = "GET", body, headers = {}, authRequired = true } = {},
+  {
+    method = "GET",
+    body,
+    headers = {},
+    authRequired = true,
+    timeoutMs = 15000,
+  } = {},
 ) {
   // --------------------------------------------------
   // API接続先の取得
@@ -339,6 +446,28 @@ export async function apiRequest(
     throw new ApiError("対応していないHTTPメソッドです。", 0, null, "CONFIG");
   }
 
+  if (requestMethod === "GET" && body !== undefined) {
+    throw new ApiError(
+      "GETリクエストに送信データは指定できません。",
+      0,
+      null,
+      "CONFIG",
+    );
+  }
+
+  // --------------------------------------------------
+  // タイムアウト時間の検証
+  // --------------------------------------------------
+
+  if (!Number.isInteger(timeoutMs) || timeoutMs < 1000 || timeoutMs > 60000) {
+    throw new ApiError(
+      "タイムアウト時間の指定が正しくありません。",
+      0,
+      null,
+      "CONFIG",
+    );
+  }
+
   // --------------------------------------------------
   // リクエストヘッダーの検証
   // --------------------------------------------------
@@ -352,10 +481,23 @@ export async function apiRequest(
     );
   }
 
-  const requestHeaders = {
-    Accept: "application/json",
-    ...headers,
-  };
+  let requestHeaders;
+
+  try {
+    requestHeaders = new Headers(headers);
+  } catch (error) {
+    throw new ApiError(
+      "リクエストヘッダーの形式が正しくありません。",
+      0,
+      null,
+      "CONFIG",
+      error,
+    );
+  }
+
+  if (!requestHeaders.has("Accept")) {
+    requestHeaders.set("Accept", "application/json");
+  }
 
   // --------------------------------------------------
   // 認証トークンの付与
@@ -370,11 +512,11 @@ export async function apiRequest(
       throw convertAuthError(error);
     }
 
-    if (!accessToken) {
+    if (typeof accessToken !== "string" || !accessToken.trim()) {
       throw new ApiError("ログインが必要です。", 401, null, "AUTH_REQUIRED");
     }
 
-    requestHeaders.Authorization = `Bearer ${accessToken}`;
+    requestHeaders.set("Authorization", `Bearer ${accessToken}`);
   }
 
   // --------------------------------------------------
@@ -384,13 +526,18 @@ export async function apiRequest(
   let requestBody;
 
   if (body !== undefined) {
-    if (body instanceof FormData) {
+    if (typeof FormData !== "undefined" && body instanceof FormData) {
       requestBody = body;
-    } else {
-      requestHeaders["Content-Type"] = "application/json";
 
+      // FormDataの場合はブラウザにContent-Typeを設定させる
+      requestHeaders.delete("Content-Type");
+    } else {
       try {
         requestBody = JSON.stringify(body);
+
+        if (requestBody === undefined) {
+          throw new Error("JSONに変換できませんでした。");
+        }
       } catch (error) {
         throw new ApiError(
           "送信データをJSONに変換できませんでした。",
@@ -400,12 +547,22 @@ export async function apiRequest(
           error,
         );
       }
+
+      if (!requestHeaders.has("Content-Type")) {
+        requestHeaders.set("Content-Type", "application/json");
+      }
     }
   }
 
   // --------------------------------------------------
   // API通信
   // --------------------------------------------------
+
+  const controller = new AbortController();
+
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
 
   let response;
 
@@ -415,13 +572,19 @@ export async function apiRequest(
       headers: requestHeaders,
       body: requestBody,
       credentials: "omit",
+      signal: controller.signal,
     });
   } catch (error) {
     // トークンやリクエストデータはログに出さない
-    console.error(
-      "LumiA: API通信に失敗しました。",
-      error?.name || "NetworkError",
-    );
+    if (controller.signal.aborted) {
+      throw new ApiError(
+        "サーバーとの通信がタイムアウトしました。",
+        0,
+        null,
+        "TIMEOUT",
+        error,
+      );
+    }
 
     throw new ApiError(
       "サーバーとの通信に失敗しました。",
@@ -430,32 +593,30 @@ export async function apiRequest(
       "NETWORK",
       error,
     );
+  } finally {
+    clearTimeout(timeoutId);
   }
 
   // --------------------------------------------------
   // レスポンスの取得
   // --------------------------------------------------
 
-  const contentType = response.headers.get("content-type") || "";
+  let responseData;
 
-  let responseData = null;
-
-  if (response.status !== 204) {
-    try {
-      if (contentType.includes("application/json")) {
-        responseData = await response.json();
-      } else {
-        responseData = await response.text();
-      }
-    } catch (error) {
-      throw new ApiError(
-        "サーバーからの応答を正しく読み取れませんでした。",
-        response.status,
-        null,
-        "DATA",
-        error,
-      );
+  try {
+    responseData = await readResponseData(response);
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
     }
+
+    throw new ApiError(
+      "サーバーからの応答を正しく読み取れませんでした。",
+      response.status,
+      null,
+      "DATA",
+      error,
+    );
   }
 
   // --------------------------------------------------
@@ -477,7 +638,7 @@ export async function apiRequest(
 }
 
 // ==================================================
-// 7. GETリクエスト
+// 8. GETリクエスト
 // ==================================================
 
 /**
@@ -491,7 +652,7 @@ export async function apiGet(path, options = {}) {
 }
 
 // ==================================================
-// 8. POSTリクエスト
+// 9. POSTリクエスト
 // ==================================================
 
 /**
@@ -506,7 +667,7 @@ export async function apiPost(path, body, options = {}) {
 }
 
 // ==================================================
-// 9. ゲスト向け質問送信
+// 10. ゲスト向け質問送信
 // ==================================================
 
 /**

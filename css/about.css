@@ -1,7 +1,7 @@
 /* ==================================================
-
    LumiA
    ファイル名：about.css
+   バージョン：2.4
 
    【ファイル概要】
    LumiA紹介ページのデザインを管理するCSS。
@@ -15,7 +15,6 @@
    ・各セクションのデザイン
    ・RAGの仕組みの図解
    ・レスポンシブ対応
-
 ================================================== */
 
 /* ==================================================
@@ -107,8 +106,6 @@ html {
 /* ==================================================
    4. ヘッダー
 ================================================== */
-
-/* ヘッダー */
 
 .about-header {
   position: sticky;
@@ -219,7 +216,7 @@ html {
   text-decoration: none;
 
   transition:
-    background var(--about-transition),
+    background-color var(--about-transition),
     transform var(--about-transition);
 }
 
@@ -1831,4 +1828,15 @@ html {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ==================================================
+   23. キーボード操作時のフォーカス表示
+================================================== */
+
+.about-page a:focus-visible,
+.about-page button:focus-visible {
+  outline: 3px solid rgb(44 99 136 / 30%);
+  outline-offset: 4px;
+  border-radius: 5px;
 }

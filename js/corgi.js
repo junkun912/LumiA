@@ -2,6 +2,7 @@
 ==================================================
 LumiA
 ファイル名：corgi.js
+バージョン：2.3
 
 【ファイル概要】
 LumiA全体で使用するコーギくんの共通表示管理。
@@ -20,10 +21,10 @@ LumiA全体で使用するコーギくんの共通表示管理。
 "use strict";
 
 // ==================================================
-// キャラクター画像の定義
+// 1. キャラクター画像の定義
 // ==================================================
 
-const CORGI_IMAGES = {
+const CORGI_IMAGES = Object.freeze({
   basic: "corgi_basic.png",
   welcome: "corgi_welcome.png",
   idea: "corgi_idea.png",
@@ -36,10 +37,10 @@ const CORGI_IMAGES = {
   apology: "corgi_apology.png",
   thanks: "corgi_thanks.png",
   rest: "corgi_rest.png",
-};
+});
 
 // ==================================================
-// キャラクター画像の保存先
+// 2. キャラクター画像の保存先
 // ==================================================
 
 const CORGI_IMAGE_PATH = new URL(
@@ -47,14 +48,11 @@ const CORGI_IMAGE_PATH = new URL(
   import.meta.url,
 );
 
-// 画像の参照先を確認
-console.log("LumiA: コーギくん画像の参照先：", CORGI_IMAGE_PATH.href);
-
 // ==================================================
-// キャラクターの代替テキスト
+// 3. キャラクターの代替テキスト
 // ==================================================
 
-const CORGI_ALT_TEXTS = {
+const CORGI_ALT_TEXTS = Object.freeze({
   basic: "通常のコーギくん",
   welcome: "歓迎するコーギくん",
   idea: "ひらめいたコーギくん",
@@ -67,10 +65,10 @@ const CORGI_ALT_TEXTS = {
   apology: "お詫びするコーギくん",
   thanks: "感謝するコーギくん",
   rest: "休憩するコーギくん",
-};
+});
 
 // ==================================================
-// コーギくん共通管理クラス
+// 4. コーギくん共通管理クラス
 // ==================================================
 
 class CorgiManager {
@@ -88,9 +86,11 @@ class CorgiManager {
   // 初期化
   // ----------------------------------------------
 
-  initialize(element) {
-    if (!element) {
-      console.error("LumiA: コーギくんの表示要素が指定されていません。");
+  initialize(element, initialState = "basic") {
+    if (!element || !(element instanceof HTMLImageElement)) {
+      console.error(
+        "LumiA: コーギくんの画像表示要素が正しく指定されていません。",
+      );
 
       return false;
     }
@@ -101,10 +101,18 @@ class CorgiManager {
       return false;
     }
 
+    // 初期状態の検証
+    if (!CORGI_IMAGES[initialState]) {
+      console.error(`LumiA: 未定義の初期状態です。${initialState}`);
+
+      return false;
+    }
+
     this.element = element;
     this.isInitialized = true;
 
-    return true;
+    // 初期画像を設定
+    return this.setState(initialState);
   }
 
   // ----------------------------------------------
@@ -141,14 +149,15 @@ class CorgiManager {
       this.transitionTimer = null;
     }
 
-    const imageUrl = new URL(
-      `../assets/images/characters/${imageName}`,
-      import.meta.url,
-    );
-    console.log("LumiA: 切り替え画像URL：", imageUrl.href);
+    // 画像URLを生成
+    const imageUrl = new URL(imageName, CORGI_IMAGE_PATH);
 
     // 画像を先読み
     const preloadImage = new Image();
+
+    // --------------------------------------------
+    // 画像読み込み成功
+    // --------------------------------------------
 
     preloadImage.onload = () => {
       // 古いリクエストなら処理しない
@@ -179,6 +188,10 @@ class CorgiManager {
       }, 180);
     };
 
+    // --------------------------------------------
+    // 画像読み込み失敗
+    // --------------------------------------------
+
     preloadImage.onerror = () => {
       // 古いリクエストのエラーは無視
       if (currentRequestId !== this.requestId) {
@@ -195,6 +208,7 @@ class CorgiManager {
       this.transitionTimer = null;
     };
 
+    // 画像読み込み開始
     preloadImage.src = imageUrl.href;
 
     return true;
@@ -210,13 +224,13 @@ class CorgiManager {
 }
 
 // ==================================================
-// 共通インスタンス
+// 5. 共通インスタンス
 // ==================================================
 
 const corgiManager = new CorgiManager();
 
 // ==================================================
-// 外部公開API
+// 6. 外部公開API
 // ==================================================
 
 /**
@@ -227,13 +241,7 @@ const corgiManager = new CorgiManager();
  * @returns {boolean} 初期化結果
  */
 export function initializeCorgi(element, initialState = "basic") {
-  const initialized = corgiManager.initialize(element);
-
-  if (!initialized) {
-    return false;
-  }
-
-  return corgiManager.setState(initialState);
+  return corgiManager.initialize(element, initialState);
 }
 
 /**

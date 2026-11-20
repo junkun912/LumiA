@@ -14,6 +14,7 @@ LumiAの基本的な使い方を説明するHTMLファイル。
 
 【関連ファイル】
 ・css/common.css
+・css/howto.css
 ・js/common.js
 
 【基本操作】
@@ -24,3 +25,509 @@ LumiAの基本的な使い方を説明するHTMLファイル。
 ⑤ 必要に応じて追加質問する
 ==================================================
 -->
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="LumiAの基本的な使い方をご紹介します。質問の仕方や回答の見方、質問履歴の確認方法を解説します。"
+    />
+    <meta name="theme-color" content="#f5e6c9" />
+
+    <title>使い方 | LumiA</title>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../assets/images/icons/favicon_master.png"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/howto.css" />
+
+    <!-- JavaScript -->
+    <script src="../js/common.js" defer></script>
+    <script src="../js/error-handler.js" defer></script>
+  </head>
+
+  <body class="howto-page">
+    <main class="howto-screen">
+      <!-- 背景 -->
+      <div class="howto-screen__background" aria-hidden="true"></div>
+
+      <!-- =========================================
+           ヘッダー
+      ========================================== -->
+      <header class="howto-header">
+        <!-- LumiAロゴ -->
+        <a
+          class="howto-header__logo"
+          href="./home.html"
+          aria-label="LumiA ホームへ戻る"
+        >
+          <img src="../assets/images/icons/logo_main.png" alt="LumiA" />
+        </a>
+
+        <!-- PC版ナビゲーション -->
+        <nav class="howto-header__navigation" aria-label="メインナビゲーション">
+          <a href="./home.html" class="howto-header__link">ホーム</a>
+
+          <a href="./about.html" class="howto-header__link"> LumiAについて </a>
+
+          <a href="./faq.html" class="howto-header__link"> よくある質問 </a>
+
+          <a href="./history.html" class="howto-header__link"> 質問履歴 </a>
+
+          <a
+            href="./howto.html"
+            class="howto-header__link howto-header__link--active"
+            aria-current="page"
+          >
+            使い方
+          </a>
+        </nav>
+      </header>
+
+      <!-- =========================================
+           モバイルナビゲーション
+      ========================================== -->
+      <nav class="howto-mobile-navigation" aria-label="モバイルナビゲーション">
+        <a href="./home.html" class="howto-mobile-navigation__link">
+          <span>ホーム</span>
+        </a>
+
+        <a href="./about.html" class="howto-mobile-navigation__link">
+          <span>LumiAについて</span>
+        </a>
+
+        <a href="./faq.html" class="howto-mobile-navigation__link">
+          <span>よくある質問</span>
+        </a>
+
+        <a href="./history.html" class="howto-mobile-navigation__link">
+          <span>質問履歴</span>
+        </a>
+
+        <a
+          href="./howto.html"
+          class="howto-mobile-navigation__link howto-mobile-navigation__link--active"
+          aria-current="page"
+        >
+          <span>使い方</span>
+        </a>
+      </nav>
+
+      <!-- =========================================
+           メインコンテンツ
+      ========================================== -->
+      <div class="howto-main">
+        <!-- =======================================
+             01. ファーストビュー
+        ======================================== -->
+        <section class="howto-hero" aria-labelledby="howto-title">
+          <div class="howto-hero__content">
+            <p class="howto-hero__eyebrow">HOW TO USE LumiA</p>
+
+            <h1 class="howto-hero__title" id="howto-title">LumiAの使い方</h1>
+
+            <p class="howto-hero__catchcopy">
+              はじめてでも、<br />
+              かんたんに。
+            </p>
+
+            <p class="howto-hero__description">
+              質問するところから、答えを見つけるまで。<br />
+              LumiAの基本的な使い方をご紹介します。
+            </p>
+
+            <a href="#howto-start" class="howto-hero__scroll">
+              <span>START GUIDE</span>
+              <span class="howto-hero__scroll-line" aria-hidden="true"></span>
+            </a>
+          </div>
+
+          <!-- コーギくん -->
+          <div class="howto-hero__mascot">
+            <div class="howto-hero__mascot-decoration" aria-hidden="true">
+              <span class="howto-hero__sparkle howto-hero__sparkle--one">
+                ✦
+              </span>
+              <span class="howto-hero__sparkle howto-hero__sparkle--two">
+                ✧
+              </span>
+              <span class="howto-hero__sparkle howto-hero__sparkle--three">
+                ✦
+              </span>
+            </div>
+
+            <img
+              src="../assets/images/characters/corgi_thinking.png"
+              alt="考えるコーギくん"
+              loading="eager"
+            />
+
+            <p class="howto-hero__mascot-caption">いっしょに使ってみよう！</p>
+          </div>
+
+          <div class="howto-hero__bottom-decoration" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </section>
+
+        <!-- =======================================
+             02. はじめに
+        ======================================== -->
+        <section
+          class="howto-section howto-start"
+          id="howto-start"
+          aria-labelledby="howto-start-title"
+        >
+          <div class="howto-section__heading">
+            <span class="howto-section__number">01</span>
+            <p class="howto-section__eyebrow">GETTING STARTED</p>
+
+            <h2 id="howto-start-title">LumiAを使ってみよう</h2>
+
+            <p class="howto-section__lead">むずかしい操作は必要ありません。</p>
+          </div>
+
+          <div class="howto-start__body">
+            <div class="howto-start__text">
+              <p>
+                LumiAは、学校に関する疑問を自然な言葉で質問できる
+                AI学校アシスタントです。
+              </p>
+
+              <p>
+                授業や資格、学校生活など、知りたいことを入力するだけで、
+                学校資料をもとに回答を探します。
+              </p>
+
+              <p>まずは気になることを、ひとつ質問してみましょう。</p>
+            </div>
+
+            <a href="./home.html" class="howto-start__button">
+              <span>質問をはじめる</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- =======================================
+             03. 基本的な使い方
+        ======================================== -->
+        <section
+          class="howto-section howto-steps"
+          aria-labelledby="howto-steps-title"
+        >
+          <div class="howto-section__heading">
+            <span class="howto-section__number">02</span>
+            <p class="howto-section__eyebrow">BASIC GUIDE</p>
+
+            <h2 id="howto-steps-title">基本の3ステップ</h2>
+
+            <p class="howto-section__lead">
+              質問から回答の確認まで、3つの手順で進められます。
+            </p>
+          </div>
+
+          <div class="howto-steps__list">
+            <!-- STEP 01 -->
+            <article class="howto-step">
+              <div class="howto-step__number">
+                <span>STEP</span>
+                <strong>01</strong>
+              </div>
+
+              <div class="howto-step__content">
+                <p class="howto-step__eyebrow">ASK A QUESTION</p>
+                <h3>知りたいことを入力する</h3>
+
+                <p>
+                  ホーム画面の質問入力欄に、知りたいことを入力します。
+                  普段使っている言葉で、そのまま質問して大丈夫です。
+                </p>
+
+                <div class="howto-example">
+                  <span class="howto-example__label">質問の例</span>
+                  <p>ITパスポートの試験について教えてください。</p>
+                </div>
+              </div>
+
+              <div
+                class="howto-step__illustration howto-step__illustration--blue"
+              >
+                <span class="howto-step__icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none">
+                    <path
+                      d="M7 10.5C7 8.57 8.57 7 10.5 7H37.5C39.43 7 41 8.57 41 10.5V29.5C41 31.43 39.43 33 37.5 33H20L10 41V33H10.5C8.57 33 7 31.43 7 29.5V10.5Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M15 17H33M15 24H28"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </article>
+
+            <!-- STEP 02 -->
+            <article class="howto-step">
+              <div class="howto-step__number">
+                <span>STEP</span>
+                <strong>02</strong>
+              </div>
+
+              <div class="howto-step__content">
+                <p class="howto-step__eyebrow">GET AN ANSWER</p>
+                <h3>LumiAの回答を確認する</h3>
+
+                <p>
+                  質問を送信すると、LumiAが学校資料をもとに
+                  関連する情報を探し、回答を生成します。
+                </p>
+
+                <p>
+                  表示された回答を読み、知りたい情報を確認しましょう。
+                  参考資料が表示された場合は、あわせて確認できます。
+                </p>
+              </div>
+
+              <div
+                class="howto-step__illustration howto-step__illustration--mint"
+              >
+                <span class="howto-step__icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none">
+                    <path
+                      d="M7 10C13 7 19 8 24 12V40C19 36 13 35 7 38V10Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M41 10C35 7 29 8 24 12V40C29 36 35 35 41 38V10Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M14 18H19M14 24H19M29 18H34M29 24H34"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </article>
+
+            <!-- STEP 03 -->
+            <article class="howto-step">
+              <div class="howto-step__number">
+                <span>STEP</span>
+                <strong>03</strong>
+              </div>
+
+              <div class="howto-step__content">
+                <p class="howto-step__eyebrow">CHECK HISTORY</p>
+                <h3>質問履歴を確認する</h3>
+
+                <p>
+                  これまでに質問した内容は、質問履歴から確認できます。
+                  以前の質問を振り返りたいときに活用しましょう。
+                </p>
+
+                <a href="./history.html" class="howto-inline-link">
+                  質問履歴を見る
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+
+              <div
+                class="howto-step__illustration howto-step__illustration--gold"
+              >
+                <span class="howto-step__icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none">
+                    <path
+                      d="M13 7H29L37 15V39C37 40.66 35.66 42 34 42H13C11.34 42 10 40.66 10 39V10C10 8.34 11.34 7 13 7Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M28 7V16H37M17 23H30M17 29H30M17 35H26"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- =======================================
+             04. 質問のコツ
+        ======================================== -->
+        <section
+          class="howto-section howto-tips"
+          aria-labelledby="howto-tips-title"
+        >
+          <div class="howto-section__heading">
+            <span class="howto-section__number">03</span>
+            <p class="howto-section__eyebrow">QUESTION TIPS</p>
+
+            <h2 id="howto-tips-title">質問するときのコツ</h2>
+
+            <p class="howto-section__lead">
+              少し具体的に伝えると、知りたいことが伝わりやすくなります。
+            </p>
+          </div>
+
+          <div class="howto-tips__grid">
+            <article class="howto-tip">
+              <span class="howto-tip__number">01</span>
+              <h3>知りたい内容を具体的に</h3>
+              <p>
+                「資格について」だけでなく、
+                「取得できる資格について教えて」など、
+                知りたい内容を伝えてみましょう。
+              </p>
+            </article>
+
+            <article class="howto-tip">
+              <span class="howto-tip__number">02</span>
+              <h3>ひとつずつ質問する</h3>
+              <p>
+                複数の内容を一度に聞くよりも、
+                知りたいことを分けて質問すると整理しやすくなります。
+              </p>
+            </article>
+
+            <article class="howto-tip">
+              <span class="howto-tip__number">03</span>
+              <h3>追加で質問してみる</h3>
+              <p>
+                回答を読んで分からないことがあれば、
+                さらに詳しく質問してみましょう。
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <!-- =======================================
+             05. 利用時のポイント
+        ======================================== -->
+        <section
+          class="howto-section howto-notes"
+          aria-labelledby="howto-notes-title"
+        >
+          <div class="howto-section__heading">
+            <span class="howto-section__number">04</span>
+            <p class="howto-section__eyebrow">IMPORTANT NOTES</p>
+
+            <h2 id="howto-notes-title">利用するときのポイント</h2>
+          </div>
+
+          <div class="howto-notes__card">
+            <div class="howto-notes__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none">
+                <path
+                  d="M24 5L41 12V23C41 33 33.5 40 24 44C14.5 40 7 33 7 23V12L24 5Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M24 16V26M24 32V32.1"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+
+            <div class="howto-notes__content">
+              <h3>回答内容を確認しよう</h3>
+
+              <ul>
+                <li>LumiAの回答は、学校資料をもとに生成されます。</li>
+                <li>
+                  回答に参考資料が表示された場合は、内容も確認しましょう。
+                </li>
+                <li>
+                  必要な情報が見つからない場合は、質問の表現を変えて試してみましょう。
+                </li>
+                <li>
+                  大切な手続きや最新情報は、学校の案内や担当者にも確認しましょう。
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- =======================================
+             06. 困ったとき
+        ======================================== -->
+        <section class="howto-help" aria-labelledby="howto-help-title">
+          <div class="howto-help__content">
+            <p class="howto-help__eyebrow">NEED MORE HELP?</p>
+
+            <h2 id="howto-help-title">分からないことがあれば</h2>
+
+            <p>
+              よくある質問も参考にしてみてください。<br />
+              知りたいことが見つからない場合は、LumiAに直接質問することもできます。
+            </p>
+
+            <div class="howto-help__actions">
+              <a href="./faq.html" class="howto-help__button">
+                <span>よくある質問を見る</span>
+                <span aria-hidden="true">→</span>
+              </a>
+
+              <a href="./home.html" class="howto-help__text-link">
+                LumiAで質問する
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="howto-help__mascot">
+            <img
+              src="../assets/images/characters/corgi_thanks.png"
+              alt="感謝を伝えるコーギくん"
+              loading="lazy"
+            />
+          </div>
+        </section>
+
+        <!-- フッター -->
+        <footer class="howto-footer">
+          <a href="./home.html" class="howto-footer__logo">
+            <img src="../assets/images/icons/logo_compact.png" alt="LumiA" />
+          </a>
+
+          <p>知りたいが、学びに変わる。</p>
+
+          <span>津高技専のためのAI学校アシスタント</span>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>

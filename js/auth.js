@@ -2,6 +2,7 @@
 ==================================================
 LumiA
 ファイル名：auth.js
+バージョン：2.1
 
 【ファイル概要】
 LumiAのユーザー認証を管理する。
@@ -14,6 +15,7 @@ LumiAのユーザー認証を管理する。
 ・ユーザー情報の取得
 ・アクセストークンの取得
 ・認証エラーの分類
+・認証状態の適切な管理
 
 【使用ライブラリ】
 AWS Amplify Auth v6
@@ -28,6 +30,7 @@ AWS Amplify Auth v6
 ・認証情報はAmplifyに管理させる。
 ・パスワードやアクセストークンをログに出力しない。
 ・ユーザー権限の最終判断はサーバー側で行う。
+・未認証とシステムエラーを区別する。
 
 ==================================================
 */
@@ -53,10 +56,10 @@ import { LUMIA_CONFIG } from "./config.js";
  * 認証処理で発生したエラーを統一して扱う。
  *
  * code:
- * AUTH_CONFIG_ERROR
- * AUTH_REQUIRED
- * AUTH_SESSION_FAILED
- * AUTH_OPERATION_FAILED
+ * AUTH_CONFIG_ERROR      認証設定エラー
+ * AUTH_REQUIRED          未認証
+ * AUTH_SESSION_FAILED    認証セッション取得失敗
+ * AUTH_OPERATION_FAILED  認証操作失敗
  */
 export class LumiaAuthError extends Error {
   constructor(message, code = "AUTH_OPERATION_FAILED", cause = null) {
@@ -79,7 +82,10 @@ let isInitialized = false;
 
 /**
  * Cognitoとの接続を初期化する。
+ *
  * 初期化は一度だけ実行する。
+ *
+ * @returns {void}
  */
 export function initializeAuth() {
   if (isInitialized) {
@@ -92,9 +98,18 @@ export function initializeAuth() {
   const userPoolId = cognitoConfig?.userPoolId;
   const userPoolClientId = cognitoConfig?.userPoolClientId;
 
+  // Cognito設定の確認
   if (!region || !userPoolId || !userPoolClientId) {
     throw new LumiaAuthError(
       "Cognitoの接続設定が不足しています。",
+      "AUTH_CONFIG_ERROR",
+    );
+  }
+
+  // User Pool IDとリージョンの整合性確認
+  if (!userPoolId.startsWith(`${region}_`)) {
+    throw new LumiaAuthError(
+      "Cognitoのリージョン設定が正しくありません。",
       "AUTH_CONFIG_ERROR",
     );
   }
@@ -111,6 +126,11 @@ export function initializeAuth() {
 
     isInitialized = true;
   } catch (error) {
+    console.error(
+      "LumiA: Cognitoの初期化に失敗しました。",
+      error?.name || "UnknownError",
+    );
+
     throw new LumiaAuthError(
       "Cognitoの初期化に失敗しました。",
       "AUTH_CONFIG_ERROR",
@@ -128,6 +148,9 @@ export function initializeAuth() {
  *
  * 未ログインと通信障害などを区別するため、
  * 未認証を示す既知のエラーだけを対象にする。
+ *
+ * @param {Error} error 発生したエラー
+ * @returns {boolean} 未認証の場合true
  */
 function isUnauthenticatedError(error) {
   const errorName = error?.name;
@@ -138,7 +161,34 @@ function isUnauthenticatedError(error) {
 }
 
 // ==================================================
-// 4. ログイン
+// 4. 認証エラーの共通生成
+// ==================================================
+
+/**
+ * 認証エラーを統一して生成する。
+ *
+ * 既にLumiaAuthErrorの場合は、
+ * 元のエラーコードを維持する。
+ *
+ * @param {Error} error 発生したエラー
+ * @param {string} message 表示用メッセージ
+ * @param {string} code エラーコード
+ * @returns {LumiaAuthError}
+ */
+function normalizeAuthError(
+  error,
+  message = "認証処理に失敗しました。",
+  code = "AUTH_OPERATION_FAILED",
+) {
+  if (error instanceof LumiaAuthError) {
+    return error;
+  }
+
+  return new LumiaAuthError(message, code, error);
+}
+
+// ==================================================
+// 5. ログイン
 // ==================================================
 
 /**
@@ -149,8 +199,6 @@ function isUnauthenticatedError(error) {
  * @returns {Promise<object>} 認証結果
  */
 export async function login(username, password) {
-  initializeAuth();
-
   const normalizedUsername = String(username || "").trim();
 
   if (!normalizedUsername || !password) {
@@ -160,20 +208,37 @@ export async function login(username, password) {
     );
   }
 
+  initializeAuth();
+
+  let result;
+
+  // Cognitoログイン
   try {
-    const result = await signIn({
+    result = await signIn({
       username: normalizedUsername,
       password,
     });
+  } catch (error) {
+    // Cognitoのエラー名をlogin.js側で判定できるよう、
+    // 元のエラーを維持する。
+    console.error(
+      "LumiA: Cognitoログインに失敗しました。",
+      error?.name || "UnknownError",
+    );
 
-    // 初回パスワード変更などの追加認証が必要な場合
-    if (!result.isSignedIn) {
-      return {
-        success: false,
-        nextStep: result.nextStep,
-      };
-    }
+    throw error;
+  }
 
+  // 初回パスワード変更などの追加認証が必要な場合
+  if (!result.isSignedIn) {
+    return {
+      success: false,
+      nextStep: result.nextStep,
+    };
+  }
+
+  // ログイン成功後のユーザー情報取得
+  try {
     const user = await getCurrentUser();
 
     return {
@@ -182,22 +247,27 @@ export async function login(username, password) {
       nextStep: result.nextStep,
     };
   } catch (error) {
-    // 認証情報そのものはログに出力しない
     console.error(
-      "LumiA: Cognitoログインに失敗しました。",
+      "LumiA: ログイン後のユーザー情報取得に失敗しました。",
       error?.name || "UnknownError",
     );
 
-    throw error;
+    throw normalizeAuthError(
+      error,
+      "ログイン後のユーザー情報を取得できませんでした。",
+      "AUTH_SESSION_FAILED",
+    );
   }
 }
 
 // ==================================================
-// 5. ログアウト
+// 6. ログアウト
 // ==================================================
 
 /**
  * Cognitoからログアウトする。
+ *
+ * @returns {Promise<boolean>} 成功時true
  */
 export async function logout() {
   initializeAuth();
@@ -212,16 +282,16 @@ export async function logout() {
       error?.name || "UnknownError",
     );
 
-    throw new LumiaAuthError(
+    throw normalizeAuthError(
+      error,
       "ログアウトに失敗しました。",
       "AUTH_OPERATION_FAILED",
-      error,
     );
   }
 }
 
 // ==================================================
-// 6. ログイン状態確認
+// 7. ログイン状態確認
 // ==================================================
 
 /**
@@ -235,9 +305,9 @@ export async function logout() {
  * @returns {Promise<object>} 認証状態
  */
 export async function checkAuth() {
-  initializeAuth();
-
   try {
+    initializeAuth();
+
     const user = await getCurrentUser();
 
     return {
@@ -247,7 +317,7 @@ export async function checkAuth() {
       error: null,
     };
   } catch (error) {
-    // 未ログインの場合
+    // 明確な未認証状態
     if (isUnauthenticatedError(error)) {
       return {
         isAuthenticated: false,
@@ -257,7 +327,7 @@ export async function checkAuth() {
       };
     }
 
-    // 未認証以外のエラーは、未ログインと決めつけない
+    // 設定エラー・セッションエラーなど
     console.error(
       "LumiA: ログイン状態を確認できませんでした。",
       error?.name || "UnknownError",
@@ -267,31 +337,31 @@ export async function checkAuth() {
       isAuthenticated: false,
       user: null,
       status: "unknown",
-      error: new LumiaAuthError(
+      error: normalizeAuthError(
+        error,
         "ログイン状態を確認できませんでした。",
         "AUTH_SESSION_FAILED",
-        error,
       ),
     };
   }
 }
 
 // ==================================================
-// 7. ユーザー情報取得
+// 8. ユーザー情報取得
 // ==================================================
 
 /**
  * 現在ログインしているユーザーを取得する。
  *
  * 未ログインの場合はnullを返す。
- * その他の認証エラーは呼び出し元へ伝える。
+ * その他の認証エラーはLumiaAuthErrorとして返す。
  *
  * @returns {Promise<object|null>} ユーザー情報
  */
 export async function getUserInfo() {
-  initializeAuth();
-
   try {
+    initializeAuth();
+
     return await getCurrentUser();
   } catch (error) {
     // 未ログインの場合
@@ -304,27 +374,29 @@ export async function getUserInfo() {
       error?.name || "UnknownError",
     );
 
-    throw new LumiaAuthError(
+    throw normalizeAuthError(
+      error,
       "ユーザー情報を取得できませんでした。",
       "AUTH_SESSION_FAILED",
-      error,
     );
   }
 }
 
 // ==================================================
-// 8. アクセストークン取得
+// 9. アクセストークン取得
 // ==================================================
 
 /**
  * API Gateway連携用のアクセストークンを取得する。
  *
+ * Amplifyが必要に応じてセッションを更新する。
+ *
  * @returns {Promise<string>} アクセストークン
  */
 export async function getAccessToken() {
-  initializeAuth();
-
   try {
+    initializeAuth();
+
     const session = await fetchAuthSession();
 
     const accessToken = session.tokens?.accessToken;
@@ -334,9 +406,18 @@ export async function getAccessToken() {
       throw new LumiaAuthError("ログインが必要です。", "AUTH_REQUIRED");
     }
 
-    return accessToken.toString();
+    const tokenString = accessToken.toString();
+
+    if (!tokenString) {
+      throw new LumiaAuthError(
+        "認証情報を取得できませんでした。",
+        "AUTH_SESSION_FAILED",
+      );
+    }
+
+    return tokenString;
   } catch (error) {
-    // 自分で生成した認証エラーはそのまま返す
+    // 自分で生成した認証エラーを維持する
     if (error instanceof LumiaAuthError) {
       throw error;
     }
@@ -352,10 +433,10 @@ export async function getAccessToken() {
       error?.name || "UnknownError",
     );
 
-    throw new LumiaAuthError(
+    throw normalizeAuthError(
+      error,
       "認証情報を取得できませんでした。",
       "AUTH_SESSION_FAILED",
-      error,
     );
   }
 }

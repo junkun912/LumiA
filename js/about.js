@@ -2,6 +2,7 @@
 
    LumiA
    ファイル名：about.js
+   バージョン：2.4
 
    【ファイル概要】
    LumiA紹介ページの動作を管理するJavaScript。
@@ -15,187 +16,217 @@
 
 ================================================== */
 
-/* ==================================================
-   1. 初期化
-================================================== */
+(() => {
+  "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
-  initializeMobileMenu();
-  initializeScrollAnimation();
-});
+  /* ==================================================
+     1. 初期化
+  ================================================== */
 
-/* ==================================================
-   2. モバイルメニュー
-================================================== */
-
-function initializeMobileMenu() {
-  const menuButton = document.getElementById("about-menu-button");
-
-  const mobileNavigation = document.getElementById("about-mobile-navigation");
-
-  if (!menuButton || !mobileNavigation) {
-    return;
+  function initializeAboutPage() {
+    initializeMobileMenu();
+    initializeScrollAnimation();
   }
 
-  /**
-   * メニューを開く
-   */
-  function openMenu() {
-    mobileNavigation.hidden = false;
-
-    menuButton.setAttribute("aria-expanded", "true");
-
-    menuButton.setAttribute("aria-label", "メニューを閉じる");
-  }
-
-  /**
-   * メニューを閉じる
-   */
-  function closeMenu() {
-    mobileNavigation.hidden = true;
-
-    menuButton.setAttribute("aria-expanded", "false");
-
-    menuButton.setAttribute("aria-label", "メニューを開く");
-  }
-
-  /**
-   * メニューの開閉
-   */
-  menuButton.addEventListener("click", () => {
-    const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
-
-    if (isExpanded) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  });
-
-  /**
-   * メニュー内のリンクを押したら閉じる
-   */
-  mobileNavigation.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      closeMenu();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeAboutPage, {
+      once: true,
     });
-  });
+  } else {
+    initializeAboutPage();
+  }
 
-  /**
-   * Escapeキーで閉じる
-   */
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeMenu();
-    }
-  });
+  /* ==================================================
+     2. モバイルメニュー
+  ================================================== */
 
-  /**
-   * メニュー外をクリックしたら閉じる
-   */
-  document.addEventListener("click", (event) => {
-    const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+  function initializeMobileMenu() {
+    const menuButton = document.getElementById("about-menu-button");
+    const mobileNavigation = document.getElementById("about-mobile-navigation");
 
-    if (!isExpanded) {
+    if (!menuButton || !mobileNavigation) {
       return;
     }
 
-    const clickedInsideMenu = mobileNavigation.contains(event.target);
+    const navigationLinks = mobileNavigation.querySelectorAll("a");
 
-    const clickedMenuButton = menuButton.contains(event.target);
-
-    if (!clickedInsideMenu && !clickedMenuButton) {
-      closeMenu();
+    if (!navigationLinks.length) {
+      return;
     }
-  });
 
-  /**
-   * PCサイズに戻った場合はメニューを閉じる
-   */
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 700) {
-      closeMenu();
+    /**
+     * メニューを開く
+     */
+    function openMenu() {
+      mobileNavigation.hidden = false;
+
+      menuButton.setAttribute("aria-expanded", "true");
+      menuButton.setAttribute("aria-label", "メニューを閉じる");
+
+      // 最初のリンクにフォーカスを移動
+      navigationLinks[0].focus();
     }
-  });
-}
 
-/* ==================================================
-   3. スクロール表示アニメーション
-================================================== */
+    /**
+     * メニューを閉じる
+     */
+    function closeMenu(restoreFocus = false) {
+      const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
 
-function initializeScrollAnimation() {
-  const animatedElements = document.querySelectorAll(
-    [
-      ".about-section",
-      ".about-hero__content",
-      ".about-hero__mascot",
-      ".about-ending__content",
-    ].join(","),
-  );
+      if (!isExpanded) {
+        return;
+      }
 
-  if (!animatedElements.length) {
-    return;
-  }
+      mobileNavigation.hidden = true;
 
-  /**
-   * 動きを減らす設定が有効な場合は
-   * アニメーションを適用しない
-   */
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  );
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "メニューを開く");
 
-  if (prefersReducedMotion.matches) {
-    return;
-  }
+      // Escapeキーで閉じた場合はボタンにフォーカスを戻す
+      if (restoreFocus) {
+        menuButton.focus();
+      }
+    }
 
-  /**
-   * IntersectionObserverが利用できない場合
-   * すべて表示する
-   */
-  if (!("IntersectionObserver" in window)) {
-    animatedElements.forEach((element) => {
-      element.classList.add("is-visible");
+    /**
+     * メニューの開閉
+     */
+    menuButton.addEventListener("click", () => {
+      const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
-    return;
+    /**
+     * メニュー内のリンクを押したら閉じる
+     */
+    navigationLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        closeMenu();
+      });
+    });
+
+    /**
+     * Escapeキーで閉じる
+     */
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      closeMenu(true);
+    });
+
+    /**
+     * メニュー外をクリックしたら閉じる
+     */
+    document.addEventListener("click", (event) => {
+      const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+
+      if (!isExpanded) {
+        return;
+      }
+
+      const clickedInsideMenu = mobileNavigation.contains(event.target);
+      const clickedMenuButton = menuButton.contains(event.target);
+
+      if (!clickedInsideMenu && !clickedMenuButton) {
+        closeMenu();
+      }
+    });
+
+    /**
+     * PCサイズに戻った場合はメニューを閉じる
+     */
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 700) {
+        closeMenu();
+      }
+    });
   }
 
-  /**
-   * アニメーション監視
-   */
-  const observer = new IntersectionObserver(
-    (entries, currentObserver) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
+  /* ==================================================
+     3. スクロール表示アニメーション
+  ================================================== */
 
-        entry.target.classList.add("is-visible");
+  function initializeScrollAnimation() {
+    const animatedElements = document.querySelectorAll(
+      [
+        ".about-section",
+        ".about-hero__content",
+        ".about-hero__mascot",
+        ".about-ending__content",
+      ].join(","),
+    );
 
-        currentObserver.unobserve(entry.target);
+    if (!animatedElements.length) {
+      return;
+    }
+
+    /**
+     * 動きを減らす設定が有効な場合は
+     * アニメーションを適用しない
+     */
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+
+    if (prefersReducedMotion.matches) {
+      return;
+    }
+
+    /**
+     * IntersectionObserverが利用できない場合
+     * すべて表示する
+     */
+    if (!("IntersectionObserver" in window)) {
+      animatedElements.forEach((element) => {
+        element.classList.add("is-visible");
       });
-    },
-    {
-      root: null,
-      rootMargin: "0px 0px -50px 0px",
-      threshold: 0.08,
-    },
-  );
 
-  /**
-   * 各要素の監視を開始
-   */
-  animatedElements.forEach((element) => {
-    observer.observe(element);
-  });
+      return;
+    }
 
-  /**
-   * CSSアニメーションを有効化
-   * 初期化後にクラスを付けることで、
-   * JavaScript無効時にコンテンツが消えるのを防ぐ
-   */
-  requestAnimationFrame(() => {
-    document.body.classList.add("about-js-ready");
-  });
-}
+    /**
+     * アニメーション監視
+     */
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+
+          currentObserver.unobserve(entry.target);
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -50px 0px",
+        threshold: 0.08,
+      },
+    );
+
+    /**
+     * 各要素の監視を開始
+     */
+    animatedElements.forEach((element) => {
+      observer.observe(element);
+    });
+
+    /**
+     * CSSアニメーションを有効化
+     * 初期化後にクラスを付けることで、
+     * JavaScript無効時にコンテンツが消えるのを防ぐ
+     */
+    requestAnimationFrame(() => {
+      document.body.classList.add("about-js-ready");
+    });
+  }
+})();

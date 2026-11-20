@@ -2,6 +2,7 @@
 ==================================================
 LumiA
 ファイル名：answer.js
+バージョン：v2.2
 
 【ファイル概要】
 LumiAの回答画面に関するJavaScriptファイル。
@@ -17,19 +18,14 @@ LumiAの回答画面に関するJavaScriptファイル。
 ・APIエラーの種類に応じた処理
 ・コーギくんの状態切り替え
 ・回答可能／未回答の判定
-
-【関連ファイル】
-・pages/answer.html
-・js/question.js
-・js/api.js
-・js/corgi.js
-・js/error-handler.js
+・未回答専用メッセージの表示
+・質問履歴画面への遷移
 
 【回答状態】
-LOADING   ：資料を確認中
-SUCCESS   ：回答できた
-UNANSWERED：公開資料から回答を確認できなかった
-ERROR     ：通信・システムなどのエラー
+LOADING    ：資料を確認中
+SUCCESS    ：回答できた
+UNANSWERED ：公開資料から回答を確認できなかった
+ERROR      ：通信・システムなどのエラー
 
 ==================================================
 */
@@ -45,40 +41,51 @@ import { sendGuestQuestion, ApiError } from "./api.js";
 
 const STORAGE_KEY = "lumia_current_question";
 
+const ANSWER_PAGE_URL = "./answer.html";
+const HOME_PAGE_URL = "./home.html";
+const HISTORY_PAGE_URL = "./history.html";
+const ERROR_PAGE_URL = "./error.html";
+
 // 回答状態
-const ANSWER_STATE = {
+const ANSWER_STATE = Object.freeze({
   LOADING: "loading",
   SUCCESS: "success",
   UNANSWERED: "unanswered",
   ERROR: "error",
-};
+});
 
-// 現在のAPI応答で使用されている未回答メッセージ
-// API側に専用ステータスが実装されるまでの暫定判定
+// APIの未回答メッセージ
 const UNANSWERED_MESSAGES = ["公開資料から確認できませんでした。"];
+
+// 絵本風エラー表示の共通設定
+// 通信・システムエラー専用
+const STORYBOOK_ERROR_OPTIONS = Object.freeze({
+  description:
+    "ごめんなさい。今は学校の資料をうまく確認できなかったようです。質問はちゃんと残っています。通信やシステムが落ち着いたら、もう一度答えを探してみますね。",
+  retryLabel: "もう一度、答えを探す",
+  note: "入力した質問は保持されています。",
+  variant: "storybook",
+});
 
 // ==================================================
 // 2. DOM要素
 // ==================================================
 
 const elements = {
-  question: document.querySelector("#answer-question"),
-  answerBody: document.querySelector("#answer-body"),
-  references: document.querySelector("#answer-references"),
-  referencesList: document.querySelector("#answer-references-list"),
+  question: null,
+  answerBody: null,
+  references: null,
+  referencesList: null,
 
-  questionForm: document.querySelector("#answer-question-form"),
-  questionInput: document.querySelector("#answer-question-input"),
-  questionModeLabel: document.querySelector("#question-mode-label"),
+  questionForm: null,
+  questionInput: null,
+  questionModeLabel: null,
+  submitButton: null,
 
-  submitButton: document.querySelector(
-    "#answer-question-form button[type='submit']",
-  ),
+  homeButton: null,
+  historyButton: null,
 
-  homeButton: document.querySelector("#home-button"),
-  historyButton: document.querySelector("#history-button"),
-
-  corgi: document.querySelector(".answer-book__mascot"),
+  corgi: null,
 };
 
 // ==================================================
@@ -86,14 +93,37 @@ const elements = {
 // ==================================================
 
 let isGenerating = false;
+let isAnswerPageInitialized = false;
 
 // ==================================================
 // 4. 初期化
 // ==================================================
 
-document.addEventListener("DOMContentLoaded", initializeAnswerPage);
-
 function initializeAnswerPage() {
+  // 二重初期化を防止
+  if (isAnswerPageInitialized) {
+    return;
+  }
+
+  // DOM要素を取得
+  elements.question = document.querySelector("#answer-question");
+  elements.answerBody = document.querySelector("#answer-body");
+  elements.references = document.querySelector("#answer-references");
+  elements.referencesList = document.querySelector("#answer-references-list");
+
+  elements.questionForm = document.querySelector("#answer-question-form");
+  elements.questionInput = document.querySelector("#answer-question-input");
+  elements.questionModeLabel = document.querySelector("#question-mode-label");
+
+  elements.submitButton = document.querySelector(
+    "#answer-question-form button[type='submit']",
+  );
+
+  elements.homeButton = document.querySelector("#home-button");
+  elements.historyButton = document.querySelector("#history-button");
+
+  elements.corgi = document.querySelector(".answer-book__mascot");
+
   // 必要なHTML要素を確認
   if (
     !elements.question ||
@@ -107,6 +137,9 @@ function initializeAnswerPage() {
     redirectToError("system");
     return;
   }
+
+  // 初期化済みにする
+  isAnswerPageInitialized = true;
 
   try {
     // コーギくん初期化
@@ -173,6 +206,7 @@ function preserveQuestion(question) {
 
   try {
     sessionStorage.setItem(STORAGE_KEY, question.trim());
+
     return true;
   } catch (error) {
     console.error(
@@ -222,7 +256,14 @@ function setupEventListeners() {
   // ホームへ戻る
   if (elements.homeButton) {
     elements.homeButton.addEventListener("click", () => {
-      window.location.href = "./home.html";
+      window.location.href = HOME_PAGE_URL;
+    });
+  }
+
+  // 質問履歴へ移動
+  if (elements.historyButton) {
+    elements.historyButton.addEventListener("click", () => {
+      window.location.href = HISTORY_PAGE_URL;
     });
   }
 }
@@ -248,7 +289,17 @@ async function handleAdditionalQuestion(event) {
 
   // 質問内容を保存
   if (!preserveQuestion(question)) {
-    showInlineError("質問を保存できませんでした。もう一度お試しください。");
+    showInlineError(
+      "質問を保存できませんでした。もう一度お試しください。",
+      null,
+      {
+        title: "質問を保存できませんでした",
+        description:
+          "入力した質問を保存できなかったため、もう一度入力内容をご確認ください。",
+        retryLabel: "もう一度試す",
+        note: "入力欄の内容はそのまま残しています。",
+      },
+    );
 
     return;
   }
@@ -257,7 +308,6 @@ async function handleAdditionalQuestion(event) {
   displayQuestion(question);
 
   // 回答生成
-  // 回答できた場合のみ入力欄をクリアする
   await generateAnswer(question, {
     clearInputOnSuccess: true,
   });
@@ -292,16 +342,18 @@ async function generateAnswer(question, options = {}) {
     // 回答データの確認
     validateAnswerResult(result);
 
-    // 回答内容を表示
-    displayAnswer(result);
-
-    // 回答できなかった場合
+    // 未回答かどうかを判定
     if (isUnansweredResult(result)) {
+      displayUnansweredMessage();
+
       setAnswerState(ANSWER_STATE.UNANSWERED);
 
       // 未回答の場合は入力内容を保持
       return false;
     }
+
+    // 通常の回答内容を表示
+    displayAnswer(result);
 
     // 追加質問の場合、回答成功後に入力欄をクリア
     if (
@@ -363,7 +415,119 @@ function isUnansweredResult(result) {
 }
 
 // ==================================================
-// 14. 回答状態の切り替え
+// 14. 未回答専用メッセージ
+// ==================================================
+
+function displayUnansweredMessage() {
+  // 回答欄をクリア
+  elements.answerBody.replaceChildren();
+
+  // 未回答専用エリア
+  const container = document.createElement("section");
+
+  container.className = "lumia-unanswered";
+  container.setAttribute("role", "status");
+  container.setAttribute("aria-live", "polite");
+
+  // ----------------------------------------------
+  // メインメッセージ
+  // ----------------------------------------------
+
+  const title = document.createElement("h3");
+
+  title.className = "lumia-unanswered__title";
+  title.textContent = "今回は答えが見つからなかったよ。";
+
+  container.appendChild(title);
+
+  // ----------------------------------------------
+  // 説明文
+  // ----------------------------------------------
+
+  const description = document.createElement("p");
+
+  description.className = "lumia-unanswered__description";
+
+  // 前半部分
+  description.append(
+    document.createTextNode(
+      "ごめんなさい。今公開されている学校資料からは、答えを見つける",
+    ),
+  );
+
+  // 意味のつながる語句をひとまとまりにする
+  const keepTogether = document.createElement("span");
+
+  keepTogether.className = "lumia-no-break";
+  keepTogether.textContent = "ことが";
+
+  description.appendChild(keepTogether);
+
+  // 後半部分
+  description.append(document.createTextNode("できませんでした。"));
+
+  container.appendChild(description);
+
+  // ----------------------------------------------
+  // 次の行動への案内
+  // ----------------------------------------------
+
+  const guide = document.createElement("div");
+
+  guide.className = "lumia-unanswered__guide";
+
+  const guideTitle = document.createElement("p");
+
+  guideTitle.className = "lumia-unanswered__guide-title";
+
+  guideTitle.textContent = "質問を少し変えてみると、見つかるかもしれません。";
+
+  guide.appendChild(guideTitle);
+
+  const guideDescription = document.createElement("p");
+
+  guideDescription.className = "lumia-unanswered__guide-description";
+
+  guideDescription.textContent =
+    "言葉を変えたり、もう少し詳しく聞いてみたりしてね。";
+
+  guide.appendChild(guideDescription);
+
+  container.appendChild(guide);
+
+  // ----------------------------------------------
+  // 補足
+  // ----------------------------------------------
+
+  const note = document.createElement("p");
+
+  note.className = "lumia-unanswered__note";
+  note.textContent = "入力した質問は残っています。";
+
+  container.appendChild(note);
+
+  // 回答欄に追加
+  elements.answerBody.appendChild(container);
+}
+
+// ==================================================
+// 15. コーギくんの状態切り替え
+// ==================================================
+
+function updateCorgiState(state) {
+  try {
+    setCorgiState(state);
+  } catch (error) {
+    // コーギくんの表示エラーで回答処理を止めない
+    console.error(
+      "LumiA: コーギくんの状態を変更できませんでした。",
+      error?.name || "CorgiError",
+    );
+  }
+}
+
+// ==================================================
+// 16. 回答状態の切り替え
 // ==================================================
 
 function setAnswerState(state) {
@@ -375,12 +539,13 @@ function setAnswerState(state) {
     // ----------------------------------------------
 
     case ANSWER_STATE.LOADING:
-      setCorgiState("reading");
+      updateCorgiState("reading");
 
       if (elements.questionModeLabel) {
         elements.questionModeLabel.textContent =
           "学校の資料を確認しています...";
       }
+
       break;
 
     // ----------------------------------------------
@@ -388,11 +553,12 @@ function setAnswerState(state) {
     // ----------------------------------------------
 
     case ANSWER_STATE.SUCCESS:
-      setCorgiState("explaining");
+      updateCorgiState("explaining");
 
       if (elements.questionModeLabel) {
         elements.questionModeLabel.textContent = "ほかの質問はありますか？";
       }
+
       break;
 
     // ----------------------------------------------
@@ -400,11 +566,12 @@ function setAnswerState(state) {
     // ----------------------------------------------
 
     case ANSWER_STATE.UNANSWERED:
-      setCorgiState("apology");
+      updateCorgiState("apology");
 
       if (elements.questionModeLabel) {
         elements.questionModeLabel.textContent = "別の質問も試してみてね。";
       }
+
       break;
 
     // ----------------------------------------------
@@ -412,12 +579,13 @@ function setAnswerState(state) {
     // ----------------------------------------------
 
     case ANSWER_STATE.ERROR:
-      setCorgiState("apology");
+      updateCorgiState("apology");
 
       if (elements.questionModeLabel) {
         elements.questionModeLabel.textContent =
           "もう一度質問することができます。";
       }
+
       break;
 
     default:
@@ -426,7 +594,7 @@ function setAnswerState(state) {
 }
 
 // ==================================================
-// 15. 調べ中の表示
+// 17. 調べ中の表示
 // ==================================================
 
 function setLoadingState() {
@@ -439,11 +607,13 @@ function setLoadingState() {
 }
 
 // ==================================================
-// 16. 質問フォームの有効・無効
+// 18. 質問フォームの有効・無効
 // ==================================================
 
 function setQuestionFormDisabled(disabled) {
-  elements.questionInput.disabled = disabled;
+  if (elements.questionInput) {
+    elements.questionInput.disabled = disabled;
+  }
 
   if (elements.submitButton) {
     elements.submitButton.disabled = disabled;
@@ -451,11 +621,16 @@ function setQuestionFormDisabled(disabled) {
 }
 
 // ==================================================
-// 17. 前の回答・参考資料をクリア
+// 19. 前の回答・参考資料をクリア
 // ==================================================
 
 function clearPreviousAnswer() {
   elements.answerBody.replaceChildren();
+
+  // 既存のインラインエラーも削除
+  if (window.LumiAError?.clearInline) {
+    window.LumiAError.clearInline(elements.answerBody);
+  }
 
   if (elements.referencesList) {
     elements.referencesList.replaceChildren();
@@ -467,16 +642,16 @@ function clearPreviousAnswer() {
 }
 
 // ==================================================
-// 18. API接続処理
+// 20. API接続処理
 // ==================================================
 
 async function requestAnswer(question) {
   // ゲスト向け質問APIへ送信
-  return await sendGuestQuestion(question);
+  return sendGuestQuestion(question);
 }
 
 // ==================================================
-// 19. AI回答の表示
+// 21. AI回答の表示
 // ==================================================
 
 function displayAnswer(result) {
@@ -491,7 +666,7 @@ function displayAnswer(result) {
 }
 
 // ==================================================
-// 20. 参照情報の表示
+// 22. 参照情報の表示
 // ==================================================
 
 function displayReferences(citations) {
@@ -551,13 +726,17 @@ function displayReferences(citations) {
 }
 
 // ==================================================
-// 21. エラーの種類に応じた処理
+// 23. エラーの種類に応じた処理
 // ==================================================
 
 function showAnswerError(error, retryCallback, question) {
   // 参考資料を非表示
   if (elements.references) {
     elements.references.hidden = true;
+  }
+
+  if (elements.referencesList) {
+    elements.referencesList.replaceChildren();
   }
 
   // エラー状態へ切り替え
@@ -570,7 +749,6 @@ function showAnswerError(error, retryCallback, question) {
   // ----------------------------------------------
 
   if (errorCode === "AUTH_REQUIRED") {
-    // ログイン画面へ移動する前に質問を保存
     preserveQuestion(question);
 
     if (window.LumiAError?.redirect) {
@@ -578,7 +756,15 @@ function showAnswerError(error, retryCallback, question) {
       return;
     }
 
-    showInlineError("ログインが必要です。ログイン画面から認証してください。");
+    showInlineError(
+      "ログインが必要です。ログイン画面から認証してください。",
+      null,
+      {
+        title: "ログインが必要です",
+        description: "ログイン後、もう一度質問をお試しください。",
+        note: "入力した質問は保持されています。",
+      },
+    );
 
     return;
   }
@@ -597,9 +783,12 @@ function showAnswerError(error, retryCallback, question) {
   // ----------------------------------------------
 
   if (errorCode === "FORBIDDEN") {
-    showInlineError(
-      "この操作を行う権限がありません。必要に応じて管理者にお問い合わせください。",
-    );
+    showInlineError("この操作を行う権限がありません。", null, {
+      title: "アクセスできませんでした",
+      description:
+        "この操作を行う権限がないようです。必要に応じて管理者にお問い合わせください。",
+      note: "入力した質問は保持されています。",
+    });
 
     return;
   }
@@ -637,10 +826,15 @@ function showAnswerError(error, retryCallback, question) {
   // 通信・サーバーエラー
   // ----------------------------------------------
 
-  if (errorCode === "NETWORK" || errorCode === "SERVER") {
+  if (
+    errorCode === "NETWORK" ||
+    errorCode === "TIMEOUT" ||
+    errorCode === "SERVER"
+  ) {
     showInlineError(
-      "サーバーとの通信に問題が発生しました。質問内容は保持されています。時間をおいて、もう一度お試しください。",
+      "少し時間をおいて、もう一度。",
       retryCallback,
+      STORYBOOK_ERROR_OPTIONS,
     );
 
     return;
@@ -651,10 +845,11 @@ function showAnswerError(error, retryCallback, question) {
   // ----------------------------------------------
 
   if (errorCode === "DATA") {
-    showInlineError(
-      "回答データを正しく処理できませんでした。質問内容を確認して、もう一度お試しください。",
-      retryCallback,
-    );
+    showInlineError("回答をうまく準備できませんでした。", retryCallback, {
+      ...STORYBOOK_ERROR_OPTIONS,
+      description:
+        "回答データを正しく処理できなかったようです。質問内容は残っていますので、もう一度答えを探してみましょう。",
+    });
 
     return;
   }
@@ -664,13 +859,14 @@ function showAnswerError(error, retryCallback, question) {
   // ----------------------------------------------
 
   showInlineError(
-    "申し訳ありません。回答を取得できませんでした。質問内容は保持されています。時間をおいて、もう一度お試しください。",
+    "少し時間をおいて、もう一度。",
     retryCallback,
+    STORYBOOK_ERROR_OPTIONS,
   );
 }
 
 // ==================================================
-// 22. 共通エラー画面への遷移
+// 24. 共通エラー画面への遷移
 // ==================================================
 
 function redirectToError(type) {
@@ -680,34 +876,80 @@ function redirectToError(type) {
   }
 
   // 共通エラーハンドラーが利用できない場合
-  window.location.href = "./error.html";
+  window.location.href = ERROR_PAGE_URL;
 }
 
 // ==================================================
-// 23. 共通インラインエラー表示
+// 25. 共通インラインエラー表示
 // ==================================================
 
-function showInlineError(message, retryCallback = null) {
+function showInlineError(message, retryCallback = null, options = {}) {
+  /*
+   * 重要：
+   * 調べ中の表示や古い回答を残さない。
+   * エラー表示を行う前に回答欄を一度空にする。
+   */
+
+  elements.answerBody.replaceChildren();
+
   // 共通エラーハンドラーを利用
   if (window.LumiAError?.showInline) {
-    window.LumiAError.showInline(elements.answerBody, message, retryCallback);
+    window.LumiAError.showInline(
+      elements.answerBody,
+      message,
+      retryCallback,
+      options,
+    );
 
     return;
   }
 
+  // ----------------------------------------------
   // 共通エラーハンドラーが利用できない場合
-  const errorContainer = document.createElement("div");
+  // ----------------------------------------------
 
-  errorContainer.className = "lumia-inline-error";
+  const errorContainer = document.createElement("section");
+
+  const isStorybook = options.variant === "storybook";
+
+  errorContainer.className = isStorybook
+    ? "lumia-inline-error lumia-inline-error--storybook"
+    : "lumia-inline-error";
+
   errorContainer.setAttribute("role", "alert");
   errorContainer.setAttribute("aria-live", "assertive");
 
+  // タイトル
+  // Storybook形式ではタイトルを表示しない
+  if (!isStorybook && options.title) {
+    const titleElement = document.createElement("h3");
+
+    titleElement.className = "lumia-inline-error__title";
+
+    titleElement.textContent = options.title;
+
+    errorContainer.appendChild(titleElement);
+  }
+
+  // メッセージ
   const messageElement = document.createElement("p");
 
   messageElement.className = "lumia-inline-error__message";
+
   messageElement.textContent = message;
 
   errorContainer.appendChild(messageElement);
+
+  // 説明文
+  if (options.description) {
+    const descriptionElement = document.createElement("p");
+
+    descriptionElement.className = "lumia-inline-error__description";
+
+    descriptionElement.textContent = options.description;
+
+    errorContainer.appendChild(descriptionElement);
+  }
 
   // 再試行ボタン
   if (typeof retryCallback === "function") {
@@ -715,7 +957,8 @@ function showInlineError(message, retryCallback = null) {
 
     retryButton.type = "button";
     retryButton.className = "lumia-inline-error__retry";
-    retryButton.textContent = "もう一度試す";
+
+    retryButton.textContent = options.retryLabel || "もう一度試す";
 
     retryButton.addEventListener("click", async () => {
       if (retryButton.disabled) {
@@ -724,11 +967,16 @@ function showInlineError(message, retryCallback = null) {
 
       retryButton.disabled = true;
 
+      retryButton.setAttribute("aria-busy", "true");
+
       try {
         await retryCallback();
+      } catch (error) {
+        // 再試行処理側でエラー表示を管理する
       } finally {
         if (retryButton.isConnected) {
           retryButton.disabled = false;
+          retryButton.removeAttribute("aria-busy");
         }
       }
     });
@@ -736,5 +984,28 @@ function showInlineError(message, retryCallback = null) {
     errorContainer.appendChild(retryButton);
   }
 
+  // 注意書き
+  if (options.note) {
+    const noteElement = document.createElement("p");
+
+    noteElement.className = "lumia-inline-error__note";
+
+    noteElement.textContent = options.note;
+
+    errorContainer.appendChild(noteElement);
+  }
+
   elements.answerBody.appendChild(errorContainer);
+}
+
+// ==================================================
+// 26. 初期化処理の実行
+// ==================================================
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeAnswerPage, {
+    once: true,
+  });
+} else {
+  initializeAnswerPage();
 }

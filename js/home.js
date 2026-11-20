@@ -9,122 +9,93 @@ LumiAホーム画面のJavaScript管理。
 【主な役割】
 ・コーギくん共通管理機能との連携
 ・ホーム画面の初期表示
-・コーギくん切り替えテスト
+・質問フォームの初期化
 
 ==================================================
 */
 
 "use strict";
 
-import { initializeCorgi, setCorgiState } from "./corgi.js";
+import { initializeCorgi } from "./corgi.js";
+
 import { initializeQuestionForm } from "./question.js";
 
 // ==================================================
-// キャラクター一覧
+// 1. 初期化状態
 // ==================================================
 
-const CORGI_TEST_STATES = [
-  { state: "basic", label: "通常" },
-  { state: "welcome", label: "歓迎" },
-  { state: "idea", label: "ひらめき" },
-  { state: "thinking", label: "考え中" },
-  { state: "studying", label: "学習" },
-  { state: "reading", label: "読書" },
-  { state: "explaining", label: "説明" },
-  { state: "cheer", label: "応援" },
-  { state: "surprised", label: "驚き" },
-  { state: "apology", label: "お詫び" },
-  { state: "thanks", label: "感謝" },
-  { state: "rest", label: "休憩" },
-];
+let isHomeInitialized = false;
 
 // ==================================================
-// コーギくんテストパネル
+// 2. 質問フォーム初期化
 // ==================================================
 
-function createCorgiTestPanel() {
-  const panel = document.createElement("div");
-
-  panel.setAttribute("aria-label", "コーギくん切り替えテスト");
-
-  Object.assign(panel.style, {
-    position: "fixed",
-    top: "12px",
-    right: "12px",
-    zIndex: "9999",
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    gap: "6px",
-    maxWidth: "420px",
-    padding: "10px",
-    background: "rgba(255, 255, 255, 0.96)",
-    border: "1px solid #d9c5a6",
-    borderRadius: "12px",
-    boxShadow: "0 3px 12px rgba(0, 0, 0, 0.12)",
-  });
-
-  const heading = document.createElement("span");
-
-  heading.textContent = "コーギくんテスト";
-
-  Object.assign(heading.style, {
-    width: "100%",
-    color: "#173f5f",
-    fontSize: "12px",
-    fontWeight: "700",
-  });
-
-  panel.appendChild(heading);
-
-  CORGI_TEST_STATES.forEach(({ state, label }) => {
-    const button = document.createElement("button");
-
-    button.type = "button";
-    button.textContent = label;
-
-    Object.assign(button.style, {
-      padding: "6px 9px",
-      color: "#173f5f",
-      background: "#fffaf2",
-      border: "1px solid #d9c5a6",
-      borderRadius: "6px",
-      fontSize: "12px",
-      cursor: "pointer",
-    });
-
-    button.addEventListener("click", () => {
-      setCorgiState(state);
-    });
-
-    panel.appendChild(button);
-  });
-
-  document.body.appendChild(panel);
+function initializeHomeQuestion() {
+  try {
+    initializeQuestionForm();
+  } catch (error) {
+    console.error(
+      "LumiA: 質問フォームを初期化できませんでした。",
+      error?.name || "QuestionFormError",
+    );
+  }
 }
 
 // ==================================================
-// ホーム画面初期化
+// 3. コーギくん初期化
 // ==================================================
 
-document.addEventListener("DOMContentLoaded", () => {
-  initializeQuestionForm();
+function initializeHomeCorgi() {
   const corgiElement = document.querySelector(".home-intro__mascot");
 
   if (!corgiElement) {
     console.error("LumiA: コーギくんの表示領域が見つかりません。");
 
+    return false;
+  }
+
+  try {
+    // 初期表示
+    initializeCorgi(corgiElement, "idea");
+
+    return true;
+  } catch (error) {
+    console.error(
+      "LumiA: コーギくんを初期化できませんでした。",
+      error?.name || "CorgiError",
+    );
+
+    return false;
+  }
+}
+
+// ==================================================
+// 4. ホーム画面初期化
+// ==================================================
+
+function initializeHomePage() {
+  // 二重初期化を防止
+  if (isHomeInitialized) {
     return;
   }
 
-  // 初期表示
-  initializeCorgi(corgiElement, "idea");
+  isHomeInitialized = true;
 
-  // テスト用URLの場合だけテストパネルを表示
-  const params = new URLSearchParams(window.location.search);
+  // 質問フォームを初期化
+  initializeHomeQuestion();
 
-  if (params.get("corgi-test") === "1") {
-    createCorgiTestPanel();
-  }
-});
+  // コーギくんを初期化
+  initializeHomeCorgi();
+}
+
+// ==================================================
+// 5. 初期化処理の実行
+// ==================================================
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeHomePage, {
+    once: true,
+  });
+} else {
+  initializeHomePage();
+}

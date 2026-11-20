@@ -1,0 +1,1458 @@
+/* ==================================================
+   LumiA
+   ファイル名：howto.css
+
+   【ファイル概要】
+   LumiAの使い方ページ専用スタイル。
+
+   【デザインコンセプト】
+   Antique Storybook × Learning Guide
+
+   【主な役割】
+   ・使い方ページ全体のレイアウト
+   ・基本操作のステップ表示
+   ・質問のコツと利用時の注意事項
+   ・コーギくんによる案内
+   ・レスポンシブ対応
+================================================== */
+
+/* ==================================================
+   1. 基本設定
+================================================== */
+
+.howto-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--lumia-ivory);
+  color: var(--lumia-text);
+}
+
+.howto-page *,
+.howto-page *::before,
+.howto-page *::after {
+  box-sizing: border-box;
+}
+
+.howto-page a {
+  color: inherit;
+}
+
+.howto-page img {
+  max-width: 100%;
+}
+
+.howto-page button {
+  font: inherit;
+}
+
+.howto-screen {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+/* ==================================================
+   2. カラーパレット
+================================================== */
+
+.howto-page {
+  --howto-navy: var(--lumia-navy);
+  --howto-blue: var(--lumia-blue);
+  --howto-light-blue: var(--lumia-light-blue);
+
+  --howto-mint: var(--lumia-mint);
+  --howto-orange: var(--lumia-orange);
+  --howto-gold: var(--lumia-gold);
+
+  --howto-ivory: var(--lumia-ivory);
+  --howto-paper: #fffaf0;
+  --howto-white: var(--lumia-white);
+
+  --howto-border: var(--lumia-border);
+  --howto-muted: var(--lumia-text-muted);
+
+  --howto-shadow: 0 5px 20px rgb(81 69 55 / 8%);
+
+  --howto-radius-small: 8px;
+  --howto-radius-medium: 14px;
+  --howto-radius-large: 20px;
+
+  --howto-transition: 0.2s ease;
+}
+
+/* ==================================================
+   3. 背景
+================================================== */
+
+.howto-screen__background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 12% 15%, rgb(255 255 255 / 48%), transparent 34%),
+    radial-gradient(circle at 88% 78%, rgb(220 236 243 / 38%), transparent 36%),
+    linear-gradient(135deg, #f8edda 0%, #f5e6c9 48%, #f7ecd9 100%);
+}
+
+/* ==================================================
+   4. ヘッダー
+================================================== */
+
+.howto-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  width: 100%;
+  min-height: 84px;
+  padding: 12px 7%;
+
+  background: rgb(255 250 240 / 94%);
+  border-bottom: 1px solid rgb(184 135 67 / 20%);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ロゴ */
+
+.howto-header__logo {
+  display: inline-flex;
+  align-items: center;
+  width: 155px;
+  flex-shrink: 0;
+}
+
+.howto-header__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* PCナビゲーション */
+
+.howto-header__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2.4vw, 34px);
+}
+
+.howto-header__link {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 10px 0;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition: color var(--howto-transition);
+}
+
+.howto-header__link:hover {
+  color: var(--howto-blue);
+}
+
+.howto-header__link--active {
+  color: var(--howto-navy);
+}
+
+.howto-header__link--active::after {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  left: 0;
+
+  height: 2px;
+
+  background: var(--howto-gold);
+  border-radius: 2px;
+
+  content: "";
+}
+
+/* ==================================================
+   5. モバイルナビゲーション
+================================================== */
+
+.howto-mobile-navigation {
+  display: none;
+}
+
+/* ==================================================
+   6. メインコンテンツ
+================================================== */
+
+.howto-main {
+  width: min(1120px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+/* ==================================================
+   7. ファーストビュー
+================================================== */
+
+.howto-hero {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+
+  min-height: 530px;
+  padding: 80px 8% 90px;
+
+  border-bottom: 1px solid rgb(184 135 67 / 25%);
+}
+
+.howto-hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+/* 英字ラベル */
+
+.howto-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 0 0 18px;
+
+  color: var(--howto-gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.howto-hero__eyebrow::before {
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--howto-gold);
+  content: "";
+}
+
+/* タイトル */
+
+.howto-hero__title {
+  margin: 0 0 30px;
+
+  color: var(--howto-navy);
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+}
+
+/* キャッチコピー */
+
+.howto-hero__catchcopy {
+  margin: 0 0 20px;
+
+  color: var(--lumia-text);
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+}
+
+/* 説明文 */
+
+.howto-hero__description {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 14px;
+  line-height: 2.1;
+  letter-spacing: 0.035em;
+}
+
+/* スクロール案内 */
+
+.howto-hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-top: 36px;
+
+  color: var(--howto-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+
+  text-decoration: none;
+}
+
+.howto-hero__scroll-line {
+  display: block;
+  width: 42px;
+  height: 1px;
+  background: var(--howto-gold);
+}
+
+/* マスコット */
+
+.howto-hero__mascot {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 330px;
+}
+
+.howto-hero__mascot img {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  width: min(280px, 100%);
+  max-height: 340px;
+
+  object-fit: contain;
+  filter: drop-shadow(0 12px 12px rgb(81 69 55 / 9%));
+
+  animation: howto-mascot-float 4s ease-in-out infinite;
+}
+
+.howto-hero__mascot-caption {
+  position: relative;
+  z-index: 3;
+
+  margin: 12px 0 0;
+  padding: 9px 18px;
+
+  color: var(--lumia-text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  background: rgb(255 250 240 / 88%);
+  border: 1px solid rgb(184 135 67 / 25%);
+  border-radius: 30px;
+}
+
+@keyframes howto-mascot-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 飾り */
+
+.howto-hero__mascot-decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.howto-hero__sparkle {
+  position: absolute;
+  color: var(--howto-gold);
+}
+
+.howto-hero__sparkle--one {
+  top: 20%;
+  left: 8%;
+  font-size: 24px;
+}
+
+.howto-hero__sparkle--two {
+  top: 35%;
+  right: 5%;
+  color: var(--howto-orange);
+  font-size: 30px;
+}
+
+.howto-hero__sparkle--three {
+  bottom: 18%;
+  left: 15%;
+  font-size: 17px;
+}
+
+/* 下部装飾 */
+
+.howto-hero__bottom-decoration {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  transform: translateX(-50%);
+}
+
+.howto-hero__bottom-decoration span {
+  display: block;
+  width: 5px;
+  height: 5px;
+
+  background: var(--howto-gold);
+  border-radius: 50%;
+}
+
+.howto-hero__bottom-decoration span:nth-child(2) {
+  width: 20px;
+  border-radius: 5px;
+}
+
+/* ==================================================
+   8. 共通セクション
+================================================== */
+
+.howto-section {
+  padding: 88px 7%;
+  border-bottom: 1px solid rgb(184 135 67 / 22%);
+}
+
+.howto-section__heading {
+  margin-bottom: 44px;
+  text-align: center;
+}
+
+.howto-section__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+  margin-bottom: 16px;
+
+  color: var(--howto-white);
+  font-family: Georgia, serif;
+  font-size: 13px;
+
+  background: var(--howto-navy);
+  border-radius: 50%;
+}
+
+.howto-section__eyebrow {
+  margin: 0 0 12px;
+
+  color: var(--howto-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.howto-section__heading h2 {
+  margin: 0;
+
+  color: var(--howto-navy);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.howto-section__lead {
+  margin: 15px 0 0;
+
+  color: var(--howto-muted);
+  font-size: 13px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+/* ==================================================
+   9. はじめに
+================================================== */
+
+.howto-start__body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 34px 38px;
+
+  background: rgb(255 250 240 / 78%);
+  border: 1px solid rgb(184 135 67 / 25%);
+  border-radius: var(--howto-radius-large);
+
+  box-shadow: var(--howto-shadow);
+}
+
+.howto-start__text p {
+  margin: 0 0 16px;
+
+  color: var(--lumia-text);
+  font-size: 14px;
+  line-height: 2.1;
+  letter-spacing: 0.035em;
+}
+
+.howto-start__text p:last-child {
+  margin-bottom: 0;
+}
+
+.howto-start__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  width: fit-content;
+  min-width: 220px;
+  min-height: 50px;
+  margin: 28px auto 0;
+  padding: 12px 24px;
+
+  color: #fffaf0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+
+  background: var(--howto-navy);
+  border: 1px solid var(--howto-navy);
+  border-radius: 30px;
+
+  text-decoration: none;
+
+  transition:
+    background var(--howto-transition),
+    transform var(--howto-transition),
+    box-shadow var(--howto-transition);
+}
+
+.howto-start__button:hover {
+  background: var(--howto-blue);
+  box-shadow: 0 6px 16px rgb(23 72 117 / 15%);
+  transform: translateY(-2px);
+}
+
+.howto-start__button span:last-child {
+  color: #e9c88d;
+  font-size: 18px;
+}
+
+/* ==================================================
+   10. 基本の3ステップ
+================================================== */
+
+.howto-steps__list {
+  display: grid;
+  gap: 20px;
+}
+
+.howto-step {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr) 110px;
+  align-items: center;
+  gap: 24px;
+
+  padding: 28px 30px;
+
+  background: rgb(255 250 240 / 82%);
+  border: 1px solid rgb(184 135 67 / 24%);
+  border-radius: var(--howto-radius-medium);
+
+  box-shadow: 0 4px 15px rgb(81 69 55 / 4%);
+
+  transition:
+    transform var(--howto-transition),
+    box-shadow var(--howto-transition),
+    border-color var(--howto-transition);
+}
+
+.howto-step:hover {
+  border-color: rgb(184 135 67 / 48%);
+  box-shadow: 0 8px 20px rgb(81 69 55 / 7%);
+  transform: translateY(-2px);
+}
+
+/* ステップ番号 */
+
+.howto-step__number {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 72px;
+  height: 72px;
+
+  color: var(--howto-navy);
+
+  background: #edf3f5;
+  border: 1px solid rgb(44 99 136 / 15%);
+  border-radius: 50%;
+}
+
+.howto-step__number span {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.howto-step__number strong {
+  font-family: Georgia, serif;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+/* ステップ本文 */
+
+.howto-step__content {
+  min-width: 0;
+}
+
+.howto-step__eyebrow {
+  margin: 0 0 8px;
+
+  color: var(--howto-gold);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.howto-step__content h3 {
+  margin: 0 0 12px;
+
+  color: var(--howto-navy);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+.howto-step__content > p:not(.howto-step__eyebrow) {
+  margin: 0 0 12px;
+
+  color: var(--lumia-text);
+  font-size: 13px;
+  line-height: 2;
+  letter-spacing: 0.025em;
+}
+
+.howto-step__content > p:last-child {
+  margin-bottom: 0;
+}
+
+/* 質問例 */
+
+.howto-example {
+  margin-top: 17px;
+  padding: 14px 17px;
+
+  background: #f3eee3;
+  border-left: 3px solid var(--howto-gold);
+  border-radius: 0 8px 8px 0;
+}
+
+.howto-example__label {
+  display: block;
+  margin-bottom: 6px;
+
+  color: var(--howto-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.howto-example p {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* ステップのイラスト */
+
+.howto-step__illustration {
+  display: grid;
+  place-items: center;
+
+  width: 100px;
+  height: 100px;
+
+  border-radius: 50%;
+}
+
+.howto-step__illustration--blue {
+  color: var(--howto-navy);
+  background: var(--howto-light-blue);
+}
+
+.howto-step__illustration--mint {
+  color: #527b60;
+  background: var(--howto-mint);
+}
+
+.howto-step__illustration--gold {
+  color: #a87935;
+  background: #f8e8d4;
+}
+
+.howto-step__icon {
+  display: grid;
+  place-items: center;
+}
+
+.howto-step__icon svg {
+  width: 47px;
+  height: 47px;
+}
+
+/* テキストリンク */
+
+.howto-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 6px;
+
+  color: var(--howto-blue);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    color var(--howto-transition),
+    gap var(--howto-transition);
+}
+
+.howto-inline-link:hover {
+  gap: 17px;
+  color: var(--howto-gold);
+}
+
+/* ==================================================
+   11. 質問のコツ
+================================================== */
+
+.howto-tips__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.howto-tip {
+  position: relative;
+  min-width: 0;
+  padding: 28px 24px 26px;
+
+  background: rgb(255 250 240 / 82%);
+  border: 1px solid rgb(184 135 67 / 24%);
+  border-radius: var(--howto-radius-medium);
+
+  box-shadow: 0 4px 15px rgb(81 69 55 / 4%);
+}
+
+.howto-tip__number {
+  display: inline-block;
+  margin-bottom: 18px;
+
+  color: var(--howto-gold);
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.howto-tip h3 {
+  margin: 0 0 13px;
+
+  color: var(--howto-navy);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.howto-tip p {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 12px;
+  line-height: 2;
+}
+
+/* ==================================================
+   12. 利用時のポイント
+================================================== */
+
+.howto-notes__card {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr);
+  gap: 24px;
+
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 32px 36px;
+
+  background: rgb(255 250 240 / 84%);
+  border: 1px solid rgb(184 135 67 / 28%);
+  border-radius: var(--howto-radius-medium);
+
+  box-shadow: var(--howto-shadow);
+}
+
+.howto-notes__icon {
+  display: grid;
+  place-items: center;
+
+  width: 64px;
+  height: 64px;
+
+  color: var(--howto-navy);
+  background: var(--howto-light-blue);
+  border-radius: 50%;
+}
+
+.howto-notes__icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.howto-notes__content h3 {
+  margin: 0 0 16px;
+
+  color: var(--howto-navy);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.howto-notes__content ul {
+  display: grid;
+  gap: 12px;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.howto-notes__content li {
+  position: relative;
+  padding-left: 21px;
+
+  color: var(--lumia-text);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.howto-notes__content li::before {
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+
+  width: 7px;
+  height: 7px;
+
+  background: var(--howto-gold);
+  border-radius: 50%;
+
+  content: "";
+}
+
+/* ==================================================
+   13. 困ったとき
+================================================== */
+
+.howto-help {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  align-items: center;
+  gap: 30px;
+
+  margin: 70px 7% 80px;
+  padding: 42px 48px;
+
+  background: linear-gradient(
+    120deg,
+    rgb(255 250 240 / 96%),
+    rgb(239 243 237 / 90%)
+  );
+
+  border: 1px solid rgb(184 135 67 / 28%);
+  border-radius: var(--howto-radius-large);
+
+  box-shadow: var(--howto-shadow);
+}
+
+.howto-help__content {
+  position: relative;
+  z-index: 2;
+}
+
+.howto-help__eyebrow {
+  margin: 0 0 12px;
+
+  color: var(--howto-gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.howto-help__content h2 {
+  margin: 0 0 15px;
+
+  color: var(--howto-navy);
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+
+.howto-help__content > p:not(.howto-help__eyebrow) {
+  margin: 0;
+
+  color: var(--lumia-text);
+  font-size: 12px;
+  line-height: 2;
+}
+
+.howto-help__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+
+  margin-top: 25px;
+}
+
+.howto-help__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  min-height: 46px;
+  padding: 10px 20px;
+
+  color: #fffaf0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  background: var(--howto-navy);
+  border-radius: 30px;
+
+  text-decoration: none;
+
+  transition:
+    background var(--howto-transition),
+    transform var(--howto-transition);
+}
+
+.howto-help__button:hover {
+  background: var(--howto-blue);
+  transform: translateY(-2px);
+}
+
+.howto-help__button span:last-child {
+  color: #e9c88d;
+  font-size: 17px;
+}
+
+.howto-help__text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--howto-blue);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.howto-help__text-link:hover {
+  color: var(--howto-gold);
+}
+
+.howto-help__mascot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.howto-help__mascot img {
+  display: block;
+  width: min(170px, 100%);
+  max-height: 180px;
+  object-fit: contain;
+
+  filter: drop-shadow(0 8px 10px rgb(81 69 55 / 8%));
+}
+
+/* ==================================================
+   14. フッター
+================================================== */
+
+.howto-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 30px 20px 38px;
+
+  border-top: 1px solid rgb(184 135 67 / 22%);
+  text-align: center;
+}
+
+.howto-footer__logo {
+  display: block;
+  width: 115px;
+  margin-bottom: 10px;
+}
+
+.howto-footer__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.howto-footer p {
+  margin: 0 0 6px;
+
+  color: var(--howto-navy);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.howto-footer > span {
+  color: var(--howto-muted);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+/* ==================================================
+   15. タブレット対応
+================================================== */
+
+@media (max-width: 1000px) {
+  .howto-header {
+    padding-right: 4%;
+    padding-left: 4%;
+  }
+
+  .howto-header__navigation {
+    gap: 17px;
+  }
+
+  .howto-header__link {
+    font-size: 11px;
+  }
+
+  .howto-main {
+    width: min(100% - 40px, 900px);
+  }
+
+  .howto-hero {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .howto-section {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .howto-step {
+    grid-template-columns: 68px minmax(0, 1fr) 85px;
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .howto-step__number {
+    width: 64px;
+    height: 64px;
+  }
+
+  .howto-step__illustration {
+    width: 82px;
+    height: 82px;
+  }
+
+  .howto-step__icon svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ==================================================
+   16. スマートフォン対応
+================================================== */
+
+@media (max-width: 768px) {
+  .howto-header {
+    min-height: 68px;
+    padding: 10px 22px;
+  }
+
+  .howto-header__logo {
+    width: 125px;
+  }
+
+  .howto-header__navigation {
+    display: none;
+  }
+
+  .howto-main {
+    width: calc(100% - 32px);
+  }
+
+  /* モバイルナビゲーション */
+
+  .howto-mobile-navigation {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3px;
+
+    padding: 9px 6px calc(9px + env(safe-area-inset-bottom));
+
+    background: rgb(255 251 243 / 96%);
+    border-top: 1px solid rgb(91 78 58 / 14%);
+
+    box-shadow: 0 -5px 20px rgb(75 62 42 / 7%);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .howto-mobile-navigation__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    min-height: 42px;
+    padding: 7px 2px;
+
+    color: #716b60;
+    font-size: clamp(9px, 2.5vw, 11px);
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    transition:
+      background-color var(--howto-transition),
+      color var(--howto-transition);
+  }
+
+  .howto-mobile-navigation__link--active {
+    color: #594a35;
+    font-weight: 700;
+    background: #f2e5ce;
+  }
+
+  .howto-mobile-navigation__link span {
+    overflow-wrap: anywhere;
+  }
+
+  .howto-screen {
+    padding-bottom: 80px;
+  }
+
+  /* ファーストビュー */
+
+  .howto-hero {
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    min-height: auto;
+    padding: 65px 7% 72px;
+    text-align: center;
+  }
+
+  .howto-hero__content {
+    order: 1;
+  }
+
+  .howto-hero__eyebrow {
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  .howto-hero__title {
+    margin-bottom: 22px;
+    font-size: clamp(29px, 8vw, 38px);
+  }
+
+  .howto-hero__catchcopy {
+    font-size: clamp(23px, 6vw, 29px);
+  }
+
+  .howto-hero__description {
+    font-size: 12px;
+  }
+
+  .howto-hero__scroll {
+    margin-top: 25px;
+  }
+
+  .howto-hero__mascot {
+    order: 2;
+    min-height: 210px;
+  }
+
+  .howto-hero__mascot img {
+    width: min(190px, 65%);
+    max-height: 220px;
+  }
+
+  .howto-hero__mascot-caption {
+    margin-top: 4px;
+    font-size: 11px;
+  }
+
+  /* 共通セクション */
+
+  .howto-section {
+    padding: 65px 4%;
+  }
+
+  .howto-section__heading {
+    margin-bottom: 32px;
+  }
+
+  .howto-section__heading h2 {
+    font-size: clamp(22px, 6vw, 28px);
+  }
+
+  .howto-section__lead {
+    font-size: 12px;
+  }
+
+  /* はじめに */
+
+  .howto-start__body {
+    padding: 25px 22px;
+  }
+
+  .howto-start__text p {
+    font-size: 13px;
+  }
+
+  /* ステップ */
+
+  .howto-step {
+    grid-template-columns: 55px minmax(0, 1fr);
+    gap: 15px;
+
+    padding: 22px 18px;
+  }
+
+  .howto-step__number {
+    align-self: start;
+
+    width: 52px;
+    height: 52px;
+  }
+
+  .howto-step__number span {
+    font-size: 7px;
+  }
+
+  .howto-step__number strong {
+    font-size: 20px;
+  }
+
+  .howto-step__content h3 {
+    font-size: 16px;
+  }
+
+  .howto-step__content > p:not(.howto-step__eyebrow) {
+    font-size: 12px;
+  }
+
+  .howto-step__illustration {
+    display: none;
+  }
+
+  /* 質問のコツ */
+
+  .howto-tips__grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .howto-tip {
+    padding: 22px;
+  }
+
+  .howto-tip__number {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+
+  .howto-tip h3 {
+    margin-bottom: 9px;
+    font-size: 14px;
+  }
+
+  .howto-tip p {
+    font-size: 12px;
+  }
+
+  /* 利用時のポイント */
+
+  .howto-notes__card {
+    grid-template-columns: 1fr;
+    gap: 17px;
+    padding: 24px 21px;
+  }
+
+  .howto-notes__icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .howto-notes__icon svg {
+    width: 29px;
+    height: 29px;
+  }
+
+  .howto-notes__content h3 {
+    font-size: 15px;
+  }
+
+  .howto-notes__content li {
+    font-size: 11px;
+  }
+
+  /* 困ったとき */
+
+  .howto-help {
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    margin: 45px 0 55px;
+    padding: 30px 23px;
+
+    text-align: center;
+  }
+
+  .howto-help__content h2 {
+    font-size: 21px;
+  }
+
+  .howto-help__content > p:not(.howto-help__eyebrow) {
+    font-size: 11px;
+  }
+
+  .howto-help__actions {
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .howto-help__mascot img {
+    width: 125px;
+    max-height: 135px;
+  }
+
+  /* フッター */
+
+  .howto-footer {
+    padding-bottom: 25px;
+  }
+}
+
+/* ==================================================
+   17. 小型スマートフォン対応
+================================================== */
+
+@media (max-width: 380px) {
+  .howto-main {
+    width: calc(100% - 24px);
+  }
+
+  .howto-header {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .howto-header__logo {
+    width: 112px;
+  }
+
+  .howto-mobile-navigation {
+    gap: 1px;
+    padding-right: 3px;
+    padding-left: 3px;
+  }
+
+  .howto-mobile-navigation__link {
+    font-size: 9px;
+  }
+
+  .howto-hero {
+    padding-right: 4%;
+    padding-left: 4%;
+  }
+
+  .howto-step {
+    gap: 11px;
+    padding: 18px 13px;
+  }
+
+  .howto-step__number {
+    width: 46px;
+    height: 46px;
+  }
+
+  .howto-step__content h3 {
+    font-size: 14px;
+  }
+
+  .howto-help {
+    padding-right: 17px;
+    padding-left: 17px;
+  }
+}
+
+/* ==================================================
+   18. アニメーション軽減設定
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .howto-page *,
+  .howto-page *::before,
+  .howto-page *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
